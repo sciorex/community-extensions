@@ -19,7 +19,7 @@
       "id": "trigger-research",
       "type": "trigger",
       "label": "Research Request",
-      "position": { "x": 400, "y": 50 },
+      "position": { "x": 100, "y": 80 },
       "triggerType": "ticket-created",
       "triggerConfig": {
         "ticketType": "research"
@@ -31,7 +31,7 @@
       "id": "orchestrator",
       "type": "agent",
       "label": "Research Orchestrator",
-      "position": { "x": 400, "y": 150 },
+      "position": { "x": 92, "y": 234 },
       "agentId": "research-orchestrator-3c4d5e6f",
       "inputMapping": {
         "request": "$.trigger.ticket.title",
@@ -50,7 +50,7 @@
       "id": "wait-approve-scope",
       "type": "wait",
       "label": "Approve Research Scope",
-      "position": { "x": 400, "y": 250 },
+      "position": { "x": 88, "y": 404 },
       "waitType": "approval",
       "prompt": "Review the research scope and ticket structure created by the orchestrator. Approve to proceed with literature review.",
       "config": {}
@@ -60,7 +60,7 @@
       "id": "check-scope-approval",
       "type": "condition",
       "label": "Scope Approved?",
-      "position": { "x": 400, "y": 350 },
+      "position": { "x": 78, "y": 582 },
       "conditions": [
         {
           "path": "$.userResponses.wait-approve-scope",
@@ -77,7 +77,7 @@
       "id": "researcher",
       "type": "agent",
       "label": "Literature Review",
-      "position": { "x": 400, "y": 450 },
+      "position": { "x": 534, "y": 566 },
       "agentId": "researcher-9e0f1a2b",
       "inputMapping": {
         "ticket": "$.nodes.orchestrator.output.phases[0]",
@@ -94,7 +94,7 @@
       "id": "wait-review-research",
       "type": "wait",
       "label": "Review Research Findings",
-      "position": { "x": 400, "y": 550 },
+      "position": { "x": 900, "y": 568 },
       "waitType": "approval",
       "prompt": "Review literature review findings. Approve to proceed with hypothesis generation.",
       "config": {}
@@ -104,7 +104,7 @@
       "id": "check-research-approval",
       "type": "condition",
       "label": "Research Approved?",
-      "position": { "x": 400, "y": 650 },
+      "position": { "x": 492, "y": 320 },
       "conditions": [
         {
           "path": "$.userResponses.wait-review-research",
@@ -121,7 +121,7 @@
       "id": "hypothesis-generator",
       "type": "agent",
       "label": "Generate Hypotheses",
-      "position": { "x": 400, "y": 750 },
+      "position": { "x": 914, "y": 304 },
       "agentId": "hypothesis-generator-7a8b9c0d",
       "inputMapping": {
         "ticket": "$.nodes.orchestrator.output.phases[1]",
@@ -139,7 +139,7 @@
       "id": "wait-approve-hypotheses",
       "type": "wait",
       "label": "Approve Hypotheses",
-      "position": { "x": 400, "y": 850 },
+      "position": { "x": 1226, "y": 306 },
       "waitType": "approval",
       "prompt": "Review generated hypotheses. Select which to test experimentally.",
       "config": {}
@@ -149,7 +149,7 @@
       "id": "check-experiment-decision",
       "type": "condition",
       "label": "Run Experiments?",
-      "position": { "x": 400, "y": 950 },
+      "position": { "x": 1562, "y": 275 },
       "conditions": [
         {
           "path": "$.userResponses.wait-approve-hypotheses",
@@ -166,7 +166,7 @@
       "id": "experiment-planner",
       "type": "agent",
       "label": "Plan Experiments",
-      "position": { "x": 400, "y": 1050 },
+      "position": { "x": 1604, "y": 30 },
       "agentId": "experiment-planner-1e2f3a4b",
       "inputMapping": {
         "ticket": "$.nodes.orchestrator.output.phases[2]",
@@ -183,7 +183,7 @@
       "id": "wait-approve-experiment",
       "type": "wait",
       "label": "Approve Experiment Plan",
-      "position": { "x": 400, "y": 1150 },
+      "position": { "x": 1884, "y": 32 },
       "waitType": "approval",
       "prompt": "Review experiment plan including conditions, metrics, and runtime estimates. Approve to execute.",
       "config": {}
@@ -193,7 +193,7 @@
       "id": "check-experiment-approval",
       "type": "condition",
       "label": "Experiment Approved?",
-      "position": { "x": 400, "y": 1250 },
+      "position": { "x": 1722, "y": -219 },
       "conditions": [
         {
           "path": "$.userResponses.wait-approve-experiment",
@@ -210,7 +210,7 @@
       "id": "experiment-executor",
       "type": "agent",
       "label": "Execute Experiment",
-      "position": { "x": 400, "y": 1350 },
+      "position": { "x": 2174, "y": -235 },
       "agentId": "experiment-executor-5c6d7e8f",
       "inputMapping": {
         "ticket": "$.nodes.orchestrator.output.phases[2]",
@@ -227,7 +227,7 @@
       "id": "check-experiment-result",
       "type": "condition",
       "label": "Experiment Supported?",
-      "position": { "x": 400, "y": 1450 },
+      "position": { "x": 2494, "y": -264 },
       "conditions": [
         {
           "path": "$.nodes.experiment-executor.output.status",
@@ -244,7 +244,7 @@
       "id": "wait-validate-decision",
       "type": "wait",
       "label": "Validate Finding?",
-      "position": { "x": 400, "y": 1550 },
+      "position": { "x": 2862, "y": -278 },
       "waitType": "approval",
       "prompt": "Experiment supports hypothesis. Run validation at scale?",
       "config": {}
@@ -254,7 +254,7 @@
       "id": "check-validation-decision",
       "type": "condition",
       "label": "Run Validation?",
-      "position": { "x": 400, "y": 1650 },
+      "position": { "x": 2862, "y": -96 },
       "conditions": [
         {
           "path": "$.userResponses.wait-validate-decision",
@@ -271,7 +271,7 @@
       "id": "verifier",
       "type": "agent",
       "label": "Validate Finding",
-      "position": { "x": 400, "y": 1750 },
+      "position": { "x": 3276, "y": 118 },
       "agentId": "verifier-1c2d3e4f",
       "inputMapping": {
         "ticket": "$.nodes.orchestrator.output.phases[3]",
@@ -287,7 +287,7 @@
       "id": "synthesizer",
       "type": "agent",
       "label": "Synthesize Results",
-      "position": { "x": 400, "y": 1950 },
+      "position": { "x": 1980, "y": 357 },
       "agentId": "synthesizer-5a6b7c8d",
       "inputMapping": {
         "ticket": "$.nodes.orchestrator.output.phases[4]",
@@ -307,7 +307,7 @@
       "id": "update-epic-complete",
       "type": "ticket_action",
       "label": "Complete Epic",
-      "position": { "x": 400, "y": 2050 },
+      "position": { "x": 2298, "y": 357 },
       "action": "update_status",
       "actionParams": {
         "status": "done"
@@ -319,7 +319,7 @@
       "id": "end-success",
       "type": "end",
       "label": "Research Complete",
-      "position": { "x": 400, "y": 2150 },
+      "position": { "x": 2556, "y": 359 },
       "endType": "success",
       "config": {}
     },
@@ -328,26 +328,8 @@
       "id": "end-cancelled",
       "type": "end",
       "label": "Research Cancelled",
-      "position": { "x": 700, "y": 350 },
+      "position": { "x": 528, "y": 666 },
       "endType": "cancelled",
-      "config": {}
-    },
-
-    {
-      "id": "end-research-only",
-      "type": "end",
-      "label": "Research Complete (No Experiments)",
-      "position": { "x": 700, "y": 950 },
-      "endType": "success",
-      "config": {}
-    },
-
-    {
-      "id": "end-experiment-failed",
-      "type": "end",
-      "label": "Hypothesis Refuted",
-      "position": { "x": 700, "y": 1450 },
-      "endType": "failure",
       "config": {}
     }
   ],
