@@ -1,0 +1,253 @@
+{
+  "id": "pr-review-f5a6b7c8",
+  "name": "Pull Request Review",
+  "description": "Automated pull request review workflow that analyzes code changes, checks for issues, and provides comprehensive feedback with approval recommendations.",
+  "icon": "🔍",
+  "version": "1.0.0",
+  "source": "community",
+  "author": "Sciorex Team",
+  "createdAt": "2025-01-01T00:00:00Z",
+  "updatedAt": "2025-01-01T00:00:00Z",
+  "variables": {},
+  "nodes": [
+    {
+      "id": "trigger-start",
+      "type": "trigger",
+      "label": "Start PR Review",
+      "position": { "x": 300, "y": 50 },
+      "triggerType": "manual",
+      "triggerConfig": {
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "diff": {
+              "type": "string",
+              "description": "The git diff of the pull request changes"
+            },
+            "prTitle": {
+              "type": "string",
+              "description": "Title of the pull request"
+            },
+            "prDescription": {
+              "type": "string",
+              "description": "Description/body of the pull request explaining the changes"
+            }
+          },
+          "required": ["diff"]
+        }
+      },
+      "config": {}
+    },
+    {
+      "id": "agent-reviewer",
+      "type": "agent",
+      "label": "Analyze PR Changes",
+      "position": { "x": 300, "y": 180 },
+      "agentId": "code-reviewer-e5f6a7b8",
+      "inputMapping": {
+        "code": "$.trigger.diff",
+        "diff": "$.trigger.diff",
+        "context": "$.trigger.prDescription"
+      },
+      "outputMapping": {
+        "summary": "$.output.summary",
+        "score": "$.output.score",
+        "issues": "$.output.issues",
+        "positives": "$.output.positives"
+      },
+      "config": {}
+    },
+    {
+      "id": "condition-critical",
+      "type": "condition",
+      "label": "Critical Issues?",
+      "position": { "x": 300, "y": 330 },
+      "conditions": [
+        {
+          "path": "$.nodes.agent-reviewer.output.score",
+          "operator": "lt",
+          "value": 4,
+          "targetNodeId": "wait-critical-review"
+        }
+      ],
+      "defaultTargetNodeId": "condition-score",
+      "config": {}
+    },
+    {
+      "id": "wait-critical-review",
+      "type": "wait",
+      "label": "Critical Issues Found",
+      "position": { "x": 685, "y": 163 },
+      "waitType": "approval",
+      "prompt": "Critical issues were found in this PR (score below 4).\n\nPlease review the issues above carefully.\n\n- **Approve**: Override and proceed with review anyway\n- **Reject**: Block the PR until issues are fixed",
+      "config": {}
+    },
+    {
+      "id": "condition-override",
+      "type": "condition",
+      "label": "Override Block?",
+      "position": { "x": 944, "y": 132 },
+      "conditions": [
+        {
+          "path": "$.userResponses.wait-critical-review",
+          "operator": "eq",
+          "value": "Approve",
+          "targetNodeId": "condition-score"
+        }
+      ],
+      "defaultTargetNodeId": "end-blocked",
+      "config": {}
+    },
+    {
+      "id": "condition-score",
+      "type": "condition",
+      "label": "Quality Score Check",
+      "position": { "x": 698, "y": 383 },
+      "conditions": [
+        {
+          "path": "$.nodes.agent-reviewer.output.score",
+          "operator": "gte",
+          "value": 7,
+          "targetNodeId": "end-approved"
+        }
+      ],
+      "defaultTargetNodeId": "wait-low-score",
+      "config": {}
+    },
+    {
+      "id": "wait-low-score",
+      "type": "wait",
+      "label": "Review Suggestions",
+      "position": { "x": 1122, "y": 467 },
+      "waitType": "approval",
+      "prompt": "The PR has some issues that could be improved (score 4-6).\n\nReview the suggestions above and decide:\n\n- **Approve**: Approve the PR with minor suggestions\n- **Reject**: Request changes before merging",
+      "config": {}
+    },
+    {
+      "id": "condition-approve-with-suggestions",
+      "type": "condition",
+      "label": "Approve Anyway?",
+      "position": { "x": 1441, "y": 436 },
+      "conditions": [
+        {
+          "path": "$.userResponses.wait-low-score",
+          "operator": "eq",
+          "value": "Approve",
+          "targetNodeId": "end-approved-with-comments"
+        }
+      ],
+      "defaultTargetNodeId": "end-changes-requested",
+      "config": {}
+    },
+    {
+      "id": "end-approved",
+      "type": "end",
+      "label": "PR Approved",
+      "position": { "x": 1125, "y": 369 },
+      "endType": "success",
+      "config": {}
+    },
+    {
+      "id": "end-approved-with-comments",
+      "type": "end",
+      "label": "Approved with Comments",
+      "position": { "x": 1827, "y": 422 },
+      "endType": "success",
+      "config": {}
+    },
+    {
+      "id": "end-changes-requested",
+      "type": "end",
+      "label": "Changes Requested",
+      "position": { "x": 1830, "y": 520 },
+      "endType": "failure",
+      "config": {}
+    },
+    {
+      "id": "end-blocked",
+      "type": "end",
+      "label": "PR Blocked",
+      "position": { "x": 1344, "y": 216 },
+      "endType": "cancelled",
+      "config": {}
+    }
+  ],
+  "edges": [
+    {
+      "id": "e-trigger-to-reviewer",
+      "source": "trigger-start",
+      "target": "agent-reviewer"
+    },
+    {
+      "id": "e-reviewer-to-critical",
+      "source": "agent-reviewer",
+      "target": "condition-critical"
+    },
+    {
+      "id": "e-critical-yes",
+      "source": "condition-critical",
+      "target": "wait-critical-review",
+      "sourceHandle": "true",
+      "label": "Score < 4"
+    },
+    {
+      "id": "e-critical-no",
+      "source": "condition-critical",
+      "target": "condition-score",
+      "sourceHandle": "false",
+      "label": "No Critical"
+    },
+    {
+      "id": "e-critical-wait-to-condition",
+      "source": "wait-critical-review",
+      "target": "condition-override"
+    },
+    {
+      "id": "e-override-yes",
+      "source": "condition-override",
+      "target": "condition-score",
+      "sourceHandle": "true",
+      "label": "Override"
+    },
+    {
+      "id": "e-override-no",
+      "source": "condition-override",
+      "target": "end-blocked",
+      "sourceHandle": "false",
+      "label": "Block PR"
+    },
+    {
+      "id": "e-score-high",
+      "source": "condition-score",
+      "target": "end-approved",
+      "sourceHandle": "true",
+      "label": "Score >= 7"
+    },
+    {
+      "id": "e-score-low",
+      "source": "condition-score",
+      "target": "wait-low-score",
+      "sourceHandle": "false",
+      "label": "Score 4-6"
+    },
+    {
+      "id": "e-low-score-to-condition",
+      "source": "wait-low-score",
+      "target": "condition-approve-with-suggestions"
+    },
+    {
+      "id": "e-approve-with-comments",
+      "source": "condition-approve-with-suggestions",
+      "target": "end-approved-with-comments",
+      "sourceHandle": "true",
+      "label": "Approve"
+    },
+    {
+      "id": "e-request-changes",
+      "source": "condition-approve-with-suggestions",
+      "target": "end-changes-requested",
+      "sourceHandle": "false",
+      "label": "Request Changes"
+    }
+  ]
+}

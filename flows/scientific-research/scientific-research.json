@@ -1,0 +1,511 @@
+{
+  "id": "scientific-research-d9e0f1a2",
+  "name": "Scientific Research Workflow",
+  "description": "Complete scientific research workflow from initial question through literature review, hypothesis generation, experimentation, validation, and final synthesis. Implements a rigorous, reproducible research process with full ticket tracking.",
+  "icon": "🔬",
+  "version": "1.0.0",
+  "source": "community",
+  "createdAt": "2024-12-01T00:00:00Z",
+  "updatedAt": "2024-12-01T00:00:00Z",
+
+  "variables": {
+    "epicId": null,
+    "workspaceId": null,
+    "researchType": "Research"
+  },
+
+  "nodes": [
+    {
+      "id": "trigger-research",
+      "type": "trigger",
+      "label": "Research Request",
+      "position": { "x": 400, "y": 50 },
+      "triggerType": "ticket-created",
+      "triggerConfig": {
+        "ticketType": "research"
+      },
+      "config": {}
+    },
+
+    {
+      "id": "orchestrator",
+      "type": "agent",
+      "label": "Research Orchestrator",
+      "position": { "x": 400, "y": 150 },
+      "agentId": "research-orchestrator-3c4d5e6f",
+      "inputMapping": {
+        "request": "$.trigger.ticket.title",
+        "context": "$.trigger.ticket.description",
+        "domain": "$.trigger.ticket.labels[0]"
+      },
+      "outputMapping": {
+        "epicId": "$.epicId",
+        "researchType": "$.researchType",
+        "phases": "$.phases"
+      },
+      "config": {}
+    },
+
+    {
+      "id": "wait-approve-scope",
+      "type": "wait",
+      "label": "Approve Research Scope",
+      "position": { "x": 400, "y": 250 },
+      "waitType": "approval",
+      "prompt": "Review the research scope and ticket structure created by the orchestrator. Approve to proceed with literature review.",
+      "config": {}
+    },
+
+    {
+      "id": "check-scope-approval",
+      "type": "condition",
+      "label": "Scope Approved?",
+      "position": { "x": 400, "y": 350 },
+      "conditions": [
+        {
+          "path": "$.userResponses.wait-approve-scope",
+          "operator": "eq",
+          "value": "Approve",
+          "targetNodeId": "researcher"
+        }
+      ],
+      "defaultTargetNodeId": "end-cancelled",
+      "config": {}
+    },
+
+    {
+      "id": "researcher",
+      "type": "agent",
+      "label": "Literature Review",
+      "position": { "x": 400, "y": 450 },
+      "agentId": "researcher-9e0f1a2b",
+      "inputMapping": {
+        "ticket": "$.nodes.orchestrator.output.phases[0]",
+        "epicContext": "$.nodes.orchestrator.output.scope",
+        "domain": "$.trigger.ticket.labels[0]"
+      },
+      "outputMapping": {
+        "researchFindings": "$.output"
+      },
+      "config": {}
+    },
+
+    {
+      "id": "wait-review-research",
+      "type": "wait",
+      "label": "Review Research Findings",
+      "position": { "x": 400, "y": 550 },
+      "waitType": "approval",
+      "prompt": "Review literature review findings. Approve to proceed with hypothesis generation.",
+      "config": {}
+    },
+
+    {
+      "id": "check-research-approval",
+      "type": "condition",
+      "label": "Research Approved?",
+      "position": { "x": 400, "y": 650 },
+      "conditions": [
+        {
+          "path": "$.userResponses.wait-review-research",
+          "operator": "eq",
+          "value": "Approve & Continue",
+          "targetNodeId": "hypothesis-generator"
+        }
+      ],
+      "defaultTargetNodeId": "researcher",
+      "config": {}
+    },
+
+    {
+      "id": "hypothesis-generator",
+      "type": "agent",
+      "label": "Generate Hypotheses",
+      "position": { "x": 400, "y": 750 },
+      "agentId": "hypothesis-generator-7a8b9c0d",
+      "inputMapping": {
+        "ticket": "$.nodes.orchestrator.output.phases[1]",
+        "researchFindings": "$.nodes.researcher.output",
+        "epicId": "$.nodes.orchestrator.output.epicId"
+      },
+      "outputMapping": {
+        "hypotheses": "$.hypotheses",
+        "priorityMatrix": "$.priorityMatrix"
+      },
+      "config": {}
+    },
+
+    {
+      "id": "wait-approve-hypotheses",
+      "type": "wait",
+      "label": "Approve Hypotheses",
+      "position": { "x": 400, "y": 850 },
+      "waitType": "approval",
+      "prompt": "Review generated hypotheses. Select which to test experimentally.",
+      "config": {}
+    },
+
+    {
+      "id": "check-experiment-decision",
+      "type": "condition",
+      "label": "Run Experiments?",
+      "position": { "x": 400, "y": 950 },
+      "conditions": [
+        {
+          "path": "$.userResponses.wait-approve-hypotheses",
+          "operator": "neq",
+          "value": "Skip to Synthesis",
+          "targetNodeId": "experiment-planner"
+        }
+      ],
+      "defaultTargetNodeId": "synthesizer",
+      "config": {}
+    },
+
+    {
+      "id": "experiment-planner",
+      "type": "agent",
+      "label": "Plan Experiments",
+      "position": { "x": 400, "y": 1050 },
+      "agentId": "experiment-planner-1e2f3a4b",
+      "inputMapping": {
+        "ticket": "$.nodes.orchestrator.output.phases[2]",
+        "hypothesis": "$.nodes.hypothesis-generator.output.hypotheses[0]",
+        "epicId": "$.nodes.orchestrator.output.epicId"
+      },
+      "outputMapping": {
+        "experimentPlan": "$.experimentPlan"
+      },
+      "config": {}
+    },
+
+    {
+      "id": "wait-approve-experiment",
+      "type": "wait",
+      "label": "Approve Experiment Plan",
+      "position": { "x": 400, "y": 1150 },
+      "waitType": "approval",
+      "prompt": "Review experiment plan including conditions, metrics, and runtime estimates. Approve to execute.",
+      "config": {}
+    },
+
+    {
+      "id": "check-experiment-approval",
+      "type": "condition",
+      "label": "Experiment Approved?",
+      "position": { "x": 400, "y": 1250 },
+      "conditions": [
+        {
+          "path": "$.userResponses.wait-approve-experiment",
+          "operator": "eq",
+          "value": "Approve & Execute",
+          "targetNodeId": "experiment-executor"
+        }
+      ],
+      "defaultTargetNodeId": "experiment-planner",
+      "config": {}
+    },
+
+    {
+      "id": "experiment-executor",
+      "type": "agent",
+      "label": "Execute Experiment",
+      "position": { "x": 400, "y": 1350 },
+      "agentId": "experiment-executor-5c6d7e8f",
+      "inputMapping": {
+        "ticket": "$.nodes.orchestrator.output.phases[2]",
+        "experimentPlan": "$.nodes.experiment-planner.output.experimentPlan",
+        "hypothesis": "$.nodes.hypothesis-generator.output.hypotheses[0]"
+      },
+      "outputMapping": {
+        "experimentResult": "$.output"
+      },
+      "config": {}
+    },
+
+    {
+      "id": "check-experiment-result",
+      "type": "condition",
+      "label": "Experiment Supported?",
+      "position": { "x": 400, "y": 1450 },
+      "conditions": [
+        {
+          "path": "$.nodes.experiment-executor.output.status",
+          "operator": "eq",
+          "value": "SUPPORTED",
+          "targetNodeId": "wait-validate-decision"
+        }
+      ],
+      "defaultTargetNodeId": "synthesizer",
+      "config": {}
+    },
+
+    {
+      "id": "wait-validate-decision",
+      "type": "wait",
+      "label": "Validate Finding?",
+      "position": { "x": 400, "y": 1550 },
+      "waitType": "approval",
+      "prompt": "Experiment supports hypothesis. Run validation at scale?",
+      "config": {}
+    },
+
+    {
+      "id": "check-validation-decision",
+      "type": "condition",
+      "label": "Run Validation?",
+      "position": { "x": 400, "y": 1650 },
+      "conditions": [
+        {
+          "path": "$.userResponses.wait-validate-decision",
+          "operator": "eq",
+          "value": "Validate",
+          "targetNodeId": "verifier"
+        }
+      ],
+      "defaultTargetNodeId": "synthesizer",
+      "config": {}
+    },
+
+    {
+      "id": "verifier",
+      "type": "agent",
+      "label": "Validate Finding",
+      "position": { "x": 400, "y": 1750 },
+      "agentId": "verifier-1c2d3e4f",
+      "inputMapping": {
+        "ticket": "$.nodes.orchestrator.output.phases[3]",
+        "experimentResult": "$.nodes.experiment-executor.output"
+      },
+      "outputMapping": {
+        "validationResult": "$.output"
+      },
+      "config": {}
+    },
+
+    {
+      "id": "synthesizer",
+      "type": "agent",
+      "label": "Synthesize Results",
+      "position": { "x": 400, "y": 1950 },
+      "agentId": "synthesizer-5a6b7c8d",
+      "inputMapping": {
+        "ticket": "$.nodes.orchestrator.output.phases[4]",
+        "epicId": "$.nodes.orchestrator.output.epicId",
+        "researchFindings": "$.nodes.researcher.output",
+        "hypotheses": "$.nodes.hypothesis-generator.output.hypotheses",
+        "experimentResults": "$.nodes.experiment-executor.output",
+        "validationResults": "$.nodes.verifier.output"
+      },
+      "outputMapping": {
+        "finalReport": "$.output"
+      },
+      "config": {}
+    },
+
+    {
+      "id": "update-epic-complete",
+      "type": "ticket_action",
+      "label": "Complete Epic",
+      "position": { "x": 400, "y": 2050 },
+      "action": "update_status",
+      "actionParams": {
+        "status": "done"
+      },
+      "config": {}
+    },
+
+    {
+      "id": "end-success",
+      "type": "end",
+      "label": "Research Complete",
+      "position": { "x": 400, "y": 2150 },
+      "endType": "success",
+      "config": {}
+    },
+
+    {
+      "id": "end-cancelled",
+      "type": "end",
+      "label": "Research Cancelled",
+      "position": { "x": 700, "y": 350 },
+      "endType": "cancelled",
+      "config": {}
+    },
+
+    {
+      "id": "end-research-only",
+      "type": "end",
+      "label": "Research Complete (No Experiments)",
+      "position": { "x": 700, "y": 950 },
+      "endType": "success",
+      "config": {}
+    },
+
+    {
+      "id": "end-experiment-failed",
+      "type": "end",
+      "label": "Hypothesis Refuted",
+      "position": { "x": 700, "y": 1450 },
+      "endType": "failure",
+      "config": {}
+    }
+  ],
+
+  "edges": [
+    {
+      "id": "e1",
+      "source": "trigger-research",
+      "target": "orchestrator"
+    },
+    {
+      "id": "e2",
+      "source": "orchestrator",
+      "target": "wait-approve-scope"
+    },
+    {
+      "id": "e3",
+      "source": "wait-approve-scope",
+      "target": "check-scope-approval"
+    },
+    {
+      "id": "e4-approve",
+      "source": "check-scope-approval",
+      "target": "researcher",
+      "sourceHandle": "true",
+      "label": "Approved"
+    },
+    {
+      "id": "e4-cancel",
+      "source": "check-scope-approval",
+      "target": "end-cancelled",
+      "sourceHandle": "false",
+      "label": "Cancelled/Revise"
+    },
+    {
+      "id": "e5",
+      "source": "researcher",
+      "target": "wait-review-research"
+    },
+    {
+      "id": "e6",
+      "source": "wait-review-research",
+      "target": "check-research-approval"
+    },
+    {
+      "id": "e7-approve",
+      "source": "check-research-approval",
+      "target": "hypothesis-generator",
+      "sourceHandle": "true",
+      "label": "Approved"
+    },
+    {
+      "id": "e7-more",
+      "source": "check-research-approval",
+      "target": "researcher",
+      "sourceHandle": "false",
+      "label": "More Research"
+    },
+    {
+      "id": "e8",
+      "source": "hypothesis-generator",
+      "target": "wait-approve-hypotheses"
+    },
+    {
+      "id": "e9",
+      "source": "wait-approve-hypotheses",
+      "target": "check-experiment-decision"
+    },
+    {
+      "id": "e10-experiment",
+      "source": "check-experiment-decision",
+      "target": "experiment-planner",
+      "sourceHandle": "true",
+      "label": "Run Experiments"
+    },
+    {
+      "id": "e10-skip",
+      "source": "check-experiment-decision",
+      "target": "synthesizer",
+      "sourceHandle": "false",
+      "label": "Skip to Synthesis"
+    },
+    {
+      "id": "e11",
+      "source": "experiment-planner",
+      "target": "wait-approve-experiment"
+    },
+    {
+      "id": "e12",
+      "source": "wait-approve-experiment",
+      "target": "check-experiment-approval"
+    },
+    {
+      "id": "e13-approve",
+      "source": "check-experiment-approval",
+      "target": "experiment-executor",
+      "sourceHandle": "true",
+      "label": "Execute"
+    },
+    {
+      "id": "e13-revise",
+      "source": "check-experiment-approval",
+      "target": "experiment-planner",
+      "sourceHandle": "false",
+      "label": "Revise"
+    },
+    {
+      "id": "e14",
+      "source": "experiment-executor",
+      "target": "check-experiment-result"
+    },
+    {
+      "id": "e15-supported",
+      "source": "check-experiment-result",
+      "target": "wait-validate-decision",
+      "sourceHandle": "true",
+      "label": "Supported"
+    },
+    {
+      "id": "e15-refuted",
+      "source": "check-experiment-result",
+      "target": "synthesizer",
+      "sourceHandle": "false",
+      "label": "Refuted/Inconclusive"
+    },
+    {
+      "id": "e16",
+      "source": "wait-validate-decision",
+      "target": "check-validation-decision"
+    },
+    {
+      "id": "e17-validate",
+      "source": "check-validation-decision",
+      "target": "verifier",
+      "sourceHandle": "true",
+      "label": "Validate"
+    },
+    {
+      "id": "e17-skip",
+      "source": "check-validation-decision",
+      "target": "synthesizer",
+      "sourceHandle": "false",
+      "label": "Skip Validation"
+    },
+    {
+      "id": "e18",
+      "source": "verifier",
+      "target": "synthesizer"
+    },
+    {
+      "id": "e19",
+      "source": "synthesizer",
+      "target": "update-epic-complete"
+    },
+    {
+      "id": "e20",
+      "source": "update-epic-complete",
+      "target": "end-success"
+    }
+  ]
+}

@@ -1,0 +1,207 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2025-01-01T00:00:00Z",
+  "agents": [
+    {
+      "id": "git-committer-a1b2c3d4",
+      "name": "Git Committer",
+      "description": "Commits workspace changes with smart, contextual commit messages. Analyzes staged changes and generates meaningful commit messages following conventional commit standards.",
+      "icon": "📝",
+      "version": "1.0.0",
+      "author": "Sciorex Team",
+      "tags": ["git", "utility", "automation"],
+      "downloadUrl": "agents/git-committer.yaml",
+      "updatedAt": "2025-01-01T00:00:00Z"
+    },
+    {
+      "id": "code-reviewer-e5f6a7b8",
+      "name": "Code Reviewer",
+      "description": "Reviews code changes and provides constructive feedback on code quality, potential bugs, and best practices.",
+      "icon": "🔍",
+      "version": "1.0.0",
+      "author": "Sciorex Team",
+      "tags": ["code-quality", "review", "best-practices"],
+      "downloadUrl": "agents/code-reviewer.yaml",
+      "updatedAt": "2025-01-01T00:00:00Z"
+    },
+    {
+      "id": "codebase-researcher-7e8f9a0b",
+      "name": "Codebase Researcher",
+      "description": "Explores and analyzes codebases to understand structure, patterns, and relationships. Provides comprehensive summaries of code architecture.",
+      "icon": "🔍",
+      "version": "1.0.0",
+      "author": "Sciorex Team",
+      "tags": ["codebase", "analysis", "architecture"],
+      "downloadUrl": "agents/codebase-researcher.yaml",
+      "updatedAt": "2025-01-01T00:00:00Z"
+    },
+    {
+      "id": "researcher-9e0f1a2b",
+      "name": "Literature Researcher",
+      "description": "Conducts thorough literature review and knowledge synthesis. Searches for papers, maintains intellectual honesty, and proposes novel ideas based on findings.",
+      "icon": "🔬",
+      "version": "1.0.0",
+      "author": "Sciorex Team",
+      "tags": ["scientific-research", "literature-review", "web-search"],
+      "downloadUrl": "agents/scientific-research/researcher.yaml",
+      "updatedAt": "2025-01-01T00:00:00Z"
+    },
+    {
+      "id": "test-writer-c9d0e1f2",
+      "name": "Test Writer",
+      "description": "Generates unit tests and integration tests for your code. Supports multiple testing frameworks.",
+      "icon": "🧪",
+      "version": "1.0.0",
+      "author": "Sciorex Team",
+      "tags": ["testing", "automation", "quality"],
+      "downloadUrl": "agents/test-writer.yaml",
+      "updatedAt": "2025-01-01T00:00:00Z"
+    },
+    {
+      "id": "doc-generator-3a4b5c6d",
+      "name": "Documentation Generator",
+      "description": "Generates documentation for your code including JSDoc comments, README files, and API documentation.",
+      "icon": "📚",
+      "version": "1.0.0",
+      "author": "Sciorex Team",
+      "tags": ["documentation", "jsdoc", "readme"],
+      "downloadUrl": "agents/doc-generator.yaml",
+      "updatedAt": "2025-01-01T00:00:00Z"
+    },
+    {
+      "id": "research-orchestrator-3c4d5e6f",
+      "name": "Research Orchestrator",
+      "description": "Entry point agent that analyzes research requests and orchestrates the scientific workflow. Determines research scope, creates epics/tickets for tracking, and routes to appropriate agents.",
+      "icon": "🎯",
+      "version": "1.0.0",
+      "author": "Sciorex Team",
+      "tags": ["scientific-research", "orchestration", "workflow"],
+      "downloadUrl": "agents/scientific-research/research-orchestrator.yaml",
+      "updatedAt": "2025-01-01T00:00:00Z"
+    },
+    {
+      "id": "hypothesis-generator-7a8b9c0d",
+      "name": "Hypothesis Generator",
+      "description": "Transforms research findings into testable hypotheses. Creates structured, falsifiable hypotheses with clear success criteria and experimental designs.",
+      "icon": "💡",
+      "version": "1.0.0",
+      "author": "Sciorex Team",
+      "tags": ["scientific-research", "hypothesis", "analysis"],
+      "downloadUrl": "agents/scientific-research/hypothesis-generator.yaml",
+      "updatedAt": "2025-01-01T00:00:00Z"
+    },
+    {
+      "id": "experiment-planner-1e2f3a4b",
+      "name": "Experiment Planner",
+      "description": "Designs detailed experiment plans for testing hypotheses. Creates reproducible experimental protocols with proper controls, metrics, and statistical rigor.",
+      "icon": "📐",
+      "version": "1.0.0",
+      "author": "Sciorex Team",
+      "tags": ["scientific-research", "experiment", "planning"],
+      "downloadUrl": "agents/scientific-research/experiment-planner.yaml",
+      "updatedAt": "2025-01-01T00:00:00Z"
+    },
+    {
+      "id": "experiment-executor-5c6d7e8f",
+      "name": "Experiment Executor",
+      "description": "Executes experiments according to the plan. Implements code, runs experiments, collects data, and produces results with proper checkpointing and recovery.",
+      "icon": "⚡",
+      "version": "1.0.0",
+      "author": "Sciorex Team",
+      "tags": ["scientific-research", "experiment", "execution"],
+      "downloadUrl": "agents/scientific-research/experiment-executor.yaml",
+      "updatedAt": "2025-01-01T00:00:00Z"
+    },
+    {
+      "id": "verifier-1c2d3e4f",
+      "name": "Verifier",
+      "description": "Validates experimental findings at scale. Tests across multiple conditions, scales, and datasets to determine if findings are robust and generalizable.",
+      "icon": "✅",
+      "version": "1.0.0",
+      "author": "Sciorex Team",
+      "tags": ["scientific-research", "validation", "testing"],
+      "downloadUrl": "agents/scientific-research/verifier.yaml",
+      "updatedAt": "2025-01-01T00:00:00Z"
+    },
+    {
+      "id": "synthesizer-5a6b7c8d",
+      "name": "Synthesizer",
+      "description": "Compiles all research findings, experimental results, and validation outcomes into comprehensive final reports. Generates actionable conclusions and next steps.",
+      "icon": "📊",
+      "version": "1.0.0",
+      "author": "Sciorex Team",
+      "tags": ["scientific-research", "synthesis", "reporting"],
+      "downloadUrl": "agents/scientific-research/synthesizer.yaml",
+      "updatedAt": "2025-01-01T00:00:00Z"
+    },
+    {
+      "id": "planner-9a0b1c2d",
+      "name": "Planner",
+      "description": "Analyzes ticket requirements and creates structured implementation plans. Breaks down work into actionable steps, identifies dependencies, and suggests subtasks.",
+      "icon": "📋",
+      "version": "1.0.0",
+      "author": "Sciorex Team",
+      "tags": ["development-workflow", "planning", "tickets"],
+      "downloadUrl": "agents/development-workflow/planner.yaml",
+      "updatedAt": "2025-01-01T00:00:00Z"
+    },
+    {
+      "id": "executor-3e4f5a6b",
+      "name": "Executor",
+      "description": "Implements code changes based on plans. Writes clean, well-structured code following existing patterns, updates ticket progress, and reports blockers.",
+      "icon": "⚡",
+      "version": "1.0.0",
+      "author": "Sciorex Team",
+      "tags": ["development-workflow", "implementation", "coding"],
+      "downloadUrl": "agents/development-workflow/executor.yaml",
+      "updatedAt": "2025-01-01T00:00:00Z"
+    },
+    {
+      "id": "tester-7c8d9e0f",
+      "name": "Tester",
+      "description": "Creates and runs tests for implemented features. Writes comprehensive test cases covering happy paths, edge cases, and error scenarios.",
+      "icon": "🧪",
+      "version": "1.0.0",
+      "author": "Sciorex Team",
+      "tags": ["development-workflow", "testing", "quality"],
+      "downloadUrl": "agents/development-workflow/tester.yaml",
+      "updatedAt": "2025-01-01T00:00:00Z"
+    }
+  ],
+  "flows": [
+    {
+      "id": "git-workflow-b1c2d3e4",
+      "name": "Git Workflow",
+      "description": "Complete git workflow: stage changes, review diff, generate commit message, and commit. Streamlines the entire commit process.",
+      "version": "1.0.0",
+      "author": "Sciorex Team",
+      "tags": ["git", "workflow", "automation"],
+      "downloadUrl": "flows/git-workflow.json",
+      "requiredAgents": ["git-committer-a1b2c3d4", "code-reviewer-e5f6a7b8"],
+      "updatedAt": "2025-01-01T00:00:00Z"
+    },
+    {
+      "id": "pr-review-f5a6b7c8",
+      "name": "PR Review Flow",
+      "description": "Automated pull request review workflow that analyzes changes, checks for issues, and provides comprehensive feedback.",
+      "version": "1.0.0",
+      "author": "Sciorex Team",
+      "tags": ["git", "review", "pull-request"],
+      "downloadUrl": "flows/pr-review.json",
+      "requiredAgents": ["code-reviewer-e5f6a7b8"],
+      "updatedAt": "2025-01-01T00:00:00Z"
+    },
+    {
+      "id": "scientific-research-d9e0f1a2",
+      "name": "Scientific Research Workflow",
+      "description": "Complete scientific research workflow from initial question through literature review, hypothesis generation, experimentation, validation, and final synthesis. Implements a rigorous, reproducible research process with full ticket tracking.",
+      "icon": "🔬",
+      "version": "1.0.0",
+      "author": "Sciorex Team",
+      "tags": ["scientific-research", "workflow", "experiment", "research"],
+      "downloadUrl": "flows/scientific-research/scientific-research.json",
+      "requiredAgents": ["research-orchestrator-3c4d5e6f", "researcher-9e0f1a2b", "hypothesis-generator-7a8b9c0d", "experiment-planner-1e2f3a4b", "experiment-executor-5c6d7e8f", "verifier-1c2d3e4f", "synthesizer-5a6b7c8d"],
+      "updatedAt": "2025-01-01T00:00:00Z"
+    }
+  ]
+}

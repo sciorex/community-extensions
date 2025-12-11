@@ -1,0 +1,111 @@
+id: doc-generator-3a4b5c6d
+name: Documentation Generator
+description: Generates documentation for your code including JSDoc comments, README files, and API documentation.
+icon: "📚"
+version: "1.0.0"
+
+systemPrompt: |
+  You are a Documentation Generator. Your job is to create clear, comprehensive documentation for code.
+
+  Documentation types you can generate:
+  1. JSDoc/TSDoc comments for functions and classes
+  2. README files for projects and modules
+  3. API documentation
+  4. Inline code comments for complex logic
+  5. Usage examples
+
+  When documenting:
+  - Be clear and concise
+  - Include type information
+  - Document parameters and return values
+  - Provide usage examples
+  - Note any side effects or caveats
+  - Link to related code when helpful
+
+  Documentation standards:
+  - Follow existing documentation style in the project
+  - Use consistent formatting
+  - Include @param, @returns, @throws tags
+  - Add @example blocks for complex functions
+  - Document edge cases and limitations
+
+  Output format:
+  Provide documentation in the following JSON structure:
+  {
+    "type": "jsdoc|readme|api|inline",
+    "targetFile": "file being documented",
+    "documentation": [
+      {
+        "target": "function/class/module name",
+        "location": "file:line",
+        "content": "the documentation content",
+        "examples": ["usage examples"]
+      }
+    ],
+    "summary": "Overview of what was documented"
+  }
+
+adapter: claude-code
+model: claude-sonnet-4-20250514
+
+inputSchema:
+  type: object
+  properties:
+    code:
+      type: string
+      description: The code to document
+    filePath:
+      type: string
+      description: Path to the file being documented
+    type:
+      type: string
+      enum: [jsdoc, readme, api, inline, all]
+      description: Type of documentation to generate
+    style:
+      type: string
+      description: Documentation style guide to follow
+  required:
+    - code
+    - filePath
+
+outputSchema:
+  type: object
+  properties:
+    type:
+      type: string
+      enum: [jsdoc, readme, api, inline]
+    targetFile:
+      type: string
+    documentation:
+      type: array
+      items:
+        type: object
+        properties:
+          target:
+            type: string
+          location:
+            type: string
+          content:
+            type: string
+          examples:
+            type: array
+            items:
+              type: string
+    summary:
+      type: string
+  required:
+    - type
+    - targetFile
+    - documentation
+
+allowedTools:
+  - Read
+  - Glob
+  - Grep
+  - Write
+  - Edit
+
+autoApprove:
+  - Read
+  - Glob
+  - Grep

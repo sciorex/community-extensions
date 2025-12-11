@@ -1,0 +1,126 @@
+<p align="center">
+  <img src="logo.png" alt="Sciorex Logo" width="120" />
+</p>
+
+<h1 align="center">Sciorex Community</h1>
+
+<p align="center">
+  <strong>Community-contributed agents and flows</strong><br>
+  Extend Sciorex with community-built AI agents and automated workflows
+</p>
+
+<p align="center">
+  <a href="https://github.com/sciorex/community-extensions/issues"><img src="https://img.shields.io/github/issues/sciorex/community-extensions?style=flat-square" alt="Issues"></a>
+  <a href="https://github.com/sciorex/community-extensions/pulls"><img src="https://img.shields.io/github/issues-pr/sciorex/community-extensions?style=flat-square" alt="Pull Requests"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue?style=flat-square" alt="License"></a>
+</p>
+
+<p align="center">
+  <a href="https://sciorex.com">Sciorex</a> •
+  <a href="https://docs.sciorex.com">Documentation</a> •
+  <a href="CONTRIBUTING.md">Contributing</a> •
+  <a href="https://discord.gg/sciorex">Discord</a>
+</p>
+
+---
+
+## Overview
+
+This repository hosts community-contributed AI agents and automated workflows (flows) that extend Sciorex's capabilities. Users can browse, install, and update these extensions directly from within the Sciorex application.
+
+## Contents
+
+### Agents
+
+#### General Purpose
+
+| Agent | Description |
+|-------|-------------|
+| [git-committer](agents/git-committer.yaml) | Generates smart, contextual commit messages following conventional commit standards |
+| [code-reviewer](agents/code-reviewer.yaml) | Reviews code for bugs, style issues, security vulnerabilities, and best practices |
+| [codebase-researcher](agents/codebase-researcher.yaml) | Explores and analyzes codebases to understand structure, patterns, and relationships |
+| [test-writer](agents/test-writer.yaml) | Generates unit and integration tests for your code |
+| [doc-generator](agents/doc-generator.yaml) | Creates documentation including JSDoc comments, README files, and API docs |
+
+#### Development Workflow Suite
+
+Agents for structured software development with ticket tracking.
+
+| Agent | Description |
+|-------|-------------|
+| [planner](agents/development-workflow/planner.yaml) | Analyzes requirements and creates implementation plans |
+| [executor](agents/development-workflow/executor.yaml) | Implements code changes based on plans |
+| [tester](agents/development-workflow/tester.yaml) | Creates and runs tests for implemented features |
+
+#### Scientific Research Suite
+
+Agents designed to work together for rigorous scientific research workflows.
+
+| Agent | Description |
+|-------|-------------|
+| [research-orchestrator](agents/scientific-research/research-orchestrator.yaml) | Entry point that scopes research and creates tracking tickets |
+| [researcher](agents/scientific-research/researcher.yaml) | Conducts literature review with intellectual honesty, proposes novel ideas |
+| [hypothesis-generator](agents/scientific-research/hypothesis-generator.yaml) | Generates testable, falsifiable hypotheses from research findings |
+| [experiment-planner](agents/scientific-research/experiment-planner.yaml) | Designs rigorous experimental protocols with statistical rigor |
+| [experiment-executor](agents/scientific-research/experiment-executor.yaml) | Implements and runs experiments with checkpointing |
+| [verifier](agents/scientific-research/verifier.yaml) | Validates findings at scale across conditions |
+| [synthesizer](agents/scientific-research/synthesizer.yaml) | Compiles comprehensive final reports |
+
+### Flows
+
+| Flow | Description | Required Agents |
+|------|-------------|-----------------|
+| [git-workflow](flows/git-workflow.json) | Complete git workflow: review code, generate commit message, commit | git-committer, code-reviewer |
+| [pr-review](flows/pr-review.json) | Automated PR review with approval gates for critical issues | code-reviewer |
+| [scientific-research](flows/scientific-research/) | Complete research workflow from question to synthesis ([details](flows/scientific-research/README.md)) | research-orchestrator, researcher, hypothesis-generator, experiment-planner, experiment-executor, verifier, synthesizer |
+
+## Installation
+
+### From Sciorex App
+
+1. Open Sciorex
+2. Navigate to **Agents** or **Flows** view
+3. Click **Browse Community**
+4. Find the agent or flow you want
+5. Click **Install**
+
+### Manual Installation
+
+1. Download the agent YAML or flow JSON file
+2. Place it in your workspace:
+   - Agents: `.sciorex/community/agents/`
+   - Flows: `.sciorex/community/flows/`
+3. Restart Sciorex or refresh the view
+
+## Contributing
+
+We welcome contributions from the community! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
+### Quick Start
+
+1. Fork this repository
+2. Create your agent or flow
+3. Test it locally in Sciorex
+4. Submit a pull request
+
+## Versioning
+
+- Each agent and flow has its own version number
+- The `index.json` has a repository version
+- Use semantic versioning (MAJOR.MINOR.PATCH)
+
+## License
+
+This repository is licensed under the [MIT License](LICENSE).
+
+Individual contributions retain their original copyright but must be compatible with the MIT license.
+
+## Code of Conduct
+
+Please read our [Code of Conduct](CODE_OF_CONDUCT.md) before participating.
+
+## Support
+
+- [Open an issue](https://github.com/sciorex/community-extensions/issues) for bugs or feature requests
+- [Discussions](https://github.com/sciorex/community-extensions/discussions) for questions and ideas
+- [Sciorex Documentation](https://docs.sciorex.com) for general help

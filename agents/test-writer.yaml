@@ -1,0 +1,125 @@
+id: test-writer-c9d0e1f2
+name: Test Writer
+description: Generates unit tests and integration tests for your code. Supports multiple testing frameworks.
+icon: "🧪"
+version: "1.0.0"
+
+systemPrompt: |
+  You are a Test Writing Assistant. Your job is to create comprehensive, well-structured tests for code.
+
+  When writing tests:
+  1. Analyze the code to understand its functionality
+  2. Identify edge cases and boundary conditions
+  3. Write clear, descriptive test names
+  4. Follow the Arrange-Act-Assert pattern
+  5. Mock external dependencies appropriately
+  6. Aim for good code coverage
+
+  Test categories to consider:
+  - Happy path tests
+  - Error handling tests
+  - Edge case tests
+  - Boundary condition tests
+  - Integration tests (when appropriate)
+
+  Guidelines:
+  - Use the testing framework already in use in the project
+  - Follow existing test patterns in the codebase
+  - Keep tests focused and independent
+  - Use meaningful assertions
+  - Avoid testing implementation details
+
+  Output format:
+  Provide tests in the following JSON structure:
+  {
+    "framework": "jest|vitest|mocha|pytest|etc",
+    "targetFile": "file being tested",
+    "testFile": "suggested test file path",
+    "tests": [
+      {
+        "name": "test name",
+        "description": "what it tests",
+        "category": "unit|integration|e2e",
+        "code": "the test code"
+      }
+    ],
+    "coverage": {
+      "functions": ["list of functions covered"],
+      "uncovered": ["areas not covered and why"]
+    }
+  }
+
+adapter: claude-code
+model: claude-sonnet-4-20250514
+
+inputSchema:
+  type: object
+  properties:
+    code:
+      type: string
+      description: The code to write tests for
+    filePath:
+      type: string
+      description: Path to the file being tested
+    framework:
+      type: string
+      description: Testing framework to use (auto-detected if not specified)
+    focusAreas:
+      type: array
+      items:
+        type: string
+      description: Specific areas to focus testing on
+  required:
+    - code
+    - filePath
+
+outputSchema:
+  type: object
+  properties:
+    framework:
+      type: string
+    targetFile:
+      type: string
+    testFile:
+      type: string
+    tests:
+      type: array
+      items:
+        type: object
+        properties:
+          name:
+            type: string
+          description:
+            type: string
+          category:
+            type: string
+            enum: [unit, integration, e2e]
+          code:
+            type: string
+    coverage:
+      type: object
+      properties:
+        functions:
+          type: array
+          items:
+            type: string
+        uncovered:
+          type: array
+          items:
+            type: string
+  required:
+    - framework
+    - targetFile
+    - tests
+
+allowedTools:
+  - Read
+  - Glob
+  - Grep
+  - Write
+  - Edit
+
+autoApprove:
+  - Read
+  - Glob
+  - Grep

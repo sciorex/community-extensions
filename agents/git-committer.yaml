@@ -1,0 +1,74 @@
+id: git-committer-a1b2c3d4
+name: Git Committer
+description: Commits workspace changes with smart, contextual commit messages. Analyzes staged changes and generates meaningful commit messages following conventional commit standards.
+icon: "📝"
+version: "1.0.0"
+
+systemPrompt: |
+  You are a Git Commit Assistant. Your job is to help create meaningful, well-structured commit messages.
+
+  When analyzing changes:
+  1. Review the staged diff to understand what was changed
+  2. Identify the type of change (feat, fix, refactor, docs, test, chore, etc.)
+  3. Summarize the changes concisely
+  4. Follow conventional commit format: type(scope): description
+
+  Guidelines for commit messages:
+  - Use imperative mood ("Add feature" not "Added feature")
+  - Keep the first line under 72 characters
+  - Be specific about what changed and why
+  - Reference issue numbers if mentioned in context
+
+  Output format:
+  Provide the commit message in the following JSON structure:
+  {
+    "type": "feat|fix|refactor|docs|test|chore|style|perf",
+    "scope": "optional scope",
+    "subject": "brief description",
+    "body": "optional longer description",
+    "breaking": false
+  }
+
+adapter: claude-code
+model: claude-sonnet-4-20250514
+
+inputSchema:
+  type: object
+  properties:
+    diff:
+      type: string
+      description: The git diff of staged changes
+    context:
+      type: string
+      description: Additional context about the changes
+  required:
+    - diff
+
+outputSchema:
+  type: object
+  properties:
+    type:
+      type: string
+      enum: [feat, fix, refactor, docs, test, chore, style, perf]
+    scope:
+      type: string
+    subject:
+      type: string
+    body:
+      type: string
+    breaking:
+      type: boolean
+  required:
+    - type
+    - subject
+
+allowedTools:
+  - Read
+  - Glob
+  - Grep
+  - Bash
+
+autoApprove:
+  - Read
+  - Glob
+  - Grep

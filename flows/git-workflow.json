@@ -1,0 +1,227 @@
+{
+  "id": "git-workflow-b1c2d3e4",
+  "name": "Git Commit Workflow",
+  "description": "Complete git workflow that reviews your staged changes, provides quality feedback, and generates a conventional commit message. Helps ensure code quality before committing.",
+  "icon": "📝",
+  "version": "1.0.0",
+  "source": "community",
+  "author": "Sciorex Team",
+  "createdAt": "2025-01-01T00:00:00Z",
+  "updatedAt": "2025-01-01T00:00:00Z",
+  "variables": {},
+  "nodes": [
+    {
+      "id": "trigger-start",
+      "type": "trigger",
+      "label": "Start Git Workflow",
+      "position": { "x": 236, "y": 8 },
+      "triggerType": "manual",
+      "triggerConfig": {
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "diff": {
+              "type": "string",
+              "description": "The git diff of your staged changes (run 'git diff --staged')"
+            },
+            "context": {
+              "type": "string",
+              "description": "Optional context about what you're working on (ticket number, feature description)"
+            }
+          },
+          "required": ["diff"]
+        }
+      },
+      "config": {}
+    },
+    {
+      "id": "agent-reviewer",
+      "type": "agent",
+      "label": "Review Code Changes",
+      "position": { "x": 247, "y": 180 },
+      "agentId": "code-reviewer-e5f6a7b8",
+      "inputMapping": {
+        "code": "$.trigger.diff",
+        "diff": "$.trigger.diff",
+        "context": "$.trigger.context"
+      },
+      "outputMapping": {
+        "summary": "$.output.summary",
+        "score": "$.output.score",
+        "issues": "$.output.issues",
+        "positives": "$.output.positives"
+      },
+      "config": {}
+    },
+    {
+      "id": "condition-review-score",
+      "type": "condition",
+      "label": "Review Score Check",
+      "position": { "x": 592, "y": 151 },
+      "conditions": [
+        {
+          "path": "$.nodes.agent-reviewer.output.score",
+          "operator": "gte",
+          "value": 7,
+          "targetNodeId": "agent-committer"
+        }
+      ],
+      "defaultTargetNodeId": "wait-review-issues",
+      "config": {}
+    },
+    {
+      "id": "wait-review-issues",
+      "type": "wait",
+      "label": "Review Issues Found",
+      "position": { "x": 636, "y": 371 },
+      "waitType": "approval",
+      "prompt": "The code review found some issues (score below 7). Please review the feedback above.\n\nYou can:\n- **Approve**: Proceed with commit anyway\n- **Reject**: Cancel and fix the issues first",
+      "config": {}
+    },
+    {
+      "id": "condition-proceed-anyway",
+      "type": "condition",
+      "label": "Proceed Anyway?",
+      "position": { "x": 613, "y": 551 },
+      "conditions": [
+        {
+          "path": "$.userResponses.wait-review-issues",
+          "operator": "eq",
+          "value": "Approve",
+          "targetNodeId": "agent-committer"
+        }
+      ],
+      "defaultTargetNodeId": "end-cancelled",
+      "config": {}
+    },
+    {
+      "id": "agent-committer",
+      "type": "agent",
+      "label": "Generate Commit Message",
+      "position": { "x": 1149, "y": 135 },
+      "agentId": "git-committer-a1b2c3d4",
+      "inputMapping": {
+        "diff": "$.trigger.diff",
+        "context": "$.trigger.context"
+      },
+      "outputMapping": {
+        "type": "$.output.type",
+        "scope": "$.output.scope",
+        "subject": "$.output.subject",
+        "body": "$.output.body",
+        "breaking": "$.output.breaking"
+      },
+      "config": {}
+    },
+    {
+      "id": "wait-confirm-commit",
+      "type": "wait",
+      "label": "Confirm Commit Message",
+      "position": { "x": 1176, "y": 298 },
+      "waitType": "approval",
+      "prompt": "Review the generated commit message above.\n\n- **Approve**: Use this commit message\n- **Reject**: Cancel the workflow",
+      "config": {}
+    },
+    {
+      "id": "condition-confirm",
+      "type": "condition",
+      "label": "Commit Approved?",
+      "position": { "x": 1137, "y": 498 },
+      "conditions": [
+        {
+          "path": "$.userResponses.wait-confirm-commit",
+          "operator": "eq",
+          "value": "Approve",
+          "targetNodeId": "end-success"
+        }
+      ],
+      "defaultTargetNodeId": "end-cancelled",
+      "config": {}
+    },
+    {
+      "id": "end-success",
+      "type": "end",
+      "label": "Commit Ready",
+      "position": { "x": 1528, "y": 484 },
+      "endType": "success",
+      "config": {}
+    },
+    {
+      "id": "end-cancelled",
+      "type": "end",
+      "label": "Workflow Cancelled",
+      "position": { "x": 1526, "y": 635 },
+      "endType": "cancelled",
+      "config": {}
+    }
+  ],
+  "edges": [
+    {
+      "id": "e-trigger-to-reviewer",
+      "source": "trigger-start",
+      "target": "agent-reviewer"
+    },
+    {
+      "id": "e-reviewer-to-condition",
+      "source": "agent-reviewer",
+      "target": "condition-review-score"
+    },
+    {
+      "id": "e-condition-pass",
+      "source": "condition-review-score",
+      "target": "agent-committer",
+      "sourceHandle": "true",
+      "label": "Score >= 7"
+    },
+    {
+      "id": "e-condition-fail",
+      "source": "condition-review-score",
+      "target": "wait-review-issues",
+      "sourceHandle": "false",
+      "label": "Issues Found"
+    },
+    {
+      "id": "e-wait-issues-to-condition",
+      "source": "wait-review-issues",
+      "target": "condition-proceed-anyway"
+    },
+    {
+      "id": "e-proceed-yes",
+      "source": "condition-proceed-anyway",
+      "target": "agent-committer",
+      "sourceHandle": "true",
+      "label": "Proceed"
+    },
+    {
+      "id": "e-proceed-no",
+      "source": "condition-proceed-anyway",
+      "target": "end-cancelled",
+      "sourceHandle": "false",
+      "label": "Fix Issues"
+    },
+    {
+      "id": "e-committer-to-confirm",
+      "source": "agent-committer",
+      "target": "wait-confirm-commit"
+    },
+    {
+      "id": "e-confirm-to-condition",
+      "source": "wait-confirm-commit",
+      "target": "condition-confirm"
+    },
+    {
+      "id": "e-confirm-yes",
+      "source": "condition-confirm",
+      "target": "end-success",
+      "sourceHandle": "true",
+      "label": "Confirmed"
+    },
+    {
+      "id": "e-confirm-no",
+      "source": "condition-confirm",
+      "target": "end-cancelled",
+      "sourceHandle": "false",
+      "label": "Cancelled"
+    }
+  ]
+}

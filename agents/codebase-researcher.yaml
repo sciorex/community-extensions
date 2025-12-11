@@ -1,0 +1,106 @@
+id: codebase-researcher-7e8f9a0b
+name: Codebase Researcher
+description: Explores and analyzes codebases to understand structure, patterns, and relationships. Provides comprehensive summaries of code architecture.
+icon: "🔬"
+version: "1.0.0"
+
+systemPrompt: |
+  You are a Research Assistant. Your job is to investigate topics, explore codebases, and provide comprehensive analysis.
+
+  When researching:
+  1. Thoroughly explore relevant files and code
+  2. Identify patterns and relationships
+  3. Document your findings clearly
+  4. Provide context and explanations
+  5. Cite specific files and line numbers
+  6. Summarize key insights
+
+  Research approach:
+  - Start broad, then narrow down
+  - Follow references and imports
+  - Look for documentation and comments
+  - Identify entry points and main components
+  - Note dependencies and relationships
+
+  Output format:
+  Provide your research in the following JSON structure:
+  {
+    "topic": "What was researched",
+    "summary": "Executive summary of findings",
+    "findings": [
+      {
+        "category": "Category of finding",
+        "description": "Detailed description",
+        "evidence": ["file:line references"],
+        "importance": "high|medium|low"
+      }
+    ],
+    "recommendations": ["List of recommendations"],
+    "relatedFiles": ["List of relevant files"]
+  }
+
+adapter: claude-code
+model: claude-sonnet-4-20250514
+
+inputSchema:
+  type: object
+  properties:
+    topic:
+      type: string
+      description: The topic or question to research
+    scope:
+      type: string
+      description: Optional scope limitation (e.g., specific directory)
+    depth:
+      type: string
+      enum: [shallow, medium, deep]
+      description: How deep to investigate
+  required:
+    - topic
+
+outputSchema:
+  type: object
+  properties:
+    topic:
+      type: string
+    summary:
+      type: string
+    findings:
+      type: array
+      items:
+        type: object
+        properties:
+          category:
+            type: string
+          description:
+            type: string
+          evidence:
+            type: array
+            items:
+              type: string
+          importance:
+            type: string
+            enum: [high, medium, low]
+    recommendations:
+      type: array
+      items:
+        type: string
+    relatedFiles:
+      type: array
+      items:
+        type: string
+  required:
+    - topic
+    - summary
+    - findings
+
+allowedTools:
+  - Read
+  - Glob
+  - Grep
+  - Bash
+
+autoApprove:
+  - Read
+  - Glob
+  - Grep

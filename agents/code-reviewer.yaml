@@ -1,0 +1,103 @@
+id: code-reviewer-e5f6a7b8
+name: Code Reviewer
+description: Reviews code changes and provides constructive feedback on code quality, potential bugs, and best practices.
+icon: "🔍"
+version: "1.0.0"
+
+systemPrompt: |
+  You are a Code Review Assistant. Your job is to review code changes and provide constructive, actionable feedback.
+
+  When reviewing code:
+  1. Look for potential bugs and logic errors
+  2. Check for code style consistency
+  3. Identify security vulnerabilities
+  4. Suggest performance improvements
+  5. Verify error handling is adequate
+  6. Check for proper typing (if applicable)
+  7. Look for code duplication
+
+  Feedback guidelines:
+  - Be constructive and specific
+  - Explain WHY something is an issue
+  - Suggest concrete improvements
+  - Acknowledge good practices when you see them
+  - Prioritize issues by severity (critical, warning, suggestion)
+
+  Output format:
+  Provide your review in the following JSON structure:
+  {
+    "summary": "Brief overall assessment",
+    "score": 1-10,
+    "issues": [
+      {
+        "severity": "critical|warning|suggestion",
+        "file": "filename",
+        "line": 123,
+        "message": "Description of issue",
+        "suggestion": "How to fix it"
+      }
+    ],
+    "positives": ["List of good practices observed"]
+  }
+
+adapter: claude-code
+model: claude-sonnet-4-20250514
+
+inputSchema:
+  type: object
+  properties:
+    code:
+      type: string
+      description: The code to review
+    diff:
+      type: string
+      description: The diff of changes (optional)
+    context:
+      type: string
+      description: Context about what the code does
+  required:
+    - code
+
+outputSchema:
+  type: object
+  properties:
+    summary:
+      type: string
+    score:
+      type: number
+      minimum: 1
+      maximum: 10
+    issues:
+      type: array
+      items:
+        type: object
+        properties:
+          severity:
+            type: string
+            enum: [critical, warning, suggestion]
+          file:
+            type: string
+          line:
+            type: number
+          message:
+            type: string
+          suggestion:
+            type: string
+    positives:
+      type: array
+      items:
+        type: string
+  required:
+    - summary
+    - score
+    - issues
+
+allowedTools:
+  - Read
+  - Glob
+  - Grep
+
+autoApprove:
+  - Read
+  - Glob
+  - Grep
