@@ -9,6 +9,7 @@
   Extend Sciorex with community-built AI agents and automated workflows
 </p>
 
+<!-- Badges use GitHub API for stats -->
 <p align="center">
   <a href="https://github.com/sciorex/community-extensions/issues"><img src="https://img.shields.io/github/issues/sciorex/community-extensions?style=flat-square" alt="Issues"></a>
   <a href="https://github.com/sciorex/community-extensions/pulls"><img src="https://img.shields.io/github/issues-pr/sciorex/community-extensions?style=flat-square" alt="Pull Requests"></a>
@@ -19,7 +20,7 @@
   <a href="https://sciorex.com">Sciorex</a> •
   <a href="https://docs.sciorex.com">Documentation</a> •
   <a href="CONTRIBUTING.md">Contributing</a> •
-  <a href="https://discord.gg/sciorex">Discord</a>
+  <a href="https://discord.gg/zSjPjA5j">Discord</a>
 </p>
 
 ---
