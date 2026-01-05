@@ -1,6 +1,6 @@
 {
-  "version": "1.0.0",
-  "lastUpdated": "2025-01-01T00:00:00Z",
+  "version": "1.1.0",
+  "lastUpdated": "2026-01-05T00:00:00Z",
   "agents": [
     {
       "id": "git-committer-a1b2c3d4",
@@ -202,6 +202,63 @@
       "downloadUrl": "flows/scientific-research/scientific-research.json",
       "requiredAgents": ["research-orchestrator-3c4d5e6f", "researcher-9e0f1a2b", "hypothesis-generator-7a8b9c0d", "experiment-planner-1e2f3a4b", "experiment-executor-5c6d7e8f", "verifier-1c2d3e4f", "synthesizer-5a6b7c8d"],
       "updatedAt": "2025-01-01T00:00:00Z"
+    }
+  ],
+  "personas": [
+    {
+      "id": "architect",
+      "name": "The Architect",
+      "description": "Focuses on system design, patterns, and long-term implications. Brings architectural expertise to council discussions.",
+      "icon": "🏛️",
+      "version": "1.0.0",
+      "author": "Sciorex Team",
+      "tags": ["design", "architecture", "technical", "systems"],
+      "downloadUrl": "personas/architect.yaml",
+      "updatedAt": "2026-01-05T00:00:00Z"
+    },
+    {
+      "id": "devils-advocate",
+      "name": "Devil's Advocate",
+      "description": "Challenges assumptions and identifies potential issues. Stress-tests ideas to strengthen proposals.",
+      "icon": "😈",
+      "version": "1.0.0",
+      "author": "Sciorex Team",
+      "tags": ["critical-thinking", "risk-analysis", "review", "quality"],
+      "downloadUrl": "personas/devils-advocate.yaml",
+      "updatedAt": "2026-01-05T00:00:00Z"
+    },
+    {
+      "id": "pragmatist",
+      "name": "The Pragmatist",
+      "description": "Focuses on practical, actionable implementation. Grounds discussions in realistic delivery.",
+      "icon": "🎯",
+      "version": "1.0.0",
+      "author": "Sciorex Team",
+      "tags": ["practical", "implementation", "delivery", "efficiency"],
+      "downloadUrl": "personas/pragmatist.yaml",
+      "updatedAt": "2026-01-05T00:00:00Z"
+    },
+    {
+      "id": "researcher",
+      "name": "The Researcher",
+      "description": "Provides analysis, references, and best practices. Brings evidence-based recommendations.",
+      "icon": "🔍",
+      "version": "1.0.0",
+      "author": "Sciorex Team",
+      "tags": ["research", "analysis", "best-practices", "documentation"],
+      "downloadUrl": "personas/researcher.yaml",
+      "updatedAt": "2026-01-05T00:00:00Z"
+    },
+    {
+      "id": "simplifier",
+      "name": "The Simplifier",
+      "description": "Advocates for the simplest effective solution. Champions KISS and YAGNI principles.",
+      "icon": "✨",
+      "version": "1.0.0",
+      "author": "Sciorex Team",
+      "tags": ["simplicity", "minimalism", "focus", "efficiency"],
+      "downloadUrl": "personas/simplifier.yaml",
+      "updatedAt": "2026-01-05T00:00:00Z"
     }
   ]
 }

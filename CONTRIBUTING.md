@@ -1,6 +1,6 @@
 # Contributing to Sciorex Community
 
-Thank you for your interest in contributing to the Sciorex community repository! This document provides guidelines for contributing agents and flows.
+Thank you for your interest in contributing to the Sciorex community repository! This document provides guidelines for contributing agents, flows, and personas.
 
 ## Table of Contents
 
@@ -8,6 +8,7 @@ Thank you for your interest in contributing to the Sciorex community repository!
 - [Contribution Types](#contribution-types)
 - [Creating an Agent](#creating-an-agent)
 - [Creating a Flow](#creating-a-flow)
+- [Creating a Persona](#creating-a-persona)
 - [Submission Process](#submission-process)
 - [Review Criteria](#review-criteria)
 - [Style Guide](#style-guide)
@@ -22,8 +23,8 @@ Thank you for your interest in contributing to the Sciorex community repository!
 ### Prerequisites
 
 - A working Sciorex installation
-- Familiarity with YAML (for agents) and JSON (for flows)
-- Understanding of the Sciorex agent/flow architecture
+- Familiarity with YAML (for agents and personas) and JSON (for flows)
+- Understanding of the Sciorex agent/flow/persona architecture
 
 ## Contribution Types
 
@@ -35,9 +36,13 @@ Create a new AI agent that performs a specific task.
 
 Create a new automated workflow combining multiple agents.
 
+### New Persona
+
+Create a new council persona that gives AI agents a specific perspective.
+
 ### Improvement
 
-Enhance an existing agent or flow with bug fixes or new capabilities.
+Enhance an existing agent, flow, or persona with bug fixes or new capabilities.
 
 ### Documentation
 
@@ -175,6 +180,60 @@ Create a JSON file in the `flows/` directory:
 3. **Error Handling**: Include condition nodes for error cases
 4. **Clear Labels**: Use descriptive labels for all nodes
 
+## Creating a Persona
+
+### Persona File Structure
+
+Create a YAML file in the `personas/` directory:
+
+```yaml
+id: my-persona-id         # Unique, lowercase, hyphenated
+name: My Persona Name     # Human-readable name
+description: |            # Brief description of the persona's perspective
+  A concise description of this persona's role and viewpoint.
+icon: persona-icon        # Icon identifier (maps to icon set)
+version: "1.0.0"          # Semantic version
+author: Your Name         # Your name or handle
+tags:                     # Relevant tags for discovery
+  - tag1
+  - tag2
+temperature: 0.7          # Optional: temperature override (0.0-1.0)
+
+systemPrompt: |
+  You are [persona name] participating in a technical discussion.
+
+  Your perspective focuses on:
+  - [Focus area 1]
+  - [Focus area 2]
+  - [Focus area 3]
+
+  When responding:
+  - [Guideline 1]
+  - [Guideline 2]
+  - [Guideline 3]
+```
+
+### Persona Guidelines
+
+1. **Clear Perspective**: Each persona should have a distinct, well-defined viewpoint
+2. **Constructive Approach**: Personas should contribute positively to discussions
+3. **Focused Role**: Define specific areas of focus for the persona
+4. **Actionable Guidelines**: Provide clear instructions for how the persona behaves
+5. **Balanced Temperature**: Use appropriate temperature (0.5-0.8 typically works well)
+
+### Icon Identifiers
+
+Available icon identifiers:
+- `architect` - System design focus
+- `devils-advocate` - Critical analysis focus
+- `pragmatist` - Practical implementation focus
+- `researcher` - Research and best practices focus
+- `simplifier` - Simplicity advocacy focus
+- `creative` - Creative/innovative thinking
+- `security` - Security focus
+- `performance` - Performance optimization focus
+- `user` - Generic/custom persona
+
 ## Submission Process
 
 ### 1. Update index.json
@@ -211,6 +270,21 @@ For flows:
 }
 ```
 
+For personas:
+```json
+{
+  "id": "my-persona",
+  "name": "My Persona",
+  "description": "What perspective it brings",
+  "icon": "emoji",
+  "version": "1.0.0",
+  "author": "Your Name",
+  "tags": ["tag1", "tag2"],
+  "downloadUrl": "personas/my-persona.yaml",
+  "updatedAt": "2025-01-01T00:00:00Z"
+}
+```
+
 ### 2. Create Pull Request
 
 1. Commit your changes with a clear message
@@ -243,6 +317,7 @@ Submissions are evaluated on:
 
 - **Agent IDs**: `lowercase-hyphenated`
 - **Flow IDs**: `lowercase-hyphenated`
+- **Persona IDs**: `lowercase-hyphenated`
 - **Display Names**: Title Case
 
 ### Version Numbers

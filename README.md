@@ -5,8 +5,8 @@
 <h1 align="center">Sciorex Community</h1>
 
 <p align="center">
-  <strong>Community-contributed agents and flows</strong><br>
-  Extend Sciorex with community-built AI agents and automated workflows
+  <strong>Community-contributed agents, flows, and personas</strong><br>
+  Extend Sciorex with community-built AI agents, automated workflows, and council personas
 </p>
 
 <!-- Badges use GitHub API for stats -->
@@ -27,7 +27,7 @@
 
 ## Overview
 
-This repository hosts community-contributed AI agents and automated workflows (flows) that extend Sciorex's capabilities. Users can browse, install, and update these extensions directly from within the Sciorex application.
+This repository hosts community-contributed AI agents, automated workflows (flows), and LLM Council personas that extend Sciorex's capabilities. Users can browse, install, and update these extensions directly from within the Sciorex application.
 
 ## Contents
 
@@ -75,6 +75,18 @@ Agents designed to work together for rigorous scientific research workflows.
 | [pr-review](flows/pr-review.json) | Automated PR review with approval gates for critical issues | code-reviewer |
 | [scientific-research](flows/scientific-research/) | Complete research workflow from question to synthesis ([details](flows/scientific-research/README.md)) | research-orchestrator, researcher, hypothesis-generator, experiment-planner, experiment-executor, verifier, synthesizer |
 
+### Personas
+
+Council personas give AI agents specific perspectives and expertise for LLM Council discussions. Each persona defines a unique viewpoint that shapes how an agent analyzes problems and contributes to technical discussions.
+
+| Persona | Description |
+|---------|-------------|
+| [The Architect](personas/architect.yaml) | Focuses on system design, patterns, and long-term architectural implications |
+| [Devil's Advocate](personas/devils-advocate.yaml) | Challenges assumptions and identifies potential issues to strengthen proposals |
+| [The Pragmatist](personas/pragmatist.yaml) | Focuses on practical, actionable implementation with realistic constraints |
+| [The Researcher](personas/researcher.yaml) | Provides analysis, references, and evidence-based best practices |
+| [The Simplifier](personas/simplifier.yaml) | Advocates for the simplest effective solution, championing KISS and YAGNI |
+
 ## Installation
 
 ### From Sciorex App
@@ -87,10 +99,11 @@ Agents designed to work together for rigorous scientific research workflows.
 
 ### Manual Installation
 
-1. Download the agent YAML or flow JSON file
+1. Download the agent YAML, flow JSON, or persona YAML file
 2. Place it in your workspace:
    - Agents: `.sciorex/community/agents/`
    - Flows: `.sciorex/community/flows/`
+   - Personas: `.sciorex/community/personas/`
 3. Restart Sciorex or refresh the view
 
 ## Contributing
