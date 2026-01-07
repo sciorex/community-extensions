@@ -1,11 +1,3 @@
----
-name: Bug Report
-about: Report an issue with a community agent or flow
-title: '[BUG] '
-labels: bug
-assignees: ''
----
-
 ## Agent/Flow Information
 
 **Name**: <!-- e.g., git-committer -->
@@ -51,3 +43,5 @@ Paste logs here
 ## Additional Context
 
 <!-- Add any other context about the problem here -->
+
+/label ~bug

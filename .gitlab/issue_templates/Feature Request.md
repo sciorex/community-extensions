@@ -1,11 +1,3 @@
----
-name: Feature Request
-about: Suggest a new agent, flow, or enhancement
-title: '[FEATURE] '
-labels: enhancement
-assignees: ''
----
-
 ## Request Type
 
 <!-- Check one -->
@@ -51,8 +43,10 @@ assignees: ''
 
 ## Willingness to Contribute
 
-<!-- Are you willing to submit a PR for this feature? -->
-- [ ] Yes, I can submit a PR
+<!-- Are you willing to submit a MR for this feature? -->
+- [ ] Yes, I can submit a MR
 - [ ] I can help with testing
 - [ ] I can help with documentation
 - [ ] I'm requesting this only
+
+/label ~enhancement

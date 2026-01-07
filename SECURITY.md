@@ -67,10 +67,10 @@ All submitted agents and flows undergo review for:
 
 Security updates will be released as patch versions (e.g., 1.0.0 → 1.0.1) and announced in:
 
-- GitHub Security Advisories
+- GitLab Security Advisories
 - Repository releases
 - Discord announcements
 
 ## Questions
 
-For general security questions, please use [GitHub Discussions](https://github.com/sciorex/community-extensions/discussions).
+For general security questions, please open an issue at [GitLab Issues](https://gitlab.com/sciorex/community-extensions/-/issues).

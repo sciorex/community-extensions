@@ -1,11 +1,3 @@
----
-name: Flow Submission
-about: Submit a new flow to the community repository
-title: '[FLOW] '
-labels: new-flow
-assignees: ''
----
-
 ## Flow Information
 
 **ID**: <!-- lowercase-hyphenated, e.g., my-flow -->
@@ -29,7 +21,7 @@ assignees: ''
 
 <!-- List agents this flow depends on -->
 - [ ] Uses community agents (list them):
-- [ ] Uses custom agents (included in PR):
+- [ ] Uses custom agents (included in MR):
 
 ### Trigger Type
 
@@ -69,3 +61,5 @@ Trigger → [Node 1] → [Node 2] → End
 ## Additional Notes
 
 <!-- Any other information about your flow -->
+
+/label ~new-flow

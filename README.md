@@ -9,10 +9,10 @@
   Extend Sciorex with community-built AI agents, automated workflows, and council personas
 </p>
 
-<!-- Badges use GitHub API for stats -->
+<!-- Badges -->
 <p align="center">
-  <a href="https://github.com/sciorex/community-extensions/issues"><img src="https://img.shields.io/github/issues/sciorex/community-extensions?style=flat-square" alt="Issues"></a>
-  <a href="https://github.com/sciorex/community-extensions/pulls"><img src="https://img.shields.io/github/issues-pr/sciorex/community-extensions?style=flat-square" alt="Pull Requests"></a>
+  <a href="https://gitlab.com/sciorex/community-extensions/-/issues"><img src="https://img.shields.io/badge/issues-gitlab-orange?style=flat-square" alt="Issues"></a>
+  <a href="https://gitlab.com/sciorex/community-extensions/-/merge_requests"><img src="https://img.shields.io/badge/merge_requests-gitlab-orange?style=flat-square" alt="Merge Requests"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue?style=flat-square" alt="License"></a>
 </p>
 
@@ -115,7 +115,7 @@ We welcome contributions from the community! See [CONTRIBUTING.md](CONTRIBUTING.
 1. Fork this repository
 2. Create your agent or flow
 3. Test it locally in Sciorex
-4. Submit a pull request
+4. Submit a merge request
 
 ## Versioning
 
@@ -135,6 +135,5 @@ Please read our [Code of Conduct](CODE_OF_CONDUCT.md) before participating.
 
 ## Support
 
-- [Open an issue](https://github.com/sciorex/community-extensions/issues) for bugs or feature requests
-- [Discussions](https://github.com/sciorex/community-extensions/discussions) for questions and ideas
-- [Sciorex Documentation](https://docs.sciorex.com) for general help
+- [Open an issue](https://gitlab.com/sciorex/community-extensions/-/issues) for bugs or feature requests
+- [Sciorex Documentation](https://docs.sciorex.com) for questions and guides

@@ -18,7 +18,7 @@ Thank you for your interest in contributing to the Sciorex community repository!
 1. **Fork** this repository
 2. **Clone** your fork locally
 3. **Test** your contribution in Sciorex
-4. **Submit** a pull request
+4. **Submit** a merge request
 
 ### Prerequisites
 
@@ -285,12 +285,12 @@ For personas:
 }
 ```
 
-### 2. Create Pull Request
+### 2. Create Merge Request
 
 1. Commit your changes with a clear message
 2. Push to your fork
-3. Open a pull request against `main`
-4. Fill out the PR template completely
+3. Open a merge request against `main`
+4. Fill out the MR template completely
 
 ### 3. Review Process
 
@@ -343,7 +343,7 @@ By submitting a contribution, you agree to:
 
 ## Questions?
 
-- Open a [Discussion](https://github.com/sciorex/community-extensions/discussions)
-- Check existing [Issues](https://github.com/sciorex/community-extensions/issues)
+- Check existing [Issues](https://gitlab.com/sciorex/community-extensions/-/issues)
+- [Sciorex Documentation](https://docs.sciorex.com)
 
 Thank you for contributing!

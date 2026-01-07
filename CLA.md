@@ -9,7 +9,7 @@ Thank you for your interest in contributing to Sciorex Community ("Project"). Th
 **"Contribution"** means any original work of authorship, including any modifications or additions to an existing work, that is submitted to the Project for inclusion in, or documentation of, the Project.
 
 **"Submit"** means any form of electronic, verbal, or written communication sent to the Project, including but not limited to:
-- Pull requests
+- Merge requests
 - Issues
 - Discussions
 - Email communications
@@ -42,7 +42,7 @@ You represent that:
 
 ## Submission
 
-By submitting a Contribution (e.g., opening a pull request), you agree to the terms of this Agreement.
+By submitting a Contribution (e.g., opening a merge request), you agree to the terms of this Agreement.
 
 You are not expected to provide support for your Contributions, except to the extent you desire to provide support.
 
@@ -58,4 +58,4 @@ This Agreement sets forth the entire agreement between you and the Project maint
 
 ---
 
-By submitting a pull request or other Contribution to this repository, you acknowledge that you have read, understand, and agree to be bound by this Contributor License Agreement.
+By submitting a merge request or other Contribution to this repository, you acknowledge that you have read, understand, and agree to be bound by this Contributor License Agreement.

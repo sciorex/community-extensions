@@ -16,7 +16,7 @@
 ## Related Issues
 
 <!-- Link any related issues -->
-Fixes #
+Closes #
 
 ## Changes Made
 

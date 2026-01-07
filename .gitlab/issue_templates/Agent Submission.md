@@ -1,11 +1,3 @@
----
-name: Agent Submission
-about: Submit a new agent to the community repository
-title: '[AGENT] '
-labels: new-agent
-assignees: ''
----
-
 ## Agent Information
 
 **ID**: <!-- lowercase-hyphenated, e.g., my-agent -->
@@ -71,3 +63,5 @@ assignees: ''
 ## Additional Notes
 
 <!-- Any other information about your agent -->
+
+/label ~new-agent
