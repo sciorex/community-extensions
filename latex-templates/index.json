@@ -1,0 +1,146 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2026-01-21T00:00:00Z",
+  "templates": [
+    {
+      "id": "ieee-conference",
+      "name": "IEEE Conference Paper",
+      "description": "Professional template for IEEE conference papers with proper formatting, citation support, and standard sections. Ideal for computer science and engineering conferences.",
+      "category": "academic",
+      "difficulty": "intermediate",
+      "tags": ["ieee", "conference", "academic", "engineering", "computer-science"],
+      "version": "1.0.0",
+      "author": "Sciorex Team",
+      "downloadUrl": "latex-templates/ieee",
+      "previewUrl": "latex-templates/ieee/preview.png",
+      "files": [
+        "main.tex",
+        "references.bib",
+        "IEEEtran.cls",
+        "README.md"
+      ],
+      "placeholders": {
+        "TITLE": "Paper title",
+        "AUTHOR": "Author name",
+        "EMAIL": "Contact email"
+      },
+      "requiredPackages": ["IEEEtran", "cite", "amsmath", "graphicx"],
+      "updatedAt": "2026-01-21T00:00:00Z"
+    },
+    {
+      "id": "acm-sigconf",
+      "name": "ACM Conference Paper",
+      "description": "Official ACM conference paper template (sigconf format) with CCS concepts, proper metadata, and bibliography support. Perfect for ACM conferences and publications.",
+      "category": "academic",
+      "difficulty": "intermediate",
+      "tags": ["acm", "conference", "academic", "computer-science", "sigconf"],
+      "version": "1.0.0",
+      "author": "Sciorex Team",
+      "downloadUrl": "latex-templates/acm",
+      "previewUrl": "latex-templates/acm/preview.png",
+      "files": [
+        "main.tex",
+        "references.bib",
+        "acmart.cls",
+        "README.md"
+      ],
+      "placeholders": {
+        "TITLE": "Paper title",
+        "AUTHOR": "Author name",
+        "EMAIL": "Contact email"
+      },
+      "requiredPackages": ["acmart"],
+      "updatedAt": "2026-01-21T00:00:00Z"
+    },
+    {
+      "id": "arxiv-preprint",
+      "name": "arXiv Preprint",
+      "description": "Clean, professional template for arXiv preprints. Compatible with arXiv submission requirements and includes all standard academic paper sections.",
+      "category": "academic",
+      "difficulty": "beginner",
+      "tags": ["arxiv", "preprint", "academic", "research", "physics", "cs"],
+      "version": "1.0.0",
+      "author": "Sciorex Team",
+      "downloadUrl": "latex-templates/arxiv",
+      "previewUrl": "latex-templates/arxiv/preview.png",
+      "files": [
+        "main.tex",
+        "references.bib",
+        "arxiv.sty",
+        "README.md"
+      ],
+      "placeholders": {
+        "TITLE": "Paper title",
+        "AUTHOR": "Author name",
+        "EMAIL": "Contact email"
+      },
+      "requiredPackages": ["arxiv", "hyperref", "amsmath", "graphicx"],
+      "updatedAt": "2026-01-21T00:00:00Z"
+    },
+    {
+      "id": "basic-article",
+      "name": "Basic Article",
+      "description": "Simple, clean article template for general-purpose documents. Perfect for essays, reports, documentation, or any standard LaTeX document. Easy to customize.",
+      "category": "general",
+      "difficulty": "beginner",
+      "tags": ["article", "basic", "general", "report", "essay", "documentation"],
+      "version": "1.0.0",
+      "author": "Sciorex Team",
+      "downloadUrl": "latex-templates/basic-article",
+      "previewUrl": "latex-templates/basic-article/preview.png",
+      "files": [
+        "main.tex",
+        "references.bib",
+        "README.md"
+      ],
+      "placeholders": {
+        "TITLE": "Document title",
+        "AUTHOR": "Author name",
+        "EMAIL": "Contact email"
+      },
+      "requiredPackages": ["amsmath", "graphicx", "hyperref", "fancyhdr"],
+      "updatedAt": "2026-01-21T00:00:00Z"
+    },
+    {
+      "id": "beamer-presentation",
+      "name": "Beamer Presentation",
+      "description": "Professional presentation template using Beamer. Includes multiple slide types, blocks, columns, and bibliography support. Perfect for academic and technical presentations.",
+      "category": "presentation",
+      "difficulty": "beginner",
+      "tags": ["beamer", "presentation", "slides", "academic", "conference", "talk"],
+      "version": "1.0.0",
+      "author": "Sciorex Team",
+      "downloadUrl": "latex-templates/beamer",
+      "previewUrl": "latex-templates/beamer/preview.png",
+      "files": [
+        "main.tex",
+        "references.bib",
+        "README.md"
+      ],
+      "placeholders": {
+        "TITLE": "Presentation title",
+        "AUTHOR": "Presenter name",
+        "EMAIL": "Contact email"
+      },
+      "requiredPackages": ["beamer", "graphicx", "booktabs", "hyperref"],
+      "updatedAt": "2026-01-21T00:00:00Z"
+    }
+  ],
+  "categories": [
+    {
+      "id": "academic",
+      "name": "Academic Papers",
+      "description": "Templates for academic papers, conferences, and journals"
+    },
+    {
+      "id": "general",
+      "name": "General Documents",
+      "description": "General-purpose document templates"
+    },
+    {
+      "id": "presentation",
+      "name": "Presentations",
+      "description": "Slide deck and presentation templates"
+    }
+  ]
+}

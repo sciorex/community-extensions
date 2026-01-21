@@ -1,0 +1,84 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+
+\geometry{margin=1in}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\thepage}
+\lhead{\leftmark}
+
+\title{{{TITLE}}}
+\author{{{AUTHOR}}\\
+  \texttt{{{EMAIL}}}}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This document is a basic article template. Replace this text with your abstract. The abstract should provide a concise summary of your document's content and purpose.
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\section{Introduction}
+This is the introduction section. Replace this text with your introduction content.
+
+\section{Background}
+Provide background information here. You can cite references like this~\cite{example2024}.
+
+\section{Main Content}
+This is the main content section. Organize your material as needed.
+
+\subsection{Subsection Example}
+You can use subsections to organize your content.
+
+\subsubsection{Subsubsection Example}
+Even deeper organization if needed.
+
+\section{Figures and Tables}
+
+You can include figures:
+
+\begin{figure}[h]
+\centering
+% \includegraphics[width=0.5\textwidth]{your-figure.pdf}
+\caption{Example figure caption}
+\label{fig:example}
+\end{figure}
+
+And tables:
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lcc}
+\hline
+Item & Value 1 & Value 2 \\
+\hline
+A & 1.0 & 2.0 \\
+B & 3.0 & 4.0 \\
+C & 5.0 & 6.0 \\
+\hline
+\end{tabular}
+\caption{Example table caption}
+\label{tab:example}
+\end{table}
+
+\section{Conclusion}
+Summarize your content here.
+
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}
