@@ -1,8 +1,0 @@
-TODO: Generate preview.png by compiling main.tex and taking a screenshot or PDF thumbnail of the first page.
-
-This can be done by:
-1. Compiling the template: pdflatex main.tex
-2. Using ImageMagick: convert -density 150 main.pdf[0] -quality 90 preview.png
-3. Or using pdftoppm: pdftoppm main.pdf preview -png -singlefile
-
-The preview should be approximately 800x1000 pixels showing the first page of the compiled document.
