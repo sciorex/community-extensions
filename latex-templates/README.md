@@ -1,32 +1,95 @@
 # LaTeX Templates
 
-Professional LaTeX document templates for academic papers, presentations, and general-purpose documents. These templates are available through the Sciorex Community modal and can be scaffolded directly into your workspace with placeholder value substitution.
+Professional LaTeX document templates for academic papers, presentations, theses, CVs, and more. **35 templates** across 7 categories with multi-page preview images. Available through the Sciorex Community modal with placeholder value substitution.
 
-## Available Templates
+## Available Templates (35)
 
-### Academic Papers
+### Academic Papers (15)
 
-- **IEEE Conference Paper** - Standard IEEE conference paper template for engineering and computer science conferences
-- **ACM Conference Paper** - Official ACM conference paper template (sigconf format) for ACM conferences and publications
-- **arXiv Preprint** - Clean template for arXiv preprints compatible with arXiv submission requirements
-- **Basic Article** - Simple article template for essays, reports, documentation, and general-purpose documents
+| Template | Description | Difficulty |
+|----------|-------------|------------|
+| [IEEE Conference](ieee/) | Standard IEEE conference paper for engineering and CS | Intermediate |
+| [ACM Conference](acm/) | Official ACM sigconf format | Intermediate |
+| [ACM CHI](acm-chi/) | ACM CHI for Human-Computer Interaction | Intermediate |
+| [arXiv Preprint](arxiv/) | Clean arXiv-compatible preprint | Beginner |
+| [Springer LNCS](springer-lncs/) | Springer Lecture Notes in Computer Science | Intermediate |
+| [NeurIPS](neurips/) | NeurIPS machine learning conference | Intermediate |
+| [CVPR/ICCV/ECCV](cvpr/) | IEEE Computer Vision conferences | Intermediate |
+| [ICLR](iclr/) | ICLR deep learning conference | Intermediate |
+| [AAAI](aaai/) | AAAI artificial intelligence conference | Intermediate |
+| [JMLR](jmlr/) | Journal of Machine Learning Research | Intermediate |
+| [Elsevier Article](elsevier-article/) | Elsevier journal format | Intermediate |
+| [Nature](nature/) | Nature journal style | Advanced |
+| [APA 7th Edition](apa7/) | APA format for psychology/social sciences | Intermediate |
+| [RevTeX/APS](revtex/) | APS physics journals (PRL, PRA-E) | Intermediate |
+| [ACS Article](acs-article/) | American Chemical Society format | Intermediate |
 
-### Presentations
+### Thesis & Dissertation (3)
 
-- **Beamer Presentation** - Professional presentation template for academic and technical talks
+| Template | Description | Difficulty |
+|----------|-------------|------------|
+| [PhD Thesis](phd-thesis/) | Complete PhD dissertation with front matter, chapters, appendices | Advanced |
+| [Master's Thesis](masters-thesis/) | Master's thesis with chapter structure | Intermediate |
+| [Thesis Proposal](thesis-proposal/) | Graduate thesis/dissertation proposal | Intermediate |
+
+### Presentations & Posters (4)
+
+| Template | Description | Difficulty |
+|----------|-------------|------------|
+| [Beamer](beamer/) | Classic Beamer presentation | Beginner |
+| [Beamer Metropolis](beamer-metropolis/) | Modern minimal Metropolis theme | Beginner |
+| [Poster A0](poster-a0/) | A0 conference poster (841×1189mm) | Intermediate |
+| [Poster A1](poster-a1/) | A1 conference poster (594×841mm) | Intermediate |
+
+### CV & Resume (2)
+
+| Template | Description | Difficulty |
+|----------|-------------|------------|
+| [Academic CV](academic-cv/) | Comprehensive academic CV for faculty positions | Beginner |
+| [Modern Resume](resume-modern/) | Clean one-page industry resume | Beginner |
+
+### Teaching Materials (5)
+
+| Template | Description | Difficulty |
+|----------|-------------|------------|
+| [Syllabus](syllabus/) | Course syllabus with schedule and policies | Beginner |
+| [Lecture Notes](lecture-notes/) | Formatted notes with theorems and examples | Intermediate |
+| [Problem Set](problem-set/) | Homework/assignment template | Beginner |
+| [Exam](exam/) | Exam paper with point values and answer spaces | Intermediate |
+| [Lab Report](lab-report/) | Scientific lab report for courses | Beginner |
+
+### General Documents (4)
+
+| Template | Description | Difficulty |
+|----------|-------------|------------|
+| [Basic Article](basic-article/) | Simple general-purpose article | Beginner |
+| [Technical Report](technical-report/) | Technical documentation for institutions | Beginner |
+| [White Paper](white-paper/) | Policy/industry white paper | Intermediate |
+| [Literature Review](literature-review/) | Survey/review paper structure | Intermediate |
+
+### Correspondence (2)
+
+| Template | Description | Difficulty |
+|----------|-------------|------------|
+| [Cover Letter](cover-letter/) | Professional job/academic cover letter | Beginner |
+| [Research Proposal](research-proposal/) | Grant/research funding proposal | Intermediate |
 
 ## Template Structure
 
-Each template directory must contain:
+Each template directory contains:
 
 ```
 template-name/
 ├── main.tex              # Main LaTeX document (required)
 ├── references.bib        # BibTeX bibliography file (optional)
-├── preview.png           # Preview image (800x1000 recommended)
-├── README.md             # Template-specific documentation
+├── preview.png           # First page preview (main thumbnail)
+├── preview-1.png         # Page 2 preview (if multi-page)
+├── preview-2.png         # Page 3 preview, etc.
+├── README.md             # Template-specific documentation with placeholders table
 └── *.cls/*.sty           # Document class or style files (if needed)
 ```
+
+Multi-page templates include preview images for all pages (`preview.png`, `preview-1.png`, `preview-2.png`, etc.).
 
 ## Placeholder Syntax
 

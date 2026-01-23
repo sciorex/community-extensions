@@ -89,15 +89,77 @@ Council personas give AI agents specific perspectives and expertise for LLM Coun
 
 ### LaTeX Templates
 
-Professional LaTeX document templates for academic papers, presentations, and general-purpose documents. Templates include placeholder support for easy customization.
+Professional LaTeX document templates with placeholder support for easy customization. **35 templates** across 7 categories with multi-page preview images.
+
+#### Academic Papers (15 templates)
 
 | Template | Description |
 |----------|-------------|
-| [IEEE Conference Paper](latex-templates/ieee/) | Standard IEEE conference paper template for engineering and computer science |
-| [ACM Conference Paper](latex-templates/acm/) | Official ACM conference paper template (sigconf format) |
-| [arXiv Preprint](latex-templates/arxiv/) | Clean template for arXiv preprints compatible with submission requirements |
-| [Basic Article](latex-templates/basic-article/) | Simple article template for essays, reports, and documentation |
-| [Beamer Presentation](latex-templates/beamer/) | Professional presentation template for academic and technical talks |
+| [IEEE Conference](latex-templates/ieee/) | Standard IEEE conference paper for engineering and CS |
+| [ACM Conference](latex-templates/acm/) | Official ACM sigconf format |
+| [ACM CHI](latex-templates/acm-chi/) | ACM CHI for Human-Computer Interaction |
+| [arXiv Preprint](latex-templates/arxiv/) | Clean arXiv-compatible preprint |
+| [Springer LNCS](latex-templates/springer-lncs/) | Springer Lecture Notes in Computer Science |
+| [NeurIPS](latex-templates/neurips/) | NeurIPS machine learning conference |
+| [CVPR/ICCV/ECCV](latex-templates/cvpr/) | IEEE Computer Vision conferences |
+| [ICLR](latex-templates/iclr/) | ICLR deep learning conference |
+| [AAAI](latex-templates/aaai/) | AAAI artificial intelligence conference |
+| [JMLR](latex-templates/jmlr/) | Journal of Machine Learning Research |
+| [Elsevier Article](latex-templates/elsevier-article/) | Elsevier journal format |
+| [Nature](latex-templates/nature/) | Nature journal style |
+| [APA 7th Edition](latex-templates/apa7/) | APA format for social sciences |
+| [RevTeX/APS](latex-templates/revtex/) | APS physics journals |
+| [ACS Article](latex-templates/acs-article/) | American Chemical Society format |
+
+#### Thesis & Dissertation (3 templates)
+
+| Template | Description |
+|----------|-------------|
+| [PhD Thesis](latex-templates/phd-thesis/) | Complete PhD dissertation with chapters |
+| [Master's Thesis](latex-templates/masters-thesis/) | Master's thesis structure |
+| [Thesis Proposal](latex-templates/thesis-proposal/) | Graduate thesis proposal |
+
+#### Presentations & Posters (4 templates)
+
+| Template | Description |
+|----------|-------------|
+| [Beamer](latex-templates/beamer/) | Classic Beamer presentation |
+| [Beamer Metropolis](latex-templates/beamer-metropolis/) | Modern minimal Metropolis theme |
+| [Poster A0](latex-templates/poster-a0/) | A0 conference poster |
+| [Poster A1](latex-templates/poster-a1/) | A1 conference poster |
+
+#### CV & Resume (2 templates)
+
+| Template | Description |
+|----------|-------------|
+| [Academic CV](latex-templates/academic-cv/) | Comprehensive academic CV |
+| [Modern Resume](latex-templates/resume-modern/) | Clean one-page resume |
+
+#### Teaching Materials (5 templates)
+
+| Template | Description |
+|----------|-------------|
+| [Syllabus](latex-templates/syllabus/) | Course syllabus with schedule |
+| [Lecture Notes](latex-templates/lecture-notes/) | Formatted lecture notes |
+| [Problem Set](latex-templates/problem-set/) | Homework/assignment template |
+| [Exam](latex-templates/exam/) | Exam paper with answer spaces |
+| [Lab Report](latex-templates/lab-report/) | Scientific lab report |
+
+#### General Documents (4 templates)
+
+| Template | Description |
+|----------|-------------|
+| [Basic Article](latex-templates/basic-article/) | Simple general-purpose article |
+| [Technical Report](latex-templates/technical-report/) | Technical documentation |
+| [White Paper](latex-templates/white-paper/) | Policy/industry white paper |
+| [Literature Review](latex-templates/literature-review/) | Survey/review paper |
+
+#### Correspondence (2 templates)
+
+| Template | Description |
+|----------|-------------|
+| [Cover Letter](latex-templates/cover-letter/) | Professional cover letter |
+| [Research Proposal](latex-templates/research-proposal/) | Grant/research proposal |
 
 See [latex-templates/README.md](latex-templates/README.md) for details on template structure and contributing new templates.
 
