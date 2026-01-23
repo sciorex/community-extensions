@@ -1,0 +1,322 @@
+%% Research Proposal Template
+%% For grant applications, PhD proposals, or project proposals
+%%
+%% Compile with: pdflatex main.tex && bibtex main && pdflatex main.tex && pdflatex main.tex
+
+\documentclass[11pt,letterpaper]{article}
+
+%% Packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[margin=1in]{geometry}
+\usepackage{setspace}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{natbib}
+
+%% Line spacing
+\onehalfspacing
+
+%% Hyperref setup
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    urlcolor=blue
+}
+
+%% Header/Footer
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small {{TITLE}}}
+\fancyhead[R]{\small {{PI_NAME}}}
+\fancyfoot[C]{\thepage}
+
+%% Section formatting
+\titleformat{\section}{\large\bfseries}{\thesection.}{1em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{1em}{}
+
+\begin{document}
+
+%% ===================
+%% TITLE PAGE
+%% ===================
+\begin{titlepage}
+\centering
+\vspace*{1in}
+
+{\LARGE\bfseries {{TITLE}}}
+
+\vspace{0.5in}
+
+{\large Research Proposal}
+
+\vspace{1in}
+
+{\Large {{PI_NAME}}}
+
+\vspace{0.25in}
+
+{{PI_AFFILIATION}} \\
+{{PI_DEPARTMENT}} \\
+{{PI_EMAIL}}
+
+\vspace{1in}
+
+\begin{tabular}{ll}
+\textbf{Funding Agency:} & {{FUNDING_AGENCY}} \\
+\textbf{Project Duration:} & {{DURATION}} \\
+\textbf{Requested Budget:} & {{BUDGET}} \\
+\textbf{Submission Date:} & {{DATE}}
+\end{tabular}
+
+\vfill
+
+\end{titlepage}
+
+%% ===================
+%% EXECUTIVE SUMMARY
+%% ===================
+\section{Executive Summary}
+\label{sec:summary}
+
+{{ABSTRACT}}
+
+\vspace{1em}
+\noindent\textbf{Keywords:} {{KEYWORDS}}
+
+%% ===================
+%% INTRODUCTION
+%% ===================
+\section{Introduction and Background}
+\label{sec:introduction}
+
+\subsection{Problem Statement}
+
+Clearly articulate the research problem or challenge that this project addresses. Explain why this problem is significant and timely \citep{chen2023foundations}.
+
+\subsection{Motivation}
+
+Describe the motivation behind this research. What gaps in current knowledge or practice does this project aim to address? Why is solving this problem important for the field and society?
+
+\subsection{Significance}
+
+Explain the potential impact of this research. How will the outcomes advance the field? What practical applications might emerge?
+
+%% ===================
+%% RESEARCH OBJECTIVES
+%% ===================
+\section{Research Objectives}
+\label{sec:objectives}
+
+\subsection{Primary Objective}
+
+State the main goal of the proposed research clearly and concisely.
+
+\subsection{Specific Aims}
+
+\begin{enumerate}[label=\textbf{Aim \arabic*:}]
+    \item {{AIM_1}} -- Describe the first specific aim and its expected outcomes.
+    \item {{AIM_2}} -- Describe the second specific aim and its expected outcomes.
+    \item {{AIM_3}} -- Describe the third specific aim and its expected outcomes.
+\end{enumerate}
+
+\subsection{Research Questions}
+
+\begin{itemize}
+    \item RQ1: What is the relationship between X and Y?
+    \item RQ2: How does intervention Z affect outcome W?
+    \item RQ3: What are the key factors influencing phenomenon P?
+\end{itemize}
+
+%% ===================
+%% LITERATURE REVIEW
+%% ===================
+\section{Literature Review}
+\label{sec:literature}
+
+\subsection{Theoretical Framework}
+
+Present the theoretical foundations upon which this research is built. Discuss relevant theories, models, or frameworks that inform the proposed approach \citep{smith2022theoretical}.
+
+\subsection{Current State of Knowledge}
+
+Review the existing literature on the topic. Identify key findings, methodological approaches, and remaining questions \citep{johnson2024review}.
+
+\subsection{Research Gap}
+
+Clearly identify the gap in the current literature that this proposal addresses. Explain how the proposed research will contribute new knowledge to the field.
+
+%% ===================
+%% METHODOLOGY
+%% ===================
+\section{Methodology}
+\label{sec:methodology}
+
+\subsection{Research Design}
+
+Describe the overall research design and justify its appropriateness for addressing the research questions. Explain whether the approach is quantitative, qualitative, or mixed-methods \citep{williams2023methods}.
+
+\subsection{Data Collection}
+
+\subsubsection{Participants/Samples}
+
+Describe the target population, sampling strategy, and sample size justification.
+
+\subsubsection{Instruments and Materials}
+
+Detail the instruments, tools, or materials that will be used for data collection.
+
+\subsubsection{Procedures}
+
+Provide a step-by-step description of the data collection procedures.
+
+\subsection{Data Analysis}
+
+\subsubsection{Analysis Plan}
+
+Describe the analytical methods that will be used to address each research question.
+
+\subsubsection{Statistical Approaches}
+
+If applicable, specify the statistical tests or computational methods to be employed.
+
+\subsection{Ethical Considerations}
+
+Address any ethical issues related to the research, including human subjects protections, data privacy, and institutional review board approval.
+
+%% ===================
+%% TIMELINE
+%% ===================
+\section{Project Timeline}
+\label{sec:timeline}
+
+\begin{table}[h]
+\centering
+\caption{Project milestones and timeline.}
+\label{tab:timeline}
+\begin{tabular}{@{}llc@{}}
+\toprule
+\textbf{Phase} & \textbf{Activities} & \textbf{Duration} \\
+\midrule
+Phase 1 & Literature review, protocol development & Months 1--3 \\
+Phase 2 & Data collection, preliminary analysis & Months 4--9 \\
+Phase 3 & Full data analysis, interpretation & Months 10--15 \\
+Phase 4 & Writing, dissemination, final report & Months 16--18 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Key Milestones}
+
+\begin{itemize}
+    \item Month 3: Complete literature review and finalize methodology
+    \item Month 6: Complete IRB approval and begin data collection
+    \item Month 12: Complete data collection
+    \item Month 15: Complete data analysis
+    \item Month 18: Submit final report and publications
+\end{itemize}
+
+%% ===================
+%% EXPECTED OUTCOMES
+%% ===================
+\section{Expected Outcomes}
+\label{sec:outcomes}
+
+\subsection{Deliverables}
+
+\begin{itemize}
+    \item Peer-reviewed publications (target: 2--3 articles)
+    \item Conference presentations (target: 3--4 presentations)
+    \item Final project report
+    \item Open-source tools/datasets (if applicable)
+\end{itemize}
+
+\subsection{Anticipated Impact}
+
+Describe how the expected outcomes will advance the field and potentially influence practice or policy.
+
+%% ===================
+%% BUDGET JUSTIFICATION
+%% ===================
+\section{Budget Justification}
+\label{sec:budget}
+
+\begin{table}[h]
+\centering
+\caption{Budget summary.}
+\label{tab:budget}
+\begin{tabular}{@{}lr@{}}
+\toprule
+\textbf{Category} & \textbf{Amount} \\
+\midrule
+Personnel (PI, Research Assistants) & \$XX,XXX \\
+Equipment and Supplies & \$XX,XXX \\
+Travel (Conferences, Field Work) & \$XX,XXX \\
+Participant Compensation & \$XX,XXX \\
+Indirect Costs & \$XX,XXX \\
+\midrule
+\textbf{Total} & \${{BUDGET}} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Personnel}
+
+Justify the personnel costs, including the time commitment of the PI and any research staff.
+
+\subsection{Equipment and Supplies}
+
+Describe essential equipment and supplies needed for the project.
+
+\subsection{Travel}
+
+Justify travel expenses for conferences, collaboration, or field work.
+
+%% ===================
+%% BROADER IMPACTS
+%% ===================
+\section{Broader Impacts}
+\label{sec:impacts}
+
+\subsection{Educational Benefits}
+
+Describe opportunities for student training, mentorship, and educational outreach.
+
+\subsection{Societal Benefits}
+
+Explain how this research may benefit society beyond the immediate scientific community.
+
+\subsection{Diversity and Inclusion}
+
+Address how the project will promote diversity and inclusion in the research team and beneficiaries.
+
+%% ===================
+%% QUALIFICATIONS
+%% ===================
+\section{Qualifications of the Research Team}
+\label{sec:qualifications}
+
+\subsection{Principal Investigator}
+
+Briefly describe the PI's relevant expertise, prior work, and qualifications to lead this project.
+
+\subsection{Collaborators}
+
+List any collaborators and their roles in the project.
+
+%% ===================
+%% REFERENCES
+%% ===================
+\bibliographystyle{apalike}
+\bibliography{references}
+
+\end{document}

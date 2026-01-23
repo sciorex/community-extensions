@@ -1,0 +1,111 @@
+\chapter{Background and Related Work}
+\label{ch:background}
+
+This chapter provides the theoretical background necessary to understand the research presented in this thesis and reviews related work in the field.
+
+\section{Theoretical Foundations}
+\label{sec:bg-theory}
+
+Understanding the theoretical underpinnings of the research area is essential for appreciating the contributions of this thesis. This section presents the key concepts and mathematical frameworks that form the foundation of our work.
+
+\subsection{Fundamental Concepts}
+\label{subsec:bg-concepts}
+
+The field is built upon several fundamental concepts that have evolved over decades of research. These concepts provide the language and tools used throughout this thesis.
+
+\begin{definition}[Key Term]
+A key term is defined as a fundamental concept that underlies the research methodology and provides a basis for understanding subsequent developments.
+\end{definition}
+
+\subsection{Mathematical Framework}
+\label{subsec:bg-math}
+
+The mathematical framework used in this research is based on established principles from the literature \cite{chen2022foundations}. The core formulation can be expressed as:
+
+\begin{equation}
+    f(x) = \sum_{i=1}^{n} w_i \cdot \phi_i(x) + b
+    \label{eq:core-formulation}
+\end{equation}
+
+where $w_i$ represents the weights, $\phi_i(x)$ are basis functions, and $b$ is a bias term.
+
+\begin{theorem}[Convergence Property]
+Under mild conditions, the iterative procedure converges to a local optimum at a rate of $O(1/\sqrt{n})$.
+\end{theorem}
+
+\section{Related Work}
+\label{sec:bg-related}
+
+This section reviews the relevant literature, organized by theme. Understanding prior work is essential for positioning the contributions of this thesis within the broader research landscape.
+
+\subsection{Classical Approaches}
+\label{subsec:bg-classical}
+
+Early work in this field established foundational techniques that remain influential today. These classical approaches introduced key principles that subsequent methods have built upon \cite{smith2020classical}.
+
+The main characteristics of classical approaches include:
+
+\begin{itemize}
+    \item Reliance on hand-crafted features
+    \item Strong theoretical guarantees under specific assumptions
+    \item Computational simplicity
+    \item Limited scalability to large datasets
+\end{itemize}
+
+\subsection{Modern Methods}
+\label{subsec:bg-modern}
+
+Recent advances have introduced more sophisticated techniques that address many limitations of classical approaches \cite{johnson2023modern}. These methods typically leverage larger datasets and increased computational power to achieve improved performance.
+
+Key developments in modern methods include:
+
+\begin{enumerate}
+    \item Data-driven feature learning
+    \item End-to-end optimization
+    \item Transfer learning capabilities
+    \item Scalable implementations
+\end{enumerate}
+
+\subsection{Current State of the Art}
+\label{subsec:bg-sota}
+
+The current state of the art represents the best-performing methods available today \cite{williams2024sota}. However, these methods still exhibit certain limitations that motivate the research presented in this thesis.
+
+\begin{table}[h]
+\centering
+\caption{Comparison of existing methods.}
+\label{tab:bg-comparison}
+\begin{tabular}{@{}lccc@{}}
+\toprule
+Method & Accuracy & Efficiency & Interpretability \\
+\midrule
+Classical A & Medium & High & High \\
+Modern B & High & Medium & Low \\
+Current SOTA & High & Low & Low \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Research Gap}
+\label{sec:bg-gap}
+
+Based on the review of related work, several gaps in the current literature can be identified:
+
+\begin{enumerate}
+    \item Lack of methods that balance accuracy with computational efficiency
+    \item Limited interpretability of high-performing approaches
+    \item Insufficient evaluation on diverse, real-world datasets
+\end{enumerate}
+
+This thesis addresses these gaps by proposing a novel methodology that achieves competitive performance while maintaining efficiency and interpretability.
+
+\section{Summary}
+\label{sec:bg-summary}
+
+This chapter has provided the theoretical background and reviewed related work relevant to this thesis. The key takeaways are:
+
+\begin{itemize}
+    \item The theoretical foundations are well-established but leave room for improvement
+    \item Existing methods exhibit trade-offs between performance, efficiency, and interpretability
+    \item The identified research gaps motivate the methodology proposed in the following chapter
+\end{itemize}

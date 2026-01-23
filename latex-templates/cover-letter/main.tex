@@ -1,0 +1,77 @@
+%% Cover Letter Template
+%% Professional cover letter for job or academic applications
+%%
+%% Placeholders use {{PLACEHOLDER}} syntax for easy substitution
+
+\documentclass[11pt,a4paper]{letter}
+
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\usepackage{xcolor}
+
+% Colors
+\definecolor{linkcolor}{RGB}{0,51,102}
+
+% Hyperref setup
+\hypersetup{
+    colorlinks=true,
+    linkcolor=linkcolor,
+    urlcolor=linkcolor,
+    pdfauthor={{{YOUR_NAME}}},
+    pdftitle={Cover Letter - {{POSITION}}}
+}
+
+% Remove default letter formatting
+\longindentation=0pt
+
+% Signature
+\signature{{{YOUR_NAME}}}
+
+% Sender address
+\address{
+    {{YOUR_NAME}}\\
+    {{YOUR_ADDRESS}}\\
+    {{YOUR_CITY}}, {{YOUR_STATE}} {{YOUR_ZIP}}\\
+    {{YOUR_EMAIL}}\\
+    {{YOUR_PHONE}}
+}
+
+\begin{document}
+
+\begin{letter}{
+    {{RECIPIENT_NAME}}\\
+    {{RECIPIENT_TITLE}}\\
+    {{COMPANY_NAME}}\\
+    {{COMPANY_ADDRESS}}\\
+    {{COMPANY_CITY}}, {{COMPANY_STATE}} {{COMPANY_ZIP}}
+}
+
+\opening{Dear {{RECIPIENT_NAME}},}
+
+% Opening paragraph - Express interest and mention the position
+I am writing to express my strong interest in the {{POSITION}} position at {{COMPANY_NAME}}, as advertised on {{JOB_SOURCE}}. With my background in {{YOUR_FIELD}} and {{YEARS_EXPERIENCE}} years of experience in {{YOUR_EXPERTISE}}, I am confident that I would be a valuable addition to your team.
+
+% Body paragraph 1 - Highlight relevant experience
+In my current role as {{CURRENT_POSITION}} at {{CURRENT_COMPANY}}, I have successfully {{KEY_ACHIEVEMENT_1}}. This experience has equipped me with strong skills in {{SKILL_1}}, {{SKILL_2}}, and {{SKILL_3}}, which align directly with the requirements outlined in your job posting.
+
+% Body paragraph 2 - Connect skills to company needs
+I am particularly drawn to {{COMPANY_NAME}} because of {{COMPANY_ATTRACTION}}. Your commitment to {{COMPANY_VALUE}} resonates with my professional values, and I am excited about the opportunity to contribute to {{COMPANY_GOAL}}. My experience in {{RELEVANT_EXPERIENCE}} has prepared me to make immediate contributions to your team.
+
+% Body paragraph 3 - Specific examples (optional, can be removed)
+During my tenure at {{PREVIOUS_COMPANY}}, I {{KEY_ACHIEVEMENT_2}}. This accomplishment demonstrates my ability to {{DEMONSTRATED_SKILL}} and my commitment to delivering results that exceed expectations.
+
+% Closing paragraph - Call to action
+I would welcome the opportunity to discuss how my experience and skills can benefit {{COMPANY_NAME}}. I am available for an interview at your earliest convenience and can be reached at {{YOUR_PHONE}} or via email at {{YOUR_EMAIL}}. Thank you for considering my application. I look forward to hearing from you.
+
+\closing{Sincerely,}
+
+% Enclosures (optional - uncomment if needed)
+% \encl{Resume \\ Portfolio}
+
+\end{letter}
+
+\end{document}

@@ -1,0 +1,185 @@
+% American Chemical Society (ACS) Article Template
+% For submissions to ACS journals
+%
+% Compile with: pdflatex main.tex
+%               bibtex main
+%               pdflatex main.tex
+%               pdflatex main.tex
+
+\documentclass[journal=jacsat,manuscript=article]{achemso}
+
+% ACS required packages
+\usepackage[version=4]{mhchem}  % Chemical formulas
+\usepackage{chemfig}            % Chemical structures
+\usepackage{siunitx}            % SI units
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+% Configure siunitx
+\sisetup{
+    separate-uncertainty = true,
+    multi-part-units = single,
+}
+
+% Author information
+\author{{{AUTHOR_1}}}
+\email{{{AUTHOR_1_EMAIL}}}
+\affiliation{{{AUTHOR_1_AFFILIATION}}, {{AUTHOR_1_ADDRESS}}}
+
+\author{{{AUTHOR_2}}}
+\affiliation{{{AUTHOR_2_AFFILIATION}}, {{AUTHOR_2_ADDRESS}}}
+
+\author{{{CORRESPONDING_AUTHOR}}}
+\email{{{CORRESPONDING_EMAIL}}}
+\phone{{{CORRESPONDING_PHONE}}}
+\affiliation{{{CORRESPONDING_AFFILIATION}}}
+\alsoaffiliation{{{CORRESPONDING_ALSO_AFFILIATION}}}
+
+\title{{{TITLE}}}
+
+\begin{document}
+
+\begin{abstract}
+{{ABSTRACT}}
+\end{abstract}
+
+\section{Introduction}
+
+The development of novel materials and chemical processes is essential for addressing global challenges in energy, health, and sustainability.\cite{smith2022sustainable} In this work, we present a new approach to {{RESEARCH_TOPIC}} that offers significant improvements over existing methods.
+
+The synthesis of functional materials requires precise control over reaction conditions and molecular architecture.\cite{johnson2021synthesis} Previous studies have demonstrated the importance of {{KEY_FACTOR}} in determining the final properties of these systems.\cite{williams2020characterization}
+
+Our approach addresses several key challenges:
+\begin{itemize}
+    \item Improved selectivity in the synthesis process
+    \item Enhanced stability under operating conditions
+    \item Scalable production methods
+    \item Reduced environmental impact
+\end{itemize}
+
+\section{Experimental Section}
+
+\subsection{Materials}
+
+All chemicals were purchased from commercial suppliers and used without further purification unless otherwise noted. {{CHEMICAL_1}} (\SI{99}{\percent}, Sigma-Aldrich), {{CHEMICAL_2}} (\SI{98}{\percent}, Alfa Aesar), and {{SOLVENT}} (HPLC grade, Fisher Scientific) were used as received.
+
+\subsection{Synthesis of {{COMPOUND_NAME}}}
+
+{{COMPOUND_NAME}} was synthesized according to the following procedure. In a typical experiment, {{CHEMICAL_1}} (\SI{1.0}{\gram}, \SI{10}{\milli\mol}) was dissolved in {{SOLVENT}} (\SI{50}{\milli\liter}) in a round-bottom flask equipped with a magnetic stir bar. The solution was heated to \SI{80}{\celsius} under nitrogen atmosphere.
+
+{{CHEMICAL_2}} (\SI{1.2}{\gram}, \SI{12}{\milli\mol}) was added dropwise over \SI{30}{\minute}. The reaction mixture was stirred for \SI{24}{\hour} at \SI{80}{\celsius}. Upon completion, the mixture was cooled to room temperature and the product was isolated by filtration.
+
+\textbf{Yield:} \SI{85}{\percent}. \textbf{Melting point:} \SI{145}{\celsius}.
+
+\textsuperscript{1}\textbf{H NMR} (\SI{400}{\mega\hertz}, CDCl\textsubscript{3}): $\delta$ 7.85 (d, $J$ = \SI{8.0}{\hertz}, 2H), 7.42 (t, $J$ = \SI{7.5}{\hertz}, 2H), 7.35 (t, $J$ = \SI{7.2}{\hertz}, 1H), 3.92 (s, 3H).
+
+\textbf{HRMS} (ESI): $m/z$ calcd for \ce{C_{x}H_{y}N_{z}O_{w}} [M+H]\textsuperscript{+} {{CALC_MASS}}; found {{FOUND_MASS}}.
+
+\subsection{Characterization}
+
+\subsubsection{Nuclear Magnetic Resonance (NMR) Spectroscopy}
+
+\textsuperscript{1}H and \textsuperscript{13}C NMR spectra were recorded on a Bruker Avance III \SI{400}{\mega\hertz} spectrometer at \SI{298}{\kelvin}. Chemical shifts are reported in ppm relative to tetramethylsilane (TMS).
+
+\subsubsection{X-ray Diffraction (XRD)}
+
+Powder X-ray diffraction patterns were collected on a Rigaku MiniFlex diffractometer using Cu K$\alpha$ radiation ($\lambda$ = \SI{1.5406}{\angstrom}). Data were collected in the 2$\theta$ range of \SI{5}{\degree}--\SI{60}{\degree} with a step size of \SI{0.02}{\degree}.
+
+\subsubsection{Scanning Electron Microscopy (SEM)}
+
+SEM images were obtained using a JEOL JSM-7500F field emission scanning electron microscope operated at \SI{5}{\kilo\volt}.
+
+\subsubsection{Thermogravimetric Analysis (TGA)}
+
+TGA measurements were performed on a TA Instruments Q500 under nitrogen flow (\SI{50}{\milli\liter\per\minute}) with a heating rate of \SI{10}{\celsius\per\minute} from \SI{25}{\celsius} to \SI{800}{\celsius}.
+
+\section{Results and Discussion}
+
+\subsection{Structural Characterization}
+
+The synthesized {{COMPOUND_NAME}} was characterized by multiple analytical techniques. Figure~\ref{fig:xrd} shows the XRD pattern, confirming the crystalline nature of the material.
+
+\begin{figure}[htbp]
+    \centering
+    % \includegraphics[width=0.8\linewidth]{figures/xrd_pattern.pdf}
+    \caption{Powder XRD pattern of {{COMPOUND_NAME}}. The sharp peaks indicate high crystallinity.}
+    \label{fig:xrd}
+\end{figure}
+
+The NMR analysis confirms the expected structure with all peaks assigned to the corresponding protons (see Supporting Information).
+
+\subsection{Performance Evaluation}
+
+The catalytic activity of {{COMPOUND_NAME}} was evaluated under standard conditions. Table~\ref{tab:performance} summarizes the results.
+
+\begin{table}[htbp]
+    \centering
+    \caption{Catalytic performance of {{COMPOUND_NAME}} compared to reference materials.}
+    \label{tab:performance}
+    \begin{tabular}{lccc}
+        \toprule
+        \textbf{Catalyst} & \textbf{Conversion (\%)} & \textbf{Selectivity (\%)} & \textbf{TOF (h\textsuperscript{-1})} \\
+        \midrule
+        Reference A & 65 & 78 & 120 \\
+        Reference B & 72 & 82 & 145 \\
+        {{COMPOUND_NAME}} & \textbf{89} & \textbf{94} & \textbf{210} \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+The superior performance of our material can be attributed to the unique structural features that provide:
+\begin{enumerate}
+    \item Enhanced active site accessibility
+    \item Optimal electronic properties
+    \item Improved thermal stability
+\end{enumerate}
+
+\subsection{Mechanistic Studies}
+
+Kinetic studies were performed to elucidate the reaction mechanism. The reaction follows first-order kinetics with respect to substrate concentration:
+
+\begin{equation}
+    r = k[S]
+\end{equation}
+
+where $r$ is the reaction rate, $k$ is the rate constant, and $[S]$ is the substrate concentration.
+
+The activation energy was determined from Arrhenius analysis:
+
+\begin{equation}
+    E_a = \SI{45.2 \pm 2.1}{\kilo\joule\per\mol}
+\end{equation}
+
+This value is consistent with the proposed mechanism involving rate-limiting substrate adsorption.
+
+\subsection{Stability Studies}
+
+Long-term stability tests showed that {{COMPOUND_NAME}} maintains \SI{95}{\percent} of its initial activity after 100 hours of continuous operation. This excellent stability is attributed to the robust structural framework.
+
+\section{Conclusions}
+
+We have developed a novel synthesis method for {{COMPOUND_NAME}} that demonstrates exceptional performance in {{APPLICATION}}. The key findings include:
+
+\begin{itemize}
+    \item High yield synthesis (\SI{85}{\percent}) under mild conditions
+    \item Superior catalytic activity compared to existing materials
+    \item Excellent long-term stability
+    \item Scalable production potential
+\end{itemize}
+
+This work provides a foundation for further development of advanced materials for sustainable chemical processes.
+
+\begin{acknowledgement}
+{{ACKNOWLEDGMENTS}}
+\end{acknowledgement}
+
+\begin{suppinfo}
+Supporting Information Available: Additional characterization data including NMR spectra, mass spectra, and additional figures. This material is available free of charge via the Internet at http://pubs.acs.org.
+\end{suppinfo}
+
+\bibliography{references}
+
+\end{document}

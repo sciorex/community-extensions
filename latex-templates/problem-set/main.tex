@@ -1,0 +1,276 @@
+%% Problem Set / Homework Template
+%% Assignment template with problems and solution spaces
+%%
+%% Placeholders use {{PLACEHOLDER}} syntax for easy substitution
+
+\documentclass[11pt,a4paper]{article}
+
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{framed}
+\usepackage{tcolorbox}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{lastpage}
+
+% Colors
+\definecolor{headercolor}{RGB}{0,51,102}
+\definecolor{problemcolor}{RGB}{0,51,102}
+\definecolor{solutioncolor}{RGB}{0,102,51}
+\definecolor{hintcolor}{RGB}{153,102,0}
+
+% Hyperref setup
+\hypersetup{
+    colorlinks=true,
+    linkcolor=headercolor,
+    urlcolor=headercolor
+}
+
+% Page style
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{{{COURSE_CODE}}: {{COURSE_NAME}}}
+\fancyhead[R]{Problem Set {{PSET_NUMBER}}}
+\fancyfoot[C]{Page \thepage\ of \pageref{LastPage}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% Problem counter
+\newcounter{problem}
+\setcounter{problem}{0}
+
+% Problem environment
+\newenvironment{problem}[1][]{
+    \refstepcounter{problem}
+    \par\vspace{1em}
+    \noindent
+    \begin{tcolorbox}[
+        colback=problemcolor!5,
+        colframe=problemcolor!80,
+        title={\textbf{Problem \theproblem}#1},
+        breakable
+    ]
+}{
+    \end{tcolorbox}
+}
+
+% Subproblem list
+\newlist{subproblems}{enumerate}{2}
+\setlist[subproblems,1]{label=(\alph*),leftmargin=*,topsep=4pt}
+\setlist[subproblems,2]{label=(\roman*),leftmargin=*,topsep=2pt}
+
+% Solution environment (for answer keys)
+\newenvironment{solution}{
+    \par\vspace{0.5em}
+    \noindent
+    \begin{tcolorbox}[
+        colback=solutioncolor!5,
+        colframe=solutioncolor!80,
+        title={\textbf{Solution}},
+        breakable
+    ]
+}{
+    \end{tcolorbox}
+}
+
+% Hint environment
+\newenvironment{hint}{
+    \par\vspace{0.3em}
+    \noindent
+    \begin{tcolorbox}[
+        colback=hintcolor!5,
+        colframe=hintcolor!60,
+        title={\textit{Hint}},
+        fonttitle=\itshape,
+        breakable
+    ]
+}{
+    \end{tcolorbox}
+}
+
+% Points command
+\newcommand{\points}[1]{\hfill\textbf{[#1 points]}}
+
+% Answer space command
+\newcommand{\answerspace}[1]{
+    \par\vspace{0.5em}
+    \noindent\textit{Your answer:}
+    \vspace{#1}
+}
+
+% Answer box command
+\newcommand{\answerbox}[1]{
+    \par\vspace{0.5em}
+    \begin{tcolorbox}[
+        colback=white,
+        colframe=black!30,
+        height=#1,
+        valign=top
+    ]
+    \end{tcolorbox}
+}
+
+\begin{document}
+
+% Header
+\begin{center}
+    {\Large\bfseries\color{headercolor} {{COURSE_CODE}}: {{COURSE_NAME}}}\\[0.5em]
+    {\LARGE\bfseries Problem Set {{PSET_NUMBER}}}\\[0.5em]
+    {\large {{PSET_TITLE}}}\\[1em]
+    \begin{tabular}{rl}
+        \textbf{Instructor:} & {{INSTRUCTOR}}\\
+        \textbf{Due Date:} & {{DUE_DATE}}\\
+        \textbf{Total Points:} & {{TOTAL_POINTS}}
+    \end{tabular}
+\end{center}
+
+\vspace{1em}
+
+% Student info
+\noindent\fbox{
+    \parbox{\textwidth}{
+        \vspace{0.5em}
+        \textbf{Name:} \hrulefill\\[0.5em]
+        \textbf{Student ID:} \hrulefill\\[0.5em]
+        \textbf{Collaborators:} \hrulefill
+        \vspace{0.5em}
+    }
+}
+
+\vspace{1em}
+
+% Instructions
+\begin{tcolorbox}[colback=gray!5,colframe=gray!50,title={\textbf{Instructions}}]
+\begin{itemize}[nosep]
+    \item {{INSTRUCTION_1}}
+    \item {{INSTRUCTION_2}}
+    \item {{INSTRUCTION_3}}
+    \item Show all work for full credit.
+    \item Clearly box or highlight your final answers.
+\end{itemize}
+\end{tcolorbox}
+
+\vspace{1em}
+
+%% =============================================================================
+%% PROBLEMS
+%% =============================================================================
+
+\begin{problem}[\points{{{POINTS_1}}}]
+{{PROBLEM_1_TEXT}}
+
+\begin{subproblems}
+    \item {{PROBLEM_1A}}
+    \item {{PROBLEM_1B}}
+    \item {{PROBLEM_1C}}
+\end{subproblems}
+\end{problem}
+
+% Uncomment for answer key version:
+% \begin{solution}
+% {{SOLUTION_1}}
+% \end{solution}
+
+\begin{problem}[\points{{{POINTS_2}}}]
+{{PROBLEM_2_TEXT}}
+
+Given:
+\begin{itemize}[nosep]
+    \item {{GIVEN_1}}
+    \item {{GIVEN_2}}
+\end{itemize}
+
+Find: {{PROBLEM_2_FIND}}
+
+\begin{hint}
+{{HINT_2}}
+\end{hint}
+\end{problem}
+
+\begin{problem}[\points{{{POINTS_3}}}]
+{{PROBLEM_3_TEXT}}
+
+\begin{subproblems}
+    \item {{PROBLEM_3A}}
+    \item {{PROBLEM_3B}}
+\end{subproblems}
+\end{problem}
+
+\begin{problem}[\points{{{POINTS_4}}}]
+\textbf{(Computational)} {{PROBLEM_4_TEXT}}
+
+Complete the following table:
+
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{{{COL_1_HEADER}}} & \textbf{{{COL_2_HEADER}}} & \textbf{{{COL_3_HEADER}}} \\
+\hline
+{{ROW_1_COL_1}} & & \\
+\hline
+{{ROW_2_COL_1}} & & \\
+\hline
+{{ROW_3_COL_1}} & & \\
+\hline
+\end{tabular}
+\end{center}
+\end{problem}
+
+\begin{problem}[\points{{{POINTS_5}}}]
+\textbf{(Proof)} {{PROBLEM_5_TEXT}}
+
+Prove that {{THEOREM_TO_PROVE}}.
+
+\begin{hint}
+{{HINT_5}}
+\end{hint}
+\end{problem}
+
+\begin{problem}[\points{{{POINTS_6}}}]
+\textbf{(Challenge - Optional)} {{PROBLEM_6_TEXT}}
+
+This problem is optional and worth extra credit.
+\end{problem}
+
+%% =============================================================================
+%% USEFUL FORMULAS (Optional Section)
+%% =============================================================================
+
+\newpage
+\section*{Reference Formulas}
+
+The following formulas may be useful for this problem set:
+
+\begin{align}
+    {{FORMULA_1}} \\
+    {{FORMULA_2}} \\
+    {{FORMULA_3}}
+\end{align}
+
+%% =============================================================================
+%% SUBMISSION CHECKLIST
+%% =============================================================================
+
+\vfill
+
+\begin{tcolorbox}[colback=gray!5,colframe=gray!50,title={\textbf{Submission Checklist}}]
+Before submitting, ensure that:
+\begin{itemize}[nosep]
+    \item[$\square$] Your name and student ID are on the first page
+    \item[$\square$] All problems are attempted
+    \item[$\square$] All work is shown clearly
+    \item[$\square$] Final answers are boxed or clearly indicated
+    \item[$\square$] Pages are numbered and in order
+    \item[$\square$] Collaborators are listed (if any)
+\end{itemize}
+\end{tcolorbox}
+
+\end{document}

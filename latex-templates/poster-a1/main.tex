@@ -1,0 +1,266 @@
+% A1 Research Poster Template
+% Category: presentation
+% Difficulty: intermediate
+% A1-sized poster for conferences and departmental events
+
+\documentclass[a1paper,portrait]{tikzposter}
+
+% Font settings
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+% Math
+\usepackage{amsmath,amssymb}
+
+% Graphics
+\usepackage{graphicx}
+
+% References
+\usepackage[numbers,sort&compress]{natbib}
+\renewcommand{\bibfont}{\small}
+
+% QR Code (optional)
+% \usepackage{qrcode}
+
+%----------------------------------------------------------------------
+% COLOR THEME
+%----------------------------------------------------------------------
+% Define custom colors
+\definecolor{primarycolor}{RGB}{0,51,102}      % Dark blue
+\definecolor{secondarycolor}{RGB}{0,120,174}   % Accent blue
+\definecolor{highlightcolor}{RGB}{255,165,0}   % Orange accent
+\definecolor{backgroundcolor}{RGB}{255,255,255} % White
+\definecolor{blockbgcolor}{RGB}{245,247,250}   % Light gray-blue
+
+% Custom color theme
+\definecolorstyle{CustomStyle}{
+    \definecolor{colorOne}{named}{primarycolor}
+    \definecolor{colorTwo}{named}{secondarycolor}
+    \definecolor{colorThree}{named}{highlightcolor}
+}{
+    % Background
+    \colorlet{backgroundcolor}{backgroundcolor}
+    \colorlet{framecolor}{primarycolor}
+    % Title
+    \colorlet{titlefgcolor}{white}
+    \colorlet{titlebgcolor}{primarycolor}
+    % Block
+    \colorlet{blocktitlebgcolor}{secondarycolor}
+    \colorlet{blocktitlefgcolor}{white}
+    \colorlet{blockbodybgcolor}{blockbgcolor}
+    \colorlet{blockbodyfgcolor}{black}
+    % Inner block
+    \colorlet{innerblocktitlebgcolor}{highlightcolor}
+    \colorlet{innerblocktitlefgcolor}{black}
+    \colorlet{innerblockbodybgcolor}{white}
+    \colorlet{innerblockbodyfgcolor}{black}
+    % Note
+    \colorlet{notefgcolor}{black}
+    \colorlet{notebgcolor}{highlightcolor!20}
+    \colorlet{notefrcolor}{highlightcolor}
+}
+
+% Apply theme
+\usetheme{Default}
+\usecolorstyle{CustomStyle}
+\useblockstyle{Envelope}
+\useinnerblockstyle{Table}
+\usetitlestyle{Filled}
+
+%----------------------------------------------------------------------
+% TITLE SETTINGS
+%----------------------------------------------------------------------
+\title{\parbox{\linewidth}{\centering {{TITLE}}}}
+\author{{{AUTHOR_1}}\textsuperscript{1}, {{AUTHOR_2}}\textsuperscript{2}, {{AUTHOR_3}}\textsuperscript{1*}}
+\institute{
+    \textsuperscript{1}{{AFFILIATION_1}} \quad
+    \textsuperscript{2}{{AFFILIATION_2}}\\[0.5em]
+    \textsuperscript{*}Corresponding author: {{EMAIL}}
+}
+
+% Logo settings - uncomment and modify as needed
+\titlegraphic{
+    % \includegraphics[height=8cm]{logo-left.png}
+}
+
+%----------------------------------------------------------------------
+% DOCUMENT
+%----------------------------------------------------------------------
+\begin{document}
+
+\maketitle
+
+%----------------------------------------------------------------------
+% CONTENT - Three Column Layout
+%----------------------------------------------------------------------
+\begin{columns}
+
+%======================================================================
+% LEFT COLUMN
+%======================================================================
+\column{0.33}
+
+%----------------------------------------------------------------------
+\block{Introduction}{
+    {{INTRODUCTION}}
+
+    \vspace{0.5em}
+    \textbf{Research Questions:}
+    \begin{itemize}
+        \item {{RESEARCH_QUESTION_1}}
+        \item {{RESEARCH_QUESTION_2}}
+    \end{itemize}
+}
+
+%----------------------------------------------------------------------
+\block{Background}{
+    {{BACKGROUND}}
+
+    % Optional: include a figure
+    % \begin{center}
+    %     \includegraphics[width=0.9\linewidth]{figures/background.png}
+    % \end{center}
+}
+
+%----------------------------------------------------------------------
+\block{Objectives}{
+    \begin{enumerate}
+        \item {{OBJECTIVE_1}}
+        \item {{OBJECTIVE_2}}
+        \item {{OBJECTIVE_3}}
+    \end{enumerate}
+}
+
+%======================================================================
+% MIDDLE COLUMN
+%======================================================================
+\column{0.34}
+
+%----------------------------------------------------------------------
+\block{Methods}{
+    {{METHODS_OVERVIEW}}
+
+    \innerblock{{{METHOD_1_NAME}}}{
+        {{METHOD_1_DESCRIPTION}}
+    }
+
+    \innerblock{{{METHOD_2_NAME}}}{
+        {{METHOD_2_DESCRIPTION}}
+    }
+
+    % Optional: methods diagram
+    % \begin{center}
+    %     \includegraphics[width=0.8\linewidth]{figures/methods.png}
+    % \end{center}
+}
+
+%----------------------------------------------------------------------
+\block{Results}{
+    {{RESULTS_OVERVIEW}}
+
+    % Results figure placeholder
+    \begin{center}
+        \coloredbox[bgcolor=white,framecolor=secondarycolor]{
+            \textbf{Figure 1:} {{FIGURE_1_CAPTION}}\\[0.5em]
+            % \includegraphics[width=0.85\linewidth]{figures/results1.png}
+            \textit{[Insert results figure here]}
+        }
+    \end{center}
+
+    \vspace{0.5em}
+    \textbf{Key Findings:}
+    \begin{itemize}
+        \item {{FINDING_1}}
+        \item {{FINDING_2}}
+        \item {{FINDING_3}}
+    \end{itemize}
+}
+
+%======================================================================
+% RIGHT COLUMN
+%======================================================================
+\column{0.33}
+
+%----------------------------------------------------------------------
+\block{Analysis}{
+    {{ANALYSIS}}
+
+    % Optional: table or additional figure
+    \begin{center}
+        \coloredbox[bgcolor=white,framecolor=secondarycolor]{
+            \textbf{Table 1:} {{TABLE_1_CAPTION}}\\[0.5em]
+            \begin{tabular}{lcc}
+                \hline
+                \textbf{{{COL_1_HEADER}}} & \textbf{{{COL_2_HEADER}}} & \textbf{{{COL_3_HEADER}}} \\
+                \hline
+                {{ROW_1_COL_1}} & {{ROW_1_COL_2}} & {{ROW_1_COL_3}} \\
+                {{ROW_2_COL_1}} & {{ROW_2_COL_2}} & {{ROW_2_COL_3}} \\
+                {{ROW_3_COL_1}} & {{ROW_3_COL_2}} & {{ROW_3_COL_3}} \\
+                \hline
+            \end{tabular}
+        }
+    \end{center}
+}
+
+%----------------------------------------------------------------------
+\block{Conclusions}{
+    {{CONCLUSIONS}}
+
+    \innerblock{Key Takeaways}{
+        \begin{itemize}
+            \item {{TAKEAWAY_1}}
+            \item {{TAKEAWAY_2}}
+            \item {{TAKEAWAY_3}}
+        \end{itemize}
+    }
+}
+
+%----------------------------------------------------------------------
+\block{Future Work}{
+    \begin{itemize}
+        \item {{FUTURE_WORK_1}}
+        \item {{FUTURE_WORK_2}}
+    \end{itemize}
+}
+
+%----------------------------------------------------------------------
+\block{References}{
+    \small
+    \begin{enumerate}
+        \item {{REFERENCE_1}}
+        \item {{REFERENCE_2}}
+        \item {{REFERENCE_3}}
+        \item {{REFERENCE_4}}
+    \end{enumerate}
+}
+
+%----------------------------------------------------------------------
+\block{Acknowledgments}{
+    \small
+    {{ACKNOWLEDGMENTS}}
+
+    % Optional: QR code to paper/data
+    % \begin{center}
+    %     \qrcode[height=3cm]{https://yourlink.com}\\
+    %     \textit{Scan for full paper}
+    % \end{center}
+
+    \vspace{0.5em}
+    \textbf{Contact:} {{EMAIL}}
+
+    % Optional: funding logos
+    % \begin{center}
+    %     \includegraphics[height=2cm]{funding-logo.png}
+    % \end{center}
+}
+
+\end{columns}
+
+%----------------------------------------------------------------------
+% FOOTER (Optional)
+%----------------------------------------------------------------------
+% \node[anchor=south east, inner sep=1cm] at (bottomright) {
+%     \textbf{{{CONFERENCE}}} | {{CONFERENCE_DATE}} | {{CONFERENCE_LOCATION}}
+% };
+
+\end{document}

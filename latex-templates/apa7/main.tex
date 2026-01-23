@@ -1,0 +1,216 @@
+% APA 7th Edition Article Template
+% For psychology, education, and social sciences
+% Requires apa7 document class
+
+\documentclass[
+    man,                              % Manuscript format (use 'jou' for journal, 'doc' for document)
+    12pt,                             % Font size
+    floatsintext,                     % Include figures/tables in text
+    a4paper                           % Paper size
+]{apa7}
+
+% Required packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[american]{babel}          % American English
+\usepackage{csquotes}                 % Required for babel
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{booktabs}                 % Better tables
+
+% Bibliography with APA 7 style
+\usepackage[style=apa,backend=biber]{biblatex}
+\addbibresource{references.bib}
+
+%==============================================================================
+% DOCUMENT METADATA
+%==============================================================================
+\title{{{TITLE}}}
+
+\shorttitle{{{SHORT_TITLE}}}
+
+\author{{{AUTHOR_1}}}
+\affiliation{{{AFFILIATION_1}}}
+
+% For multiple authors with different affiliations:
+% \author{{{AUTHOR_1}}\textsuperscript{1} and {{AUTHOR_2}}\textsuperscript{2}}
+% \affiliation{\textsuperscript{1}{{AFFILIATION_1}}}
+% \affiliation{\textsuperscript{2}{{AFFILIATION_2}}}
+
+% Author Note
+\authornote{
+    \addORCIDlink{{{AUTHOR_1}}}{{{ORCID}}}
+
+    {{AUTHOR_NOTE}}
+
+    Correspondence concerning this article should be addressed to {{AUTHOR_1}}, {{DEPARTMENT}}, {{UNIVERSITY}}, {{ADDRESS}}. Email: {{EMAIL}}
+}
+
+%==============================================================================
+% ABSTRACT AND KEYWORDS
+%==============================================================================
+\abstract{{{ABSTRACT}}}
+
+\keywords{{{KEYWORDS}}}
+
+%==============================================================================
+% DOCUMENT CONTENT
+%==============================================================================
+\begin{document}
+
+\maketitle
+
+%------------------------------------------------------------------------------
+% INTRODUCTION (Level 1 Heading - Centered, Bold)
+% Note: In APA 7, the introduction does not have a heading labeled "Introduction"
+%------------------------------------------------------------------------------
+
+{{INTRODUCTION}}
+
+% APA Heading Levels:
+% Level 1: Centered, Bold (e.g., Method, Results, Discussion)
+% Level 2: Left-aligned, Bold (e.g., Participants, Materials)
+% Level 3: Left-aligned, Bold, Italic (e.g., subsections)
+% Level 4: Indented, Bold, Period. Text continues on same line.
+% Level 5: Indented, Bold, Italic, Period. Text continues on same line.
+
+%------------------------------------------------------------------------------
+% LITERATURE REVIEW (if separate from introduction)
+%------------------------------------------------------------------------------
+\section{Literature Review}
+
+{{LITERATURE_REVIEW}}
+
+\subsection{{{SUBSECTION_1_TITLE}}}
+
+{{SUBSECTION_1_CONTENT}}
+
+\subsection{{{SUBSECTION_2_TITLE}}}
+
+{{SUBSECTION_2_CONTENT}}
+
+%------------------------------------------------------------------------------
+% METHOD
+%------------------------------------------------------------------------------
+\section{Method}
+
+\subsection{Participants}
+
+{{PARTICIPANTS}}
+
+% Include: sample size, demographics (age, gender, ethnicity if relevant),
+% recruitment method, compensation, and any inclusion/exclusion criteria.
+
+\subsection{Materials}
+
+{{MATERIALS}}
+
+% Describe instruments, questionnaires, stimuli, or equipment used.
+% Include reliability information (e.g., Cronbach's alpha).
+
+\subsection{Procedure}
+
+{{PROCEDURE}}
+
+% Describe the step-by-step process of the study.
+% Include ethical considerations (IRB approval, informed consent).
+
+\subsection{Data Analysis}
+
+{{DATA_ANALYSIS}}
+
+% Describe statistical methods used.
+% Include software and version (e.g., "Data were analyzed using SPSS Version 28").
+
+%------------------------------------------------------------------------------
+% RESULTS
+%------------------------------------------------------------------------------
+\section{Results}
+
+{{RESULTS}}
+
+% Report descriptive statistics first, then inferential statistics.
+% Use APA format for statistics: F(1, 45) = 4.56, p = .038, \eta^2 = .09
+
+\subsection{{{RESULTS_SUBSECTION_1}}}
+
+{{RESULTS_SUBSECTION_1_CONTENT}}
+
+\subsection{{{RESULTS_SUBSECTION_2}}}
+
+{{RESULTS_SUBSECTION_2_CONTENT}}
+
+%------------------------------------------------------------------------------
+% DISCUSSION
+%------------------------------------------------------------------------------
+\section{Discussion}
+
+{{DISCUSSION}}
+
+\subsection{Theoretical Implications}
+
+{{THEORETICAL_IMPLICATIONS}}
+
+\subsection{Practical Implications}
+
+{{PRACTICAL_IMPLICATIONS}}
+
+\subsection{Limitations and Future Directions}
+
+{{LIMITATIONS}}
+
+%------------------------------------------------------------------------------
+% CONCLUSION
+%------------------------------------------------------------------------------
+\section{Conclusion}
+
+{{CONCLUSION}}
+
+%------------------------------------------------------------------------------
+% REFERENCES
+%------------------------------------------------------------------------------
+\printbibliography
+
+%------------------------------------------------------------------------------
+% TABLES (at end of manuscript for submission)
+%------------------------------------------------------------------------------
+\clearpage
+
+\begin{table}[h]
+\caption{{{TABLE_1_TITLE}}}
+\label{tab:table1}
+\begin{tabular}{lccc}
+\toprule
+Variable & $M$ & $SD$ & $n$ \\
+\midrule
+{{TABLE_1_CONTENT}}
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\small
+\item \textit{Note}. {{TABLE_1_NOTE}}
+\end{tablenotes}
+\end{table}
+
+%------------------------------------------------------------------------------
+% FIGURES (at end of manuscript for submission)
+%------------------------------------------------------------------------------
+\clearpage
+
+\begin{figure}[h]
+\centering
+% \includegraphics[width=\textwidth]{figure1.pdf}
+\caption{{{FIGURE_1_CAPTION}}}
+\label{fig:figure1}
+\end{figure}
+
+%------------------------------------------------------------------------------
+% APPENDICES (optional)
+%------------------------------------------------------------------------------
+\appendix
+
+\section{{{APPENDIX_A_TITLE}}}
+
+{{APPENDIX_A_CONTENT}}
+
+\end{document}

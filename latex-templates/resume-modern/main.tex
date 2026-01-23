@@ -1,0 +1,179 @@
+%% Modern Resume Template
+%% Clean, professional one-page resume design
+%%
+%% Placeholders use {{PLACEHOLDER}} syntax for easy substitution
+
+\documentclass[11pt,a4paper]{article}
+
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[margin=0.75in]{geometry}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{fontawesome5}
+\usepackage{tabularx}
+\usepackage{multicol}
+
+% Colors
+\definecolor{primary}{RGB}{0,51,102}
+\definecolor{secondary}{RGB}{102,102,102}
+\definecolor{accent}{RGB}{0,102,153}
+
+% Hyperref setup
+\hypersetup{
+    colorlinks=true,
+    linkcolor=accent,
+    urlcolor=accent,
+    pdfauthor={{{NAME}}},
+    pdftitle={Resume - {{NAME}}}
+}
+
+% Remove page numbers
+\pagenumbering{gobble}
+
+% Section formatting
+\titleformat{\section}
+    {\Large\bfseries\color{primary}}
+    {}
+    {0em}
+    {}
+    [\titlerule]
+
+\titlespacing{\section}{0pt}{12pt}{8pt}
+
+% Custom commands
+\newcommand{\resumeheader}[6]{
+    \begin{center}
+        {\Huge\bfseries\color{primary} #1}\\[8pt]
+        {\large\color{secondary} #2}\\[6pt]
+        \begin{tabular}{c c c c}
+            \faEnvelope\ #3 &
+            \faPhone\ #4 &
+            \faLinkedin\ #5 &
+            \faMapMarker*\ #6
+        \end{tabular}
+    \end{center}
+}
+
+\newcommand{\experienceitem}[4]{
+    \textbf{#1} \hfill \textit{#2}\\
+    \textit{#3} \hfill #4
+}
+
+\newcommand{\educationitem}[4]{
+    \textbf{#1} \hfill #2\\
+    \textit{#3} \hfill #4
+}
+
+% List settings
+\setlist[itemize]{leftmargin=*, nosep, topsep=2pt}
+
+\begin{document}
+
+% Header
+\resumeheader
+    {{{NAME}}}
+    {{{PROFESSIONAL_TITLE}}}
+    {{{EMAIL}}}
+    {{{PHONE}}}
+    {{{LINKEDIN}}}
+    {{{LOCATION}}}
+
+\vspace{8pt}
+
+% Professional Summary
+\section{Professional Summary}
+{{PROFESSIONAL_SUMMARY}}
+
+% Experience
+\section{Professional Experience}
+
+\experienceitem
+    {{{JOB_TITLE_1}}}
+    {{{COMPANY_1}}}
+    {{{EMPLOYMENT_TYPE_1}}}
+    {{{DATE_RANGE_1}}}
+\begin{itemize}
+    \item {{ACHIEVEMENT_1_1}}
+    \item {{ACHIEVEMENT_1_2}}
+    \item {{ACHIEVEMENT_1_3}}
+\end{itemize}
+
+\vspace{8pt}
+
+\experienceitem
+    {{{JOB_TITLE_2}}}
+    {{{COMPANY_2}}}
+    {{{EMPLOYMENT_TYPE_2}}}
+    {{{DATE_RANGE_2}}}
+\begin{itemize}
+    \item {{ACHIEVEMENT_2_1}}
+    \item {{ACHIEVEMENT_2_2}}
+    \item {{ACHIEVEMENT_2_3}}
+\end{itemize}
+
+\vspace{8pt}
+
+\experienceitem
+    {{{JOB_TITLE_3}}}
+    {{{COMPANY_3}}}
+    {{{EMPLOYMENT_TYPE_3}}}
+    {{{DATE_RANGE_3}}}
+\begin{itemize}
+    \item {{ACHIEVEMENT_3_1}}
+    \item {{ACHIEVEMENT_3_2}}
+\end{itemize}
+
+% Education
+\section{Education}
+
+\educationitem
+    {{{DEGREE_1}}}
+    {{{GRADUATION_DATE_1}}}
+    {{{UNIVERSITY_1}}}
+    {GPA: {{GPA_1}}}
+\begin{itemize}
+    \item {{EDUCATION_DETAIL_1}}
+\end{itemize}
+
+\vspace{4pt}
+
+\educationitem
+    {{{DEGREE_2}}}
+    {{{GRADUATION_DATE_2}}}
+    {{{UNIVERSITY_2}}}
+    {}
+
+% Skills
+\section{Skills}
+
+\begin{tabularx}{\textwidth}{@{}l X@{}}
+    \textbf{Technical:} & {{TECHNICAL_SKILLS}} \\[4pt]
+    \textbf{Tools:} & {{TOOLS}} \\[4pt]
+    \textbf{Languages:} & {{LANGUAGES}} \\[4pt]
+    \textbf{Soft Skills:} & {{SOFT_SKILLS}}
+\end{tabularx}
+
+% Projects (Optional Section)
+\section{Projects}
+
+\textbf{{{PROJECT_1_NAME}}} \hfill {{PROJECT_1_DATE}}\\
+{{PROJECT_1_DESCRIPTION}}
+
+\vspace{4pt}
+
+\textbf{{{PROJECT_2_NAME}}} \hfill {{PROJECT_2_DATE}}\\
+{{PROJECT_2_DESCRIPTION}}
+
+% Certifications (Optional Section)
+\section{Certifications}
+\begin{itemize}
+    \item {{CERTIFICATION_1}} -- {{CERTIFICATION_1_DATE}}
+    \item {{CERTIFICATION_2}} -- {{CERTIFICATION_2_DATE}}
+\end{itemize}
+
+\end{document}

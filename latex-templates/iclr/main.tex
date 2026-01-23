@@ -1,0 +1,297 @@
+% ICLR Conference Paper Template
+% International Conference on Learning Representations
+% OpenReview submission format
+
+\documentclass{article}
+
+% Required ICLR style file
+\usepackage{iclr2025_conference}      % Update year as needed
+% Options:
+% \usepackage[final]{iclr2025_conference}     % Final (camera-ready) version
+% \usepackage[preprint]{iclr2025_conference}  % Preprint (arXiv) version
+
+% Required packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{booktabs}                 % Better tables
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{nicefrac}                 % Compact fractions
+\usepackage{microtype}                % Better typography
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{subcaption}               % Subfigures
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+% Custom commands (common in ML papers)
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\argmax}{\operatorname{argmax}}
+\newcommand{\argmin}{\operatorname{argmin}}
+
+%==============================================================================
+% DOCUMENT METADATA
+%==============================================================================
+
+\title{{{TITLE}}}
+
+% Authors for initial submission (anonymous)
+\author{Anonymous}
+
+% Authors for camera-ready (uncomment and fill in):
+% \author{
+%     {{AUTHOR_1}} \\
+%     {{AFFILIATION_1}} \\
+%     \texttt{{{EMAIL_1}}} \\
+%     \And
+%     {{AUTHOR_2}} \\
+%     {{AFFILIATION_2}} \\
+%     \texttt{{{EMAIL_2}}} \\
+%     \And
+%     {{AUTHOR_3}} \\
+%     {{AFFILIATION_3}} \\
+%     \texttt{{{EMAIL_3}}}
+% }
+
+% For more authors, use \AND between author blocks:
+% \AND is used for a new row of authors
+
+\iclrfinalcopy  % Uncomment for camera-ready version
+
+\begin{document}
+
+\maketitle
+
+%==============================================================================
+% ABSTRACT
+%==============================================================================
+
+\begin{abstract}
+{{ABSTRACT}}
+\end{abstract}
+
+%==============================================================================
+% INTRODUCTION
+%==============================================================================
+
+\section{Introduction}
+\label{sec:introduction}
+
+{{INTRODUCTION}}
+
+% ICLR papers typically include:
+% - Clear problem statement
+% - Summary of contributions (often as a bulleted list)
+% - Brief overview of approach
+% - Paper organization (optional)
+
+\textbf{Contributions.} Our main contributions are:
+\begin{itemize}
+    \item {{CONTRIBUTION_1}}
+    \item {{CONTRIBUTION_2}}
+    \item {{CONTRIBUTION_3}}
+\end{itemize}
+
+%==============================================================================
+% RELATED WORK
+%==============================================================================
+
+\section{Related Work}
+\label{sec:related}
+
+{{RELATED_WORK}}
+
+\paragraph{{{RELATED_TOPIC_1}}}
+{{RELATED_TOPIC_1_CONTENT}}
+
+\paragraph{{{RELATED_TOPIC_2}}}
+{{RELATED_TOPIC_2_CONTENT}}
+
+%==============================================================================
+% BACKGROUND / PRELIMINARIES
+%==============================================================================
+
+\section{Background}
+\label{sec:background}
+
+{{BACKGROUND}}
+
+\subsection{Problem Formulation}
+\label{sec:problem}
+
+{{PROBLEM_FORMULATION}}
+
+\subsection{Notation}
+\label{sec:notation}
+
+{{NOTATION}}
+
+%==============================================================================
+% METHOD / APPROACH
+%==============================================================================
+
+\section{Method}
+\label{sec:method}
+
+{{METHOD_OVERVIEW}}
+
+\subsection{{{METHOD_SECTION_1}}}
+\label{sec:method1}
+
+{{METHOD_SECTION_1_CONTENT}}
+
+\subsection{{{METHOD_SECTION_2}}}
+\label{sec:method2}
+
+{{METHOD_SECTION_2_CONTENT}}
+
+\subsection{{{METHOD_SECTION_3}}}
+\label{sec:method3}
+
+{{METHOD_SECTION_3_CONTENT}}
+
+% Example algorithm:
+% \begin{algorithm}
+%     \caption{{{ALGORITHM_NAME}}}
+%     \label{alg:method}
+%     \begin{algorithmic}[1]
+%         \REQUIRE Input data $\mathcal{D}$, hyperparameters $\theta$
+%         \ENSURE Trained model $f$
+%         \STATE Initialize model parameters
+%         \FOR{epoch $= 1$ to $T$}
+%             \FOR{batch $\mathcal{B}$ in $\mathcal{D}$}
+%                 \STATE Compute loss $\mathcal{L}(\mathcal{B}; \theta)$
+%                 \STATE Update parameters via gradient descent
+%             \ENDFOR
+%         \ENDFOR
+%         \RETURN $f$
+%     \end{algorithmic}
+% \end{algorithm}
+
+%==============================================================================
+% THEORETICAL ANALYSIS (optional)
+%==============================================================================
+
+\section{Theoretical Analysis}
+\label{sec:theory}
+
+{{THEORETICAL_ANALYSIS}}
+
+%==============================================================================
+% EXPERIMENTS
+%==============================================================================
+
+\section{Experiments}
+\label{sec:experiments}
+
+{{EXPERIMENTS_OVERVIEW}}
+
+\subsection{Experimental Setup}
+\label{sec:setup}
+
+\paragraph{Datasets}
+{{DATASETS}}
+
+\paragraph{Baselines}
+{{BASELINES}}
+
+\paragraph{Implementation Details}
+{{IMPLEMENTATION_DETAILS}}
+
+\subsection{Main Results}
+\label{sec:results}
+
+{{MAIN_RESULTS}}
+
+% Example results table:
+% \begin{table}[t]
+%     \caption{{{TABLE_1_CAPTION}}}
+%     \label{tab:main_results}
+%     \centering
+%     \begin{tabular}{lccc}
+%         \toprule
+%         Method & Dataset 1 & Dataset 2 & Dataset 3 \\
+%         \midrule
+%         Baseline 1 & 85.2 & 78.4 & 91.1 \\
+%         Baseline 2 & 87.1 & 80.2 & 92.3 \\
+%         \textbf{Ours} & \textbf{89.5} & \textbf{83.7} & \textbf{94.2} \\
+%         \bottomrule
+%     \end{tabular}
+% \end{table}
+
+\subsection{Ablation Studies}
+\label{sec:ablation}
+
+{{ABLATION_STUDIES}}
+
+\subsection{Analysis}
+\label{sec:analysis}
+
+{{ANALYSIS}}
+
+%==============================================================================
+% DISCUSSION
+%==============================================================================
+
+\section{Discussion}
+\label{sec:discussion}
+
+{{DISCUSSION}}
+
+\paragraph{Limitations}
+{{LIMITATIONS}}
+
+\paragraph{Broader Impact}
+{{BROADER_IMPACT}}
+
+%==============================================================================
+% CONCLUSION
+%==============================================================================
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+{{CONCLUSION}}
+
+%==============================================================================
+% ACKNOWLEDGMENTS (only in camera-ready)
+%==============================================================================
+
+% Uncomment for camera-ready version:
+% \section*{Acknowledgments}
+% {{ACKNOWLEDGMENTS}}
+
+%==============================================================================
+% REFERENCES
+%==============================================================================
+
+\bibliography{references}
+\bibliographystyle{iclr2025_conference}
+
+%==============================================================================
+% APPENDIX
+%==============================================================================
+
+\appendix
+
+\section{Additional Experimental Details}
+\label{app:details}
+
+{{APPENDIX_DETAILS}}
+
+\section{Additional Results}
+\label{app:results}
+
+{{APPENDIX_RESULTS}}
+
+\section{Proofs}
+\label{app:proofs}
+
+{{APPENDIX_PROOFS}}
+
+\end{document}

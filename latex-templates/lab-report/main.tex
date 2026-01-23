@@ -1,0 +1,307 @@
+% Scientific Lab Report Template
+% For undergraduate and graduate laboratory courses
+%
+% Compile with: pdflatex main.tex
+%               bibtex main
+%               pdflatex main.tex
+%               pdflatex main.tex
+
+\documentclass[12pt,a4paper]{article}
+
+% Essential packages
+\usepackage[margin=1in]{geometry}
+\usepackage{times}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{siunitx}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{hyperref}
+\usepackage{natbib}
+\usepackage{setspace}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+% Configure siunitx
+\sisetup{
+    separate-uncertainty = true,
+    multi-part-units = single,
+}
+
+% Page style
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{{{COURSE_CODE}} - Lab Report}
+\lhead{{{AUTHOR}}}
+\rfoot{Page \thepage\ of \pageref{LastPage}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% Line spacing
+\onehalfspacing
+
+% Title page information
+\title{
+    \textbf{{{TITLE}}} \\
+    \vspace{0.5cm}
+    \large {{COURSE_CODE}}: {{COURSE_NAME}} \\
+    Lab Section: {{LAB_SECTION}}
+}
+
+\author{
+    {{AUTHOR}} \\
+    Student ID: {{STUDENT_ID}} \\
+    Lab Partner(s): {{LAB_PARTNERS}} \\
+    \\
+    Instructor: {{INSTRUCTOR}} \\
+    Teaching Assistant: {{TA_NAME}}
+}
+
+\date{
+    Experiment Performed: {{EXPERIMENT_DATE}} \\
+    Report Submitted: {{SUBMISSION_DATE}}
+}
+
+\begin{document}
+
+% Title page
+\maketitle
+\thispagestyle{empty}
+\newpage
+
+% Abstract
+\begin{abstract}
+{{ABSTRACT}}
+\end{abstract}
+
+\section{Introduction}
+
+\subsection{Background}
+
+The purpose of this experiment is to investigate {{EXPERIMENT_PURPOSE}}. Understanding this phenomenon is important because {{IMPORTANCE_STATEMENT}}.
+
+The theoretical background for this experiment is based on the principle that {{THEORY_DESCRIPTION}}. According to established scientific principles \citep{serway2018physics}, the relationship can be expressed as:
+
+\begin{equation}
+    {{EQUATION_VARIABLE}} = {{EQUATION_EXPRESSION}}
+    \label{eq:main}
+\end{equation}
+
+where:
+\begin{itemize}
+    \item ${{VARIABLE_1}}$ = {{VARIABLE_1_DESCRIPTION}} [{{VARIABLE_1_UNITS}}]
+    \item ${{VARIABLE_2}}$ = {{VARIABLE_2_DESCRIPTION}} [{{VARIABLE_2_UNITS}}]
+    \item ${{VARIABLE_3}}$ = {{VARIABLE_3_DESCRIPTION}} [{{VARIABLE_3_UNITS}}]
+\end{itemize}
+
+\subsection{Objectives}
+
+The specific objectives of this experiment are:
+\begin{enumerate}
+    \item To measure {{OBJECTIVE_1}}
+    \item To determine the relationship between {{OBJECTIVE_2}}
+    \item To verify the theoretical predictions for {{OBJECTIVE_3}}
+    \item To develop skills in {{OBJECTIVE_4}}
+\end{enumerate}
+
+\subsection{Hypothesis}
+
+Based on the theoretical background, we hypothesize that {{HYPOTHESIS}}.
+
+\section{Materials and Methods}
+
+\subsection{Materials}
+
+The following equipment and materials were used:
+\begin{itemize}
+    \item {{EQUIPMENT_1}} ({{EQUIPMENT_1_SPECS}})
+    \item {{EQUIPMENT_2}} ({{EQUIPMENT_2_SPECS}})
+    \item {{EQUIPMENT_3}} ({{EQUIPMENT_3_SPECS}})
+    \item {{MATERIAL_1}}
+    \item {{MATERIAL_2}}
+    \item Stopwatch (resolution: \SI{0.01}{\second})
+    \item Digital balance (precision: \SI{0.01}{\gram})
+    \item Meter stick (precision: \SI{1}{\milli\meter})
+\end{itemize}
+
+\subsection{Experimental Setup}
+
+Figure~\ref{fig:setup} shows the experimental apparatus used in this investigation.
+
+\begin{figure}[H]
+    \centering
+    % \includegraphics[width=0.7\textwidth]{figures/setup.png}
+    \fbox{\parbox{0.7\textwidth}{\centering\vspace{3cm}[Diagram of experimental setup]\vspace{3cm}}}
+    \caption{Schematic diagram of the experimental setup showing {{SETUP_DESCRIPTION}}.}
+    \label{fig:setup}
+\end{figure}
+
+\subsection{Procedure}
+
+The experiment was conducted according to the following procedure:
+
+\begin{enumerate}
+    \item The apparatus was assembled as shown in Figure~\ref{fig:setup}.
+    \item {{PROCEDURE_STEP_1}}
+    \item {{PROCEDURE_STEP_2}}
+    \item {{PROCEDURE_STEP_3}}
+    \item {{PROCEDURE_STEP_4}}
+    \item Each measurement was repeated three times to ensure reproducibility.
+    \item All data were recorded in the laboratory notebook.
+\end{enumerate}
+
+\subsection{Safety Considerations}
+
+The following safety precautions were observed:
+\begin{itemize}
+    \item {{SAFETY_1}}
+    \item {{SAFETY_2}}
+    \item Appropriate personal protective equipment was worn throughout the experiment.
+\end{itemize}
+
+\section{Results}
+
+\subsection{Raw Data}
+
+Table~\ref{tab:raw_data} presents the raw data collected during the experiment.
+
+\begin{table}[H]
+    \centering
+    \caption{Raw experimental data collected during the investigation.}
+    \label{tab:raw_data}
+    \begin{tabular}{cccc}
+        \toprule
+        \textbf{Trial} & \textbf{{{COLUMN_1}} ({{UNITS_1}})} & \textbf{{{COLUMN_2}} ({{UNITS_2}})} & \textbf{{{COLUMN_3}} ({{UNITS_3}})} \\
+        \midrule
+        1 & {{DATA_1_1}} & {{DATA_1_2}} & {{DATA_1_3}} \\
+        2 & {{DATA_2_1}} & {{DATA_2_2}} & {{DATA_2_3}} \\
+        3 & {{DATA_3_1}} & {{DATA_3_2}} & {{DATA_3_3}} \\
+        4 & {{DATA_4_1}} & {{DATA_4_2}} & {{DATA_4_3}} \\
+        5 & {{DATA_5_1}} & {{DATA_5_2}} & {{DATA_5_3}} \\
+        \midrule
+        Mean & {{MEAN_1}} & {{MEAN_2}} & {{MEAN_3}} \\
+        Std Dev & {{STD_1}} & {{STD_2}} & {{STD_3}} \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection{Calculated Results}
+
+Using equation~\eqref{eq:main} and the measured values, the following calculations were performed:
+
+\begin{equation}
+    {{CALCULATED_RESULT}} = {{CALCULATION_EXPRESSION}} = {{FINAL_VALUE}} \pm {{UNCERTAINTY}} \text{ {{RESULT_UNITS}}}
+\end{equation}
+
+The percent error compared to the accepted value is:
+
+\begin{equation}
+    \text{Percent Error} = \frac{|{{EXPERIMENTAL_VALUE}} - {{ACCEPTED_VALUE}}|}{{{ACCEPTED_VALUE}}} \times 100\% = {{PERCENT_ERROR}}\%
+\end{equation}
+
+\subsection{Graphical Analysis}
+
+Figure~\ref{fig:graph} shows the relationship between {{X_VARIABLE}} and {{Y_VARIABLE}}.
+
+\begin{figure}[H]
+    \centering
+    % \includegraphics[width=0.8\textwidth]{figures/graph.png}
+    \fbox{\parbox{0.8\textwidth}{\centering\vspace{5cm}[Graph showing {{X_VARIABLE}} vs {{Y_VARIABLE}}]\vspace{5cm}}}
+    \caption{Plot of {{Y_VARIABLE}} as a function of {{X_VARIABLE}}. The linear fit yields a slope of {{SLOPE}} $\pm$ {{SLOPE_ERROR}} and $R^2$ = {{R_SQUARED}}.}
+    \label{fig:graph}
+\end{figure}
+
+The linear regression analysis yields:
+\begin{itemize}
+    \item Slope: {{SLOPE}} $\pm$ {{SLOPE_ERROR}} {{SLOPE_UNITS}}
+    \item Y-intercept: {{INTERCEPT}} $\pm$ {{INTERCEPT_ERROR}} {{INTERCEPT_UNITS}}
+    \item Correlation coefficient ($R^2$): {{R_SQUARED}}
+\end{itemize}
+
+\section{Discussion}
+
+\subsection{Analysis of Results}
+
+The experimental results {{SUPPORT_OR_REFUTE}} the initial hypothesis. The measured value of {{MEASURED_QUANTITY}} (\SI{{{MEASURED_VALUE}}}{{MEASURED_UNITS}}}) compares {{FAVORABLY_OR_UNFAVORABLY}} with the theoretical prediction (\SI{{{THEORETICAL_VALUE}}}{{THEORETICAL_UNITS}}}).
+
+The percent error of {{PERCENT_ERROR}}\% indicates {{ERROR_INTERPRETATION}}. Several factors may contribute to this discrepancy:
+
+\begin{enumerate}
+    \item \textbf{Systematic errors:} {{SYSTEMATIC_ERROR_DISCUSSION}}
+    \item \textbf{Random errors:} {{RANDOM_ERROR_DISCUSSION}}
+    \item \textbf{Instrumental limitations:} {{INSTRUMENTAL_ERROR_DISCUSSION}}
+\end{enumerate}
+
+\subsection{Sources of Error}
+
+The main sources of uncertainty in this experiment include:
+
+\begin{itemize}
+    \item Measurement uncertainty in {{ERROR_SOURCE_1}} ($\pm$ {{UNCERTAINTY_1}})
+    \item {{ERROR_SOURCE_2}}
+    \item Environmental factors such as {{ENVIRONMENTAL_FACTOR}}
+\end{itemize}
+
+\subsection{Comparison with Theory}
+
+The relationship observed in Figure~\ref{fig:graph} demonstrates {{RELATIONSHIP_DESCRIPTION}}. This is consistent with the theoretical model described in the introduction, which predicts a {{PREDICTED_RELATIONSHIP}} relationship.
+
+\subsection{Improvements}
+
+Future experiments could be improved by:
+\begin{enumerate}
+    \item {{IMPROVEMENT_1}}
+    \item {{IMPROVEMENT_2}}
+    \item Using more precise measuring instruments
+    \item Increasing the number of trials
+\end{enumerate}
+
+\section{Conclusion}
+
+This experiment successfully {{CONCLUSION_SUMMARY}}. The key findings include:
+
+\begin{enumerate}
+    \item {{FINDING_1}}
+    \item {{FINDING_2}}
+    \item The experimental results agree with theoretical predictions within {{AGREEMENT_PERCENT}}\%.
+\end{enumerate}
+
+The hypothesis was {{CONFIRMED_OR_REJECTED}} based on the experimental evidence. The skills developed during this experiment include {{SKILLS_DEVELOPED}}.
+
+\section*{Acknowledgments}
+
+{{ACKNOWLEDGMENTS}}
+
+\newpage
+\bibliography{references}
+\bibliographystyle{plain}
+
+\newpage
+\appendix
+\section{Sample Calculations}
+\label{app:calculations}
+
+\textbf{Example calculation for {{CALCULATED_QUANTITY}}:}
+
+Given:
+\begin{itemize}
+    \item ${{GIVEN_VAR_1}}$ = {{GIVEN_VALUE_1}} {{GIVEN_UNITS_1}}
+    \item ${{GIVEN_VAR_2}}$ = {{GIVEN_VALUE_2}} {{GIVEN_UNITS_2}}
+\end{itemize}
+
+Calculation:
+\begin{align}
+    {{CALC_VARIABLE}} &= {{CALC_FORMULA}} \\
+    &= {{CALC_SUBSTITUTION}} \\
+    &= {{CALC_RESULT}} \text{ {{CALC_UNITS}}}
+\end{align}
+
+\section{Raw Data Tables}
+\label{app:rawdata}
+
+[Include original data sheets or additional data tables here]
+
+\end{document}

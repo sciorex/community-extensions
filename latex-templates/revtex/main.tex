@@ -1,0 +1,246 @@
+% RevTeX 4.2 Template for APS/AIP Physics Journals
+% Physical Review Letters, Physical Review A-E, Physical Review X, etc.
+% RevTeX is included in most TeX distributions
+
+\documentclass[
+    aps,                              % American Physical Society
+    prl,                              % Physical Review Letters (change to pra, prb, prc, prd, pre, prx as needed)
+    twocolumn,                        % Two-column format
+    superscriptaddress,               % Affiliations as superscripts
+    showpacs,                         % Show PACS numbers
+    showkeys,                         % Show keywords
+    reprint                           % Reprint format
+]{revtex4-2}
+
+% Alternative journal options:
+% aps,prl  - Physical Review Letters
+% aps,pra  - Physical Review A (Atomic, Molecular, Optical)
+% aps,prb  - Physical Review B (Condensed Matter)
+% aps,prc  - Physical Review C (Nuclear)
+% aps,prd  - Physical Review D (Particles, Fields, Gravitation)
+% aps,pre  - Physical Review E (Statistical, Nonlinear, Soft Matter)
+% aps,prx  - Physical Review X
+% aip,jcp  - Journal of Chemical Physics
+% aip,apl  - Applied Physics Letters
+
+% Required packages
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{bm}                       % Bold math
+\usepackage{siunitx}                  % SI units
+\usepackage{physics}                  % Physics notation (optional)
+
+% Hyperref setup
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    urlcolor=blue
+}
+
+%==============================================================================
+% DOCUMENT METADATA
+%==============================================================================
+
+\begin{document}
+
+\preprint{APS/123-QED}                % Preprint number (optional)
+
+\title{{{TITLE}}}
+
+% Authors with affiliations
+\author{{{AUTHOR_1}}}
+\email{{{AUTHOR_1_EMAIL}}}
+\affiliation{{{AFFILIATION_1}}}
+
+\author{{{AUTHOR_2}}}
+\affiliation{{{AFFILIATION_2}}}
+
+\author{{{AUTHOR_3}}}
+\affiliation{{{AFFILIATION_1}}}
+\affiliation{{{AFFILIATION_2}}}       % Multiple affiliations
+
+% Collaboration (for large collaborations)
+% \collaboration{The Example Collaboration}
+
+\date{\today}
+
+%==============================================================================
+% ABSTRACT
+%==============================================================================
+
+\begin{abstract}
+{{ABSTRACT}}
+\end{abstract}
+
+%==============================================================================
+% PACS AND KEYWORDS
+%==============================================================================
+
+% PACS numbers (Physics and Astronomy Classification Scheme)
+% Find codes at: https://journals.aps.org/PACS
+\pacs{{{PACS_NUMBERS}}}
+% Example: 03.67.-a, 42.50.Dv, 73.21.La
+
+\keywords{{{KEYWORDS}}}
+
+\maketitle
+
+%==============================================================================
+% INTRODUCTION
+%==============================================================================
+
+\section{Introduction}
+\label{sec:introduction}
+
+{{INTRODUCTION}}
+
+%==============================================================================
+% THEORETICAL FRAMEWORK / MODEL
+%==============================================================================
+
+\section{Theoretical Framework}
+\label{sec:theory}
+
+{{THEORY}}
+
+% Example equation:
+% The Hamiltonian of the system is given by
+% \begin{equation}
+%     \hat{H} = \sum_{i} \frac{\hat{p}_i^2}{2m} + \sum_{i<j} V(|\mathbf{r}_i - \mathbf{r}_j|),
+%     \label{eq:hamiltonian}
+% \end{equation}
+% where $\hat{p}_i$ is the momentum operator and $V$ is the interaction potential.
+
+\subsection{{{THEORY_SUBSECTION_1}}}
+
+{{THEORY_SUBSECTION_1_CONTENT}}
+
+\subsection{{{THEORY_SUBSECTION_2}}}
+
+{{THEORY_SUBSECTION_2_CONTENT}}
+
+%==============================================================================
+% EXPERIMENTAL METHODS / NUMERICAL METHODS
+%==============================================================================
+
+\section{Methods}
+\label{sec:methods}
+
+{{METHODS}}
+
+\subsection{Experimental Setup}
+
+{{EXPERIMENTAL_SETUP}}
+
+\subsection{Measurement Procedure}
+
+{{MEASUREMENT_PROCEDURE}}
+
+%==============================================================================
+% RESULTS
+%==============================================================================
+
+\section{Results}
+\label{sec:results}
+
+{{RESULTS}}
+
+% Example figure reference:
+% As shown in Fig.~\ref{fig:results}, the measured values agree with theoretical predictions.
+
+% Example table reference:
+% The numerical results are summarized in Table~\ref{tab:data}.
+
+\subsection{{{RESULTS_SUBSECTION_1}}}
+
+{{RESULTS_SUBSECTION_1_CONTENT}}
+
+\subsection{{{RESULTS_SUBSECTION_2}}}
+
+{{RESULTS_SUBSECTION_2_CONTENT}}
+
+%==============================================================================
+% DISCUSSION
+%==============================================================================
+
+\section{Discussion}
+\label{sec:discussion}
+
+{{DISCUSSION}}
+
+%==============================================================================
+% CONCLUSION
+%==============================================================================
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+{{CONCLUSION}}
+
+%==============================================================================
+% ACKNOWLEDGMENTS
+%==============================================================================
+
+\begin{acknowledgments}
+{{ACKNOWLEDGMENTS}}
+% Example: This work was supported by the National Science Foundation under Grant No. PHY-XXXXXXX.
+\end{acknowledgments}
+
+%==============================================================================
+% APPENDICES (optional)
+%==============================================================================
+
+\appendix
+
+\section{{{APPENDIX_A_TITLE}}}
+\label{app:a}
+
+{{APPENDIX_A_CONTENT}}
+
+%==============================================================================
+% REFERENCES
+%==============================================================================
+
+\bibliography{references}
+
+%==============================================================================
+% FIGURES
+%==============================================================================
+
+% Figures in RevTeX are typically placed at the end for submission
+% They will be positioned appropriately in the final publication
+
+\begin{figure}
+    \centering
+    % \includegraphics[width=\columnwidth]{figure1.pdf}
+    \caption{{{FIGURE_1_CAPTION}}}
+    \label{fig:figure1}
+\end{figure}
+
+\begin{figure}
+    \centering
+    % \includegraphics[width=\columnwidth]{figure2.pdf}
+    \caption{{{FIGURE_2_CAPTION}}}
+    \label{fig:figure2}
+\end{figure}
+
+%==============================================================================
+% TABLES
+%==============================================================================
+
+\begin{table}
+    \caption{{{TABLE_1_CAPTION}}}
+    \label{tab:table1}
+    \begin{ruledtabular}
+    \begin{tabular}{lccc}
+        Parameter & Value & Uncertainty & Unit \\
+        \hline
+        {{TABLE_1_CONTENT}}
+    \end{tabular}
+    \end{ruledtabular}
+\end{table}
+
+\end{document}

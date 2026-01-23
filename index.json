@@ -1,6 +1,6 @@
 {
-  "version": "1.1.0",
-  "lastUpdated": "2026-01-05T00:00:00Z",
+  "version": "1.2.0",
+  "lastUpdated": "2026-01-23T00:00:00Z",
   "agents": [
     {
       "id": "git-committer-a1b2c3d4",
@@ -202,6 +202,358 @@
       "downloadUrl": "flows/scientific-research/scientific-research.json",
       "requiredAgents": ["research-orchestrator-3c4d5e6f", "researcher-9e0f1a2b", "hypothesis-generator-7a8b9c0d", "experiment-planner-1e2f3a4b", "experiment-executor-5c6d7e8f", "verifier-1c2d3e4f", "synthesizer-5a6b7c8d"],
       "updatedAt": "2025-01-01T00:00:00Z"
+    }
+  ],
+  "latexTemplates": [
+    {
+      "id": "ieee-conference",
+      "name": "IEEE Conference Paper",
+      "description": "Professional template for IEEE conference papers with proper formatting, citation support, and standard sections. Ideal for computer science and engineering conferences.",
+      "author": "Sciorex Team",
+      "tags": ["ieee", "conference", "academic", "engineering", "computer-science"],
+      "previewUrl": "latex-templates/ieee/preview.png",
+      "downloadUrl": "latex-templates/ieee",
+      "updatedAt": "2026-01-21T00:00:00Z"
+    },
+    {
+      "id": "acm-sigconf",
+      "name": "ACM Conference Paper",
+      "description": "Official ACM conference paper template (sigconf format) with CCS concepts, proper metadata, and bibliography support. Perfect for ACM conferences and publications.",
+      "author": "Sciorex Team",
+      "tags": ["acm", "conference", "academic", "computer-science", "sigconf"],
+      "previewUrl": "latex-templates/acm/preview.png",
+      "downloadUrl": "latex-templates/acm",
+      "updatedAt": "2026-01-21T00:00:00Z"
+    },
+    {
+      "id": "arxiv-preprint",
+      "name": "arXiv Preprint",
+      "description": "Clean, professional template for arXiv preprints. Compatible with arXiv submission requirements and includes all standard academic paper sections.",
+      "author": "Sciorex Team",
+      "tags": ["arxiv", "preprint", "academic", "research", "physics", "cs"],
+      "previewUrl": "latex-templates/arxiv/preview.png",
+      "downloadUrl": "latex-templates/arxiv",
+      "updatedAt": "2026-01-21T00:00:00Z"
+    },
+    {
+      "id": "basic-article",
+      "name": "Basic Article",
+      "description": "Simple, clean article template for general-purpose documents. Perfect for essays, reports, documentation, or any standard LaTeX document. Easy to customize.",
+      "author": "Sciorex Team",
+      "tags": ["article", "basic", "general", "report", "essay", "documentation"],
+      "previewUrl": "latex-templates/basic-article/preview.png",
+      "downloadUrl": "latex-templates/basic-article",
+      "updatedAt": "2026-01-21T00:00:00Z"
+    },
+    {
+      "id": "beamer-presentation",
+      "name": "Beamer Presentation",
+      "description": "Professional presentation template using Beamer. Includes multiple slide types, blocks, columns, and bibliography support. Perfect for academic and technical presentations.",
+      "author": "Sciorex Team",
+      "tags": ["beamer", "presentation", "slides", "academic", "conference", "talk"],
+      "previewUrl": "latex-templates/beamer/preview.png",
+      "downloadUrl": "latex-templates/beamer",
+      "updatedAt": "2026-01-21T00:00:00Z"
+    },
+    {
+      "id": "springer-lncs",
+      "name": "Springer LNCS",
+      "description": "Official Springer LNCS format for conference proceedings and book chapters. Widely used in computer science conferences.",
+      "author": "Sciorex Team",
+      "tags": ["springer", "lncs", "computer-science", "conference", "book-chapter"],
+      "previewUrl": "latex-templates/springer-lncs/preview.png",
+      "downloadUrl": "latex-templates/springer-lncs",
+      "updatedAt": "2026-01-23T00:00:00Z"
+    },
+    {
+      "id": "neurips",
+      "name": "NeurIPS Conference",
+      "description": "Official NeurIPS conference paper template. The premier venue for machine learning and AI research.",
+      "author": "Sciorex Team",
+      "tags": ["neurips", "nips", "machine-learning", "ai", "deep-learning", "conference"],
+      "previewUrl": "latex-templates/neurips/preview.png",
+      "downloadUrl": "latex-templates/neurips",
+      "updatedAt": "2026-01-23T00:00:00Z"
+    },
+    {
+      "id": "cvpr",
+      "name": "CVPR/ICCV/ECCV",
+      "description": "Template for IEEE Computer Vision conferences (CVPR, ICCV, ECCV, WACV). Standard format for computer vision research.",
+      "author": "Sciorex Team",
+      "tags": ["cvpr", "iccv", "eccv", "computer-vision", "conference", "ieee"],
+      "previewUrl": "latex-templates/cvpr/preview.png",
+      "downloadUrl": "latex-templates/cvpr",
+      "updatedAt": "2026-01-23T00:00:00Z"
+    },
+    {
+      "id": "phd-thesis",
+      "name": "PhD Thesis",
+      "description": "Complete PhD thesis/dissertation template with front matter, chapters, appendices, and bibliography. Customizable for different university requirements.",
+      "author": "Sciorex Team",
+      "tags": ["thesis", "phd", "dissertation", "academic", "graduate"],
+      "previewUrl": "latex-templates/phd-thesis/preview.png",
+      "downloadUrl": "latex-templates/phd-thesis",
+      "updatedAt": "2026-01-23T00:00:00Z"
+    },
+    {
+      "id": "academic-cv",
+      "name": "Academic CV",
+      "description": "Comprehensive academic CV template for faculty positions, grants, and academic applications. Includes sections for publications, teaching, grants, and service.",
+      "author": "Sciorex Team",
+      "tags": ["cv", "curriculum-vitae", "academic", "resume", "career"],
+      "previewUrl": "latex-templates/academic-cv/preview.png",
+      "downloadUrl": "latex-templates/academic-cv",
+      "updatedAt": "2026-01-23T00:00:00Z"
+    },
+    {
+      "id": "elsevier-article",
+      "name": "Elsevier Journal Article",
+      "description": "Standard Elsevier journal article format. Used by hundreds of Elsevier journals across all scientific disciplines.",
+      "author": "Sciorex Team",
+      "tags": ["elsevier", "journal", "academic", "science", "multi-disciplinary"],
+      "previewUrl": "latex-templates/elsevier-article/preview.png",
+      "downloadUrl": "latex-templates/elsevier-article",
+      "updatedAt": "2026-01-23T00:00:00Z"
+    },
+    {
+      "id": "masters-thesis",
+      "name": "Master's Thesis",
+      "description": "Master's thesis template - shorter than PhD but with similar structure. Suitable for MS, MA, MEng degrees.",
+      "author": "Sciorex Team",
+      "tags": ["thesis", "masters", "dissertation", "academic", "graduate"],
+      "previewUrl": "latex-templates/masters-thesis/preview.png",
+      "downloadUrl": "latex-templates/masters-thesis",
+      "updatedAt": "2026-01-23T00:00:00Z"
+    },
+    {
+      "id": "research-proposal",
+      "name": "Research Proposal",
+      "description": "Research or grant proposal template. Suitable for PhD proposals, grant applications, or project proposals.",
+      "author": "Sciorex Team",
+      "tags": ["proposal", "grant", "funding", "research", "academic"],
+      "previewUrl": "latex-templates/research-proposal/preview.png",
+      "downloadUrl": "latex-templates/research-proposal",
+      "updatedAt": "2026-01-23T00:00:00Z"
+    },
+    {
+      "id": "poster-a0",
+      "name": "Conference Poster (A0)",
+      "description": "A0-sized conference poster template with clean multi-column layout. Suitable for academic conferences and symposiums.",
+      "author": "Sciorex Team",
+      "tags": ["poster", "conference", "presentation", "a0", "academic"],
+      "previewUrl": "latex-templates/poster-a0/preview.png",
+      "downloadUrl": "latex-templates/poster-a0",
+      "updatedAt": "2026-01-23T00:00:00Z"
+    },
+    {
+      "id": "beamer-metropolis",
+      "name": "Beamer Metropolis",
+      "description": "Modern, minimal presentation theme using the popular Metropolis theme. Clean typography and professional appearance.",
+      "author": "Sciorex Team",
+      "tags": ["beamer", "presentation", "slides", "metropolis", "modern", "minimal"],
+      "previewUrl": "latex-templates/beamer-metropolis/preview.png",
+      "downloadUrl": "latex-templates/beamer-metropolis",
+      "updatedAt": "2026-01-23T00:00:00Z"
+    },
+    {
+      "id": "nature",
+      "name": "Nature Journal",
+      "description": "Template following Nature journal style guidelines. For high-impact scientific research across disciplines.",
+      "author": "Sciorex Team",
+      "tags": ["nature", "journal", "science", "biology", "high-impact"],
+      "previewUrl": "latex-templates/nature/preview.png",
+      "downloadUrl": "latex-templates/nature",
+      "updatedAt": "2026-01-23T00:00:00Z"
+    },
+    {
+      "id": "apa7",
+      "name": "APA 7th Edition",
+      "description": "APA 7th Edition format for psychology, education, and social sciences. Includes proper heading levels, in-text citations, and reference formatting.",
+      "author": "Sciorex Team",
+      "tags": ["apa", "psychology", "social-science", "education", "journal"],
+      "previewUrl": "latex-templates/apa7/preview.png",
+      "downloadUrl": "latex-templates/apa7",
+      "updatedAt": "2026-01-23T00:00:00Z"
+    },
+    {
+      "id": "revtex",
+      "name": "APS/RevTeX (Physics)",
+      "description": "RevTeX 4.2 template for APS journals (Physical Review Letters, Physical Review A-E, etc.).",
+      "author": "Sciorex Team",
+      "tags": ["aps", "physics", "revtex", "physical-review", "journal"],
+      "previewUrl": "latex-templates/revtex/preview.png",
+      "downloadUrl": "latex-templates/revtex",
+      "updatedAt": "2026-01-23T00:00:00Z"
+    },
+    {
+      "id": "iclr",
+      "name": "ICLR Conference",
+      "description": "ICLR conference paper template. Top venue for deep learning research with OpenReview submission format.",
+      "author": "Sciorex Team",
+      "tags": ["iclr", "deep-learning", "conference", "ai", "machine-learning"],
+      "previewUrl": "latex-templates/iclr/preview.png",
+      "downloadUrl": "latex-templates/iclr",
+      "updatedAt": "2026-01-23T00:00:00Z"
+    },
+    {
+      "id": "literature-review",
+      "name": "Literature Review",
+      "description": "Structured literature review or survey paper template. Useful for comprehensive reviews of research areas.",
+      "author": "Sciorex Team",
+      "tags": ["literature-review", "survey", "academic", "research"],
+      "previewUrl": "latex-templates/literature-review/preview.png",
+      "downloadUrl": "latex-templates/literature-review",
+      "updatedAt": "2026-01-23T00:00:00Z"
+    },
+    {
+      "id": "aaai",
+      "name": "AAAI Conference",
+      "description": "AAAI conference paper format. Major AI conference with two-column format.",
+      "author": "Sciorex Team",
+      "tags": ["aaai", "ai", "artificial-intelligence", "conference"],
+      "previewUrl": "latex-templates/aaai/preview.png",
+      "downloadUrl": "latex-templates/aaai",
+      "updatedAt": "2026-01-23T00:00:00Z"
+    },
+    {
+      "id": "jmlr",
+      "name": "JMLR Journal",
+      "description": "JMLR journal article format. Premier open-access machine learning journal.",
+      "author": "Sciorex Team",
+      "tags": ["jmlr", "machine-learning", "journal", "ai"],
+      "previewUrl": "latex-templates/jmlr/preview.png",
+      "downloadUrl": "latex-templates/jmlr",
+      "updatedAt": "2026-01-23T00:00:00Z"
+    },
+    {
+      "id": "acs-article",
+      "name": "ACS Article (Chemistry)",
+      "description": "American Chemical Society journal article format. Standard for chemistry publications.",
+      "author": "Sciorex Team",
+      "tags": ["acs", "chemistry", "journal", "science"],
+      "previewUrl": "latex-templates/acs-article/preview.png",
+      "downloadUrl": "latex-templates/acs-article",
+      "updatedAt": "2026-01-23T00:00:00Z"
+    },
+    {
+      "id": "lab-report",
+      "name": "Lab Report",
+      "description": "Scientific lab report template for undergraduate/graduate courses. Standard experimental report format.",
+      "author": "Sciorex Team",
+      "tags": ["lab", "report", "science", "undergraduate", "experiment"],
+      "previewUrl": "latex-templates/lab-report/preview.png",
+      "downloadUrl": "latex-templates/lab-report",
+      "updatedAt": "2026-01-23T00:00:00Z"
+    },
+    {
+      "id": "technical-report",
+      "name": "Technical Report",
+      "description": "Technical report template for research institutions, companies, or internal documentation.",
+      "author": "Sciorex Team",
+      "tags": ["technical", "report", "documentation", "industry"],
+      "previewUrl": "latex-templates/technical-report/preview.png",
+      "downloadUrl": "latex-templates/technical-report",
+      "updatedAt": "2026-01-23T00:00:00Z"
+    },
+    {
+      "id": "cover-letter",
+      "name": "Cover Letter",
+      "description": "Professional cover letter for job or academic applications.",
+      "author": "Sciorex Team",
+      "tags": ["cover-letter", "job", "application", "professional"],
+      "previewUrl": "latex-templates/cover-letter/preview.png",
+      "downloadUrl": "latex-templates/cover-letter",
+      "updatedAt": "2026-01-23T00:00:00Z"
+    },
+    {
+      "id": "resume-modern",
+      "name": "Modern Resume",
+      "description": "Modern one-page resume with clean design. Suitable for industry positions.",
+      "author": "Sciorex Team",
+      "tags": ["resume", "cv", "job", "modern", "professional"],
+      "previewUrl": "latex-templates/resume-modern/preview.png",
+      "downloadUrl": "latex-templates/resume-modern",
+      "updatedAt": "2026-01-23T00:00:00Z"
+    },
+    {
+      "id": "lecture-notes",
+      "name": "Lecture Notes",
+      "description": "Formatted lecture notes template with theorem environments, examples, and exercises.",
+      "author": "Sciorex Team",
+      "tags": ["lecture", "notes", "teaching", "course", "education"],
+      "previewUrl": "latex-templates/lecture-notes/preview.png",
+      "downloadUrl": "latex-templates/lecture-notes",
+      "updatedAt": "2026-01-23T00:00:00Z"
+    },
+    {
+      "id": "problem-set",
+      "name": "Problem Set / Homework",
+      "description": "Homework/problem set template with clear problem numbering and space for solutions.",
+      "author": "Sciorex Team",
+      "tags": ["homework", "problem-set", "assignment", "teaching", "course"],
+      "previewUrl": "latex-templates/problem-set/preview.png",
+      "downloadUrl": "latex-templates/problem-set",
+      "updatedAt": "2026-01-23T00:00:00Z"
+    },
+    {
+      "id": "exam",
+      "name": "Exam Paper",
+      "description": "Exam/test paper template with instructions, point values, and answer spaces.",
+      "author": "Sciorex Team",
+      "tags": ["exam", "test", "quiz", "teaching", "assessment"],
+      "previewUrl": "latex-templates/exam/preview.png",
+      "downloadUrl": "latex-templates/exam",
+      "updatedAt": "2026-01-23T00:00:00Z"
+    },
+    {
+      "id": "syllabus",
+      "name": "Course Syllabus",
+      "description": "Course syllabus template with schedule, policies, and grading information.",
+      "author": "Sciorex Team",
+      "tags": ["syllabus", "course", "teaching", "education"],
+      "previewUrl": "latex-templates/syllabus/preview.png",
+      "downloadUrl": "latex-templates/syllabus",
+      "updatedAt": "2026-01-23T00:00:00Z"
+    },
+    {
+      "id": "thesis-proposal",
+      "name": "Thesis Proposal",
+      "description": "Thesis/dissertation proposal template for graduate students.",
+      "author": "Sciorex Team",
+      "tags": ["thesis", "proposal", "phd", "masters", "graduate"],
+      "previewUrl": "latex-templates/thesis-proposal/preview.png",
+      "downloadUrl": "latex-templates/thesis-proposal",
+      "updatedAt": "2026-01-23T00:00:00Z"
+    },
+    {
+      "id": "white-paper",
+      "name": "White Paper",
+      "description": "White paper template for policy documents, industry reports, or position papers.",
+      "author": "Sciorex Team",
+      "tags": ["white-paper", "policy", "industry", "report"],
+      "previewUrl": "latex-templates/white-paper/preview.png",
+      "downloadUrl": "latex-templates/white-paper",
+      "updatedAt": "2026-01-23T00:00:00Z"
+    },
+    {
+      "id": "poster-a1",
+      "name": "Conference Poster (A1)",
+      "description": "A1-sized poster for smaller conference presentations or departmental events.",
+      "author": "Sciorex Team",
+      "tags": ["poster", "conference", "a1", "presentation"],
+      "previewUrl": "latex-templates/poster-a1/preview.png",
+      "downloadUrl": "latex-templates/poster-a1",
+      "updatedAt": "2026-01-23T00:00:00Z"
+    },
+    {
+      "id": "acm-chi",
+      "name": "ACM CHI",
+      "description": "ACM CHI conference paper template for Human-Computer Interaction research.",
+      "author": "Sciorex Team",
+      "tags": ["chi", "hci", "acm", "human-computer-interaction", "conference"],
+      "previewUrl": "latex-templates/acm-chi/preview.png",
+      "downloadUrl": "latex-templates/acm-chi",
+      "updatedAt": "2026-01-23T00:00:00Z"
     }
   ],
   "personas": [

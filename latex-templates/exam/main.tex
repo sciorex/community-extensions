@@ -1,0 +1,366 @@
+%% Exam Paper Template
+%% Examination paper with questions, points, and answer spaces
+%%
+%% Placeholders use {{PLACEHOLDER}} syntax for easy substitution
+
+\documentclass[11pt,a4paper]{article}
+
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{tcolorbox}
+\usepackage{graphicx}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{multicol}
+
+% Colors
+\definecolor{headercolor}{RGB}{0,51,102}
+\definecolor{questioncolor}{RGB}{0,51,102}
+\definecolor{answercolor}{RGB}{128,128,128}
+
+% Hyperref setup
+\hypersetup{
+    colorlinks=true,
+    linkcolor=headercolor,
+    urlcolor=headercolor
+}
+
+% Page style
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{{{COURSE_CODE}} - {{EXAM_TYPE}}}
+\fancyhead[R]{{{DATE}}}
+\fancyfoot[L]{{{COURSE_NAME}}}
+\fancyfoot[R]{Page \thepage\ of \pageref{LastPage}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% Question counter
+\newcounter{question}
+\setcounter{question}{0}
+
+% Question environment
+\newenvironment{question}[1]{
+    \refstepcounter{question}
+    \par\vspace{1em}
+    \noindent\textbf{\color{questioncolor}Question \thequestion} \hfill \textbf{[#1 points]}
+    \par\vspace{0.5em}
+    \noindent
+}{
+    \par\vspace{0.5em}
+}
+
+% Subquestion list
+\newlist{subquestions}{enumerate}{2}
+\setlist[subquestions,1]{label=(\alph*),leftmargin=*,topsep=4pt,itemsep=8pt}
+\setlist[subquestions,2]{label=(\roman*),leftmargin=*,topsep=2pt}
+
+% Points for subquestions
+\newcommand{\subpoints}[1]{\hfill\textit{[#1 pts]}}
+
+% Answer space
+\newcommand{\answerspace}[1]{
+    \par\vspace{0.3em}
+    \noindent\textcolor{answercolor}{\textit{Answer:}}
+    \vspace{#1}
+}
+
+% Answer lines
+\newcommand{\answerlines}[1]{
+    \par\vspace{0.3em}
+    \foreach \n in {1,...,#1}{
+        \noindent\hrulefill\par\vspace{0.5em}
+    }
+}
+
+% Answer box
+\newcommand{\answerbox}[2][]{
+    \par\vspace{0.3em}
+    \begin{tcolorbox}[
+        colback=white,
+        colframe=answercolor!50,
+        height=#2,
+        width=\linewidth,
+        valign=top,
+        #1
+    ]
+    \end{tcolorbox}
+}
+
+% Multiple choice
+\newcommand{\choices}[4]{
+    \begin{multicols}{2}
+    \begin{enumerate}[label=\Alph*.,nosep]
+        \item #1
+        \item #2
+        \item #3
+        \item #4
+    \end{enumerate}
+    \end{multicols}
+}
+
+% True/False
+\newcommand{\truefalse}{
+    \hfill $\bigcirc$ True \quad $\bigcirc$ False
+}
+
+% Fill in the blank
+\newcommand{\blank}[1][3cm]{\underline{\hspace{#1}}}
+
+\begin{document}
+
+% ============================================================================
+% COVER PAGE
+% ============================================================================
+
+\thispagestyle{empty}
+
+\begin{center}
+    \vspace*{1cm}
+
+    {\LARGE\bfseries {{INSTITUTION}}}\\[0.5cm]
+    {\Large {{DEPARTMENT}}}\\[1.5cm]
+
+    {\Huge\bfseries\color{headercolor} {{EXAM_TYPE}}}\\[0.5cm]
+    {\LARGE {{COURSE_CODE}}: {{COURSE_NAME}}}\\[0.5cm]
+    {\Large {{SEMESTER}}}\\[2cm]
+
+    \begin{tabular}{|p{4cm}|p{8cm}|}
+        \hline
+        \textbf{Date:} & {{DATE}} \\
+        \hline
+        \textbf{Duration:} & {{DURATION}} \\
+        \hline
+        \textbf{Total Points:} & {{TOTAL_POINTS}} \\
+        \hline
+        \textbf{Instructor:} & {{INSTRUCTOR}} \\
+        \hline
+    \end{tabular}
+
+    \vspace{2cm}
+
+    \fbox{
+        \parbox{0.9\textwidth}{
+            \vspace{0.5cm}
+            \begin{tabular}{p{4cm}p{8cm}}
+                \textbf{Student Name:} & \hrulefill \\[1em]
+                \textbf{Student ID:} & \hrulefill \\[1em]
+                \textbf{Section:} & \hrulefill \\[1em]
+                \textbf{Signature:} & \hrulefill \\
+            \end{tabular}
+            \vspace{0.5cm}
+        }
+    }
+
+    \vspace{1.5cm}
+
+\end{center}
+
+% Grading table
+\begin{center}
+\textbf{FOR GRADER USE ONLY}\\[0.5em]
+\begin{tabular}{|c|c|c|}
+    \hline
+    \textbf{Question} & \textbf{Points} & \textbf{Score} \\
+    \hline
+    1 & {{Q1_POINTS}} & \\
+    \hline
+    2 & {{Q2_POINTS}} & \\
+    \hline
+    3 & {{Q3_POINTS}} & \\
+    \hline
+    4 & {{Q4_POINTS}} & \\
+    \hline
+    5 & {{Q5_POINTS}} & \\
+    \hline
+    \textbf{Total} & \textbf{{{TOTAL_POINTS}}} & \\
+    \hline
+\end{tabular}
+\end{center}
+
+\vspace{1cm}
+
+% Instructions box
+\begin{tcolorbox}[colback=gray!5,colframe=headercolor,title={\textbf{INSTRUCTIONS - READ CAREFULLY}}]
+\begin{enumerate}[nosep]
+    \item {{INSTRUCTION_1}}
+    \item {{INSTRUCTION_2}}
+    \item {{INSTRUCTION_3}}
+    \item {{INSTRUCTION_4}}
+    \item Write your answers clearly in the spaces provided.
+    \item Show all work for partial credit.
+    \item No electronic devices unless otherwise specified.
+    \item {{MATERIALS_ALLOWED}}
+\end{enumerate}
+\end{tcolorbox}
+
+\vfill
+
+\begin{center}
+\textbf{DO NOT OPEN THIS EXAM UNTIL INSTRUCTED TO DO SO}
+\end{center}
+
+\newpage
+
+% ============================================================================
+% EXAM QUESTIONS
+% ============================================================================
+
+\section*{Part A: Multiple Choice}
+\textit{Circle the best answer for each question.}
+
+\begin{question}{{{Q1_POINTS}}}
+{{MC_QUESTION_1}}
+
+\choices
+    {{{MC_1_OPTION_A}}}
+    {{{MC_1_OPTION_B}}}
+    {{{MC_1_OPTION_C}}}
+    {{{MC_1_OPTION_D}}}
+\end{question}
+
+\begin{question}{{{Q1_POINTS}}}
+{{MC_QUESTION_2}}
+
+\choices
+    {{{MC_2_OPTION_A}}}
+    {{{MC_2_OPTION_B}}}
+    {{{MC_2_OPTION_C}}}
+    {{{MC_2_OPTION_D}}}
+\end{question}
+
+\vspace{1cm}
+
+\section*{Part B: True/False}
+\textit{Circle True or False for each statement.}
+
+\begin{question}{{{Q2_POINTS}}}
+{{TF_QUESTION_1}} \truefalse
+\end{question}
+
+\begin{question}{{{Q2_POINTS}}}
+{{TF_QUESTION_2}} \truefalse
+\end{question}
+
+\newpage
+
+\section*{Part C: Short Answer}
+\textit{Answer the following questions in the space provided.}
+
+\begin{question}{{{Q3_POINTS}}}
+{{SHORT_ANSWER_1}}
+
+\answerbox{4cm}
+
+\begin{subquestions}
+    \item {{SHORT_1A}} \subpoints{{{Q3A_POINTS}}}
+    \answerbox{2.5cm}
+
+    \item {{SHORT_1B}} \subpoints{{{Q3B_POINTS}}}
+    \answerbox{2.5cm}
+\end{subquestions}
+\end{question}
+
+\newpage
+
+\section*{Part D: Problem Solving}
+\textit{Show all work for full credit.}
+
+\begin{question}{{{Q4_POINTS}}}
+{{PROBLEM_1}}
+
+Given:
+\begin{itemize}[nosep]
+    \item {{GIVEN_1}}
+    \item {{GIVEN_2}}
+\end{itemize}
+
+Find: {{FIND_1}}
+
+\answerbox{8cm}
+\end{question}
+
+\newpage
+
+\begin{question}{{{Q5_POINTS}}}
+{{PROBLEM_2}}
+
+\begin{subquestions}
+    \item {{PROBLEM_2A}} \subpoints{{{Q5A_POINTS}}}
+    \answerbox{5cm}
+
+    \item {{PROBLEM_2B}} \subpoints{{{Q5B_POINTS}}}
+    \answerbox{5cm}
+
+    \item {{PROBLEM_2C}} \subpoints{{{Q5C_POINTS}}}
+    \answerbox{5cm}
+\end{subquestions}
+\end{question}
+
+\newpage
+
+\section*{Part E: Essay / Long Answer}
+\textit{Answer the following question thoroughly.}
+
+\begin{question}{{{Q6_POINTS}}}
+{{ESSAY_QUESTION}}
+
+\answerbox{12cm}
+
+\textit{Continue on the next page if needed.}
+\end{question}
+
+% ============================================================================
+% EXTRA PAGES
+% ============================================================================
+
+\newpage
+\section*{Additional Space}
+\textit{Use this page for additional work if needed. Clearly indicate which question you are answering.}
+
+\vfill
+
+\begin{center}
+\textbf{--- END OF EXAM ---}
+\end{center}
+
+% ============================================================================
+% FORMULA SHEET (Optional - can be detached)
+% ============================================================================
+
+\newpage
+\section*{Formula Sheet}
+\textit{This page may be detached for reference during the exam.}
+
+\begin{tcolorbox}[colback=white,colframe=headercolor,title={\textbf{Reference Formulas}}]
+\begin{multicols}{2}
+\textbf{{{FORMULA_CATEGORY_1}}}
+\begin{align*}
+    {{FORMULA_1}} \\
+    {{FORMULA_2}}
+\end{align*}
+
+\textbf{{{FORMULA_CATEGORY_2}}}
+\begin{align*}
+    {{FORMULA_3}} \\
+    {{FORMULA_4}}
+\end{align*}
+\end{multicols}
+\end{tcolorbox}
+
+\vfill
+
+\begin{center}
+\textit{This formula sheet is provided for your reference.}
+\end{center}
+
+\end{document}

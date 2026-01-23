@@ -1,0 +1,422 @@
+% Literature Review / Survey Paper Template
+% Structured template for comprehensive reviews of research areas
+
+\documentclass[11pt,a4paper]{article}
+
+% Required packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{times}
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}                 % Better tables
+\usepackage{longtable}                % Multi-page tables
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{enumitem}                 % Better lists
+\usepackage{natbib}                   % Citations
+\usepackage{caption}
+\usepackage{subcaption}
+
+% Hyperref setup
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    urlcolor=blue
+}
+
+% Custom commands for review papers
+\newcommand{\rqone}{RQ1}
+\newcommand{\rqtwo}{RQ2}
+\newcommand{\rqthree}{RQ3}
+
+%==============================================================================
+% DOCUMENT METADATA
+%==============================================================================
+
+\title{{{TITLE}}: A {{REVIEW_TYPE}} Review}
+% Review types: Systematic, Comprehensive, Scoping, Narrative, Critical
+
+\author{
+    {{AUTHOR_1}}$^{1}$ \and
+    {{AUTHOR_2}}$^{2}$ \and
+    {{AUTHOR_3}}$^{1,2}$
+}
+
+\date{{{DATE}}}
+
+\begin{document}
+
+\maketitle
+
+%==============================================================================
+% AFFILIATIONS
+%==============================================================================
+
+\noindent
+$^{1}${{AFFILIATION_1}}\\
+$^{2}${{AFFILIATION_2}}\\[0.5em]
+Corresponding author: {{CORRESPONDING_EMAIL}}
+
+%==============================================================================
+% ABSTRACT
+%==============================================================================
+
+\begin{abstract}
+\noindent
+\textbf{Background:} {{ABSTRACT_BACKGROUND}}
+
+\textbf{Objectives:} {{ABSTRACT_OBJECTIVES}}
+
+\textbf{Methods:} {{ABSTRACT_METHODS}}
+
+\textbf{Results:} {{ABSTRACT_RESULTS}}
+
+\textbf{Conclusions:} {{ABSTRACT_CONCLUSIONS}}
+\end{abstract}
+
+\noindent\textbf{Keywords:} {{KEYWORDS}}
+
+%==============================================================================
+% TABLE OF CONTENTS (optional for longer reviews)
+%==============================================================================
+
+\tableofcontents
+\newpage
+
+%==============================================================================
+% INTRODUCTION
+%==============================================================================
+
+\section{Introduction}
+\label{sec:introduction}
+
+{{INTRODUCTION}}
+
+\subsection{Background and Motivation}
+\label{sec:background}
+
+{{BACKGROUND_MOTIVATION}}
+
+\subsection{Scope and Objectives}
+\label{sec:scope}
+
+{{SCOPE_OBJECTIVES}}
+
+The primary objectives of this review are:
+\begin{enumerate}
+    \item {{OBJECTIVE_1}}
+    \item {{OBJECTIVE_2}}
+    \item {{OBJECTIVE_3}}
+\end{enumerate}
+
+\subsection{Research Questions}
+\label{sec:research_questions}
+
+This review addresses the following research questions:
+
+\begin{description}
+    \item[RQ1:] {{RESEARCH_QUESTION_1}}
+    \item[RQ2:] {{RESEARCH_QUESTION_2}}
+    \item[RQ3:] {{RESEARCH_QUESTION_3}}
+\end{description}
+
+\subsection{Contributions}
+\label{sec:contributions}
+
+{{CONTRIBUTIONS}}
+
+\subsection{Paper Organization}
+\label{sec:organization}
+
+The remainder of this paper is organized as follows. Section~\ref{sec:methodology} describes the review methodology. Section~\ref{sec:background_concepts} provides necessary background. Sections~\ref{sec:theme1}--\ref{sec:theme3} present the thematic analysis. Section~\ref{sec:discussion} discusses findings and implications. Section~\ref{sec:conclusion} concludes with future directions.
+
+%==============================================================================
+% REVIEW METHODOLOGY
+%==============================================================================
+
+\section{Review Methodology}
+\label{sec:methodology}
+
+{{METHODOLOGY_OVERVIEW}}
+
+\subsection{Search Strategy}
+\label{sec:search}
+
+{{SEARCH_STRATEGY}}
+
+\subsubsection{Databases and Sources}
+
+We searched the following databases:
+\begin{itemize}
+    \item {{DATABASE_1}}
+    \item {{DATABASE_2}}
+    \item {{DATABASE_3}}
+    \item {{DATABASE_4}}
+\end{itemize}
+
+\subsubsection{Search Terms}
+
+{{SEARCH_TERMS}}
+
+% Example search query:
+% ("machine learning" OR "deep learning") AND ("healthcare" OR "medical") AND ("diagnosis" OR "prediction")
+
+\subsection{Inclusion and Exclusion Criteria}
+\label{sec:criteria}
+
+\subsubsection{Inclusion Criteria}
+\begin{itemize}
+    \item {{INCLUSION_1}}
+    \item {{INCLUSION_2}}
+    \item {{INCLUSION_3}}
+\end{itemize}
+
+\subsubsection{Exclusion Criteria}
+\begin{itemize}
+    \item {{EXCLUSION_1}}
+    \item {{EXCLUSION_2}}
+    \item {{EXCLUSION_3}}
+\end{itemize}
+
+\subsection{Selection Process}
+\label{sec:selection}
+
+{{SELECTION_PROCESS}}
+
+% Include PRISMA flow diagram if applicable
+
+\subsection{Data Extraction}
+\label{sec:extraction}
+
+{{DATA_EXTRACTION}}
+
+\subsection{Quality Assessment}
+\label{sec:quality}
+
+{{QUALITY_ASSESSMENT}}
+
+%==============================================================================
+% BACKGROUND AND KEY CONCEPTS
+%==============================================================================
+
+\section{Background and Key Concepts}
+\label{sec:background_concepts}
+
+{{BACKGROUND_CONCEPTS}}
+
+\subsection{{{CONCEPT_1_TITLE}}}
+\label{sec:concept1}
+
+{{CONCEPT_1_CONTENT}}
+
+\subsection{{{CONCEPT_2_TITLE}}}
+\label{sec:concept2}
+
+{{CONCEPT_2_CONTENT}}
+
+\subsection{{{CONCEPT_3_TITLE}}}
+\label{sec:concept3}
+
+{{CONCEPT_3_CONTENT}}
+
+%==============================================================================
+% TAXONOMY / CLASSIFICATION
+%==============================================================================
+
+\section{Taxonomy and Classification}
+\label{sec:taxonomy}
+
+{{TAXONOMY_OVERVIEW}}
+
+% Include a taxonomy figure or table showing classification scheme
+
+\subsection{Classification Criteria}
+\label{sec:classification_criteria}
+
+{{CLASSIFICATION_CRITERIA}}
+
+\subsection{Overview of Categories}
+\label{sec:categories}
+
+{{CATEGORIES_OVERVIEW}}
+
+%==============================================================================
+% THEME 1
+%==============================================================================
+
+\section{{{THEME_1_TITLE}}}
+\label{sec:theme1}
+
+{{THEME_1_OVERVIEW}}
+
+\subsection{{{THEME_1_SUBTHEME_1}}}
+\label{sec:theme1_sub1}
+
+{{THEME_1_SUBTHEME_1_CONTENT}}
+
+\subsection{{{THEME_1_SUBTHEME_2}}}
+\label{sec:theme1_sub2}
+
+{{THEME_1_SUBTHEME_2_CONTENT}}
+
+\subsection{Summary of {{THEME_1_TITLE}}}
+\label{sec:theme1_summary}
+
+{{THEME_1_SUMMARY}}
+
+%==============================================================================
+% THEME 2
+%==============================================================================
+
+\section{{{THEME_2_TITLE}}}
+\label{sec:theme2}
+
+{{THEME_2_OVERVIEW}}
+
+\subsection{{{THEME_2_SUBTHEME_1}}}
+\label{sec:theme2_sub1}
+
+{{THEME_2_SUBTHEME_1_CONTENT}}
+
+\subsection{{{THEME_2_SUBTHEME_2}}}
+\label{sec:theme2_sub2}
+
+{{THEME_2_SUBTHEME_2_CONTENT}}
+
+\subsection{Summary of {{THEME_2_TITLE}}}
+\label{sec:theme2_summary}
+
+{{THEME_2_SUMMARY}}
+
+%==============================================================================
+% THEME 3
+%==============================================================================
+
+\section{{{THEME_3_TITLE}}}
+\label{sec:theme3}
+
+{{THEME_3_OVERVIEW}}
+
+\subsection{{{THEME_3_SUBTHEME_1}}}
+\label{sec:theme3_sub1}
+
+{{THEME_3_SUBTHEME_1_CONTENT}}
+
+\subsection{{{THEME_3_SUBTHEME_2}}}
+\label{sec:theme3_sub2}
+
+{{THEME_3_SUBTHEME_2_CONTENT}}
+
+\subsection{Summary of {{THEME_3_TITLE}}}
+\label{sec:theme3_summary}
+
+{{THEME_3_SUMMARY}}
+
+%==============================================================================
+% COMPARATIVE ANALYSIS
+%==============================================================================
+
+\section{Comparative Analysis}
+\label{sec:comparative}
+
+{{COMPARATIVE_ANALYSIS}}
+
+% Include comparison tables summarizing approaches
+
+%==============================================================================
+% DISCUSSION
+%==============================================================================
+
+\section{Discussion}
+\label{sec:discussion}
+
+{{DISCUSSION_OVERVIEW}}
+
+\subsection{Trends and Patterns}
+\label{sec:trends}
+
+{{TRENDS_PATTERNS}}
+
+\subsection{Answering the Research Questions}
+\label{sec:answers}
+
+\subsubsection{RQ1: {{RESEARCH_QUESTION_1_SHORT}}}
+{{RQ1_ANSWER}}
+
+\subsubsection{RQ2: {{RESEARCH_QUESTION_2_SHORT}}}
+{{RQ2_ANSWER}}
+
+\subsubsection{RQ3: {{RESEARCH_QUESTION_3_SHORT}}}
+{{RQ3_ANSWER}}
+
+\subsection{Research Gaps}
+\label{sec:gaps}
+
+{{RESEARCH_GAPS}}
+
+\subsection{Future Research Directions}
+\label{sec:future}
+
+{{FUTURE_DIRECTIONS}}
+
+\subsection{Implications for Practice}
+\label{sec:implications}
+
+{{PRACTICAL_IMPLICATIONS}}
+
+\subsection{Limitations of This Review}
+\label{sec:limitations}
+
+{{REVIEW_LIMITATIONS}}
+
+%==============================================================================
+% CONCLUSION
+%==============================================================================
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+{{CONCLUSION}}
+
+%==============================================================================
+% ACKNOWLEDGMENTS
+%==============================================================================
+
+\section*{Acknowledgments}
+
+{{ACKNOWLEDGMENTS}}
+
+%==============================================================================
+% REFERENCES
+%==============================================================================
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+%==============================================================================
+% APPENDICES
+%==============================================================================
+
+\appendix
+
+\section{Complete List of Reviewed Studies}
+\label{app:studies}
+
+{{APPENDIX_STUDIES}}
+
+% Include a comprehensive table of all reviewed papers
+
+\section{Search Queries}
+\label{app:queries}
+
+{{APPENDIX_QUERIES}}
+
+\section{Quality Assessment Details}
+\label{app:quality}
+
+{{APPENDIX_QUALITY}}
+
+\end{document}

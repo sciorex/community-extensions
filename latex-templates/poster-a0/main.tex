@@ -1,0 +1,245 @@
+%% Conference Poster Template (A0)
+%% Using tikzposter class for flexible layouts
+%%
+%% Compile with: pdflatex main.tex
+
+\documentclass[a0paper,portrait,25pt]{tikzposter}
+
+%% Packages
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage[backend=biber,style=numeric,maxnames=3]{biblatex}
+\usepackage{lipsum}
+
+%% Bibliography file
+\addbibresource{references.bib}
+
+%% Color theme - Professional blue/gray
+\definecolorpalette{CustomPalette}{
+    \definecolor{colorOne}{HTML}{2C3E50}    % Dark blue-gray
+    \definecolor{colorTwo}{HTML}{3498DB}    % Bright blue
+    \definecolor{colorThree}{HTML}{ECF0F1}  % Light gray
+}
+
+%% Custom theme
+\definelayouttheme{CustomTheme}{
+    \usecolorstyle[colorPalette=CustomPalette]{Britain}
+    \usebackgroundstyle{Default}
+    \usetitlestyle{Filled}
+    \useblockstyle{Slide}
+}
+
+\usetheme{CustomTheme}
+
+%% Title formatting
+\settitle{
+    \centering
+    \vbox{
+        \centering
+        \color{white}
+        {\bfseries \Huge {{TITLE}} \par}
+        \vspace{1em}
+        {\LARGE {{AUTHOR_1}}$^{1}$, {{AUTHOR_2}}$^{2}$, {{AUTHOR_3}}$^{1}$ \par}
+        \vspace{0.5em}
+        {\large $^{1}${{AFFILIATION_1}} \quad $^{2}${{AFFILIATION_2}} \par}
+        \vspace{0.5em}
+        {\large Contact: {{EMAIL}} \par}
+    }
+}
+
+%% Document information
+\title{{{TITLE}}}
+\author{{{AUTHOR_1}}, {{AUTHOR_2}}, {{AUTHOR_3}}}
+\institute{{{AFFILIATION_1}}}
+
+%% Logo (optional)
+%\titlegraphic{\includegraphics[width=10cm]{logo.png}}
+
+\begin{document}
+
+\maketitle[width=\textwidth]
+
+%% Conference banner (optional)
+\node[anchor=north east, inner sep=2cm] at (topright) {
+    \textcolor{colorTwo}{\large \textbf{{{CONFERENCE}}}}
+};
+
+\begin{columns}
+
+%% ===================
+%% LEFT COLUMN
+%% ===================
+\column{0.33}
+
+\block{Introduction}{
+    {{INTRODUCTION}}
+
+    \textbf{Research Questions:}
+    \begin{itemize}[leftmargin=*]
+        \item How does factor X influence outcome Y?
+        \item What are the key mechanisms underlying phenomenon Z?
+        \item Can we develop improved methods for problem P?
+    \end{itemize}
+}
+
+\block{Background}{
+    \textbf{Motivation}
+
+    Understanding the relationship between variables is crucial for advancing the field. Previous work has established foundational principles, but significant gaps remain.
+
+    \textbf{Key Concepts}
+    \begin{itemize}[leftmargin=*]
+        \item \textbf{Concept A:} Brief description of the first key concept
+        \item \textbf{Concept B:} Brief description of the second key concept
+        \item \textbf{Concept C:} Brief description of the third key concept
+    \end{itemize}
+}
+
+\block{Objectives}{
+    \begin{enumerate}[leftmargin=*]
+        \item Investigate the relationship between X and Y
+        \item Develop a novel approach to address limitation Z
+        \item Validate findings through comprehensive experiments
+        \item Demonstrate practical applications
+    \end{enumerate}
+}
+
+%% ===================
+%% MIDDLE COLUMN
+%% ===================
+\column{0.34}
+
+\block{Methods}{
+    \textbf{Study Design}
+
+    We employed a mixed-methods approach combining quantitative analysis with qualitative validation.
+
+    \textbf{Data Collection}
+    \begin{itemize}[leftmargin=*]
+        \item Sample size: N = 500 participants
+        \item Data sources: surveys, experiments, observations
+        \item Duration: 12 months
+    \end{itemize}
+
+    \textbf{Analysis Pipeline}
+
+    %% Placeholder for methodology figure
+    \begin{tikzfigure}[Schematic of the proposed methodology]
+        \begin{tikzpicture}[scale=1.5]
+            \node[draw, rounded corners, fill=colorTwo!20, minimum width=3cm, minimum height=1cm] (input) at (0,0) {Input Data};
+            \node[draw, rounded corners, fill=colorTwo!30, minimum width=3cm, minimum height=1cm] (process) at (0,-2) {Processing};
+            \node[draw, rounded corners, fill=colorTwo!40, minimum width=3cm, minimum height=1cm] (analysis) at (0,-4) {Analysis};
+            \node[draw, rounded corners, fill=colorTwo!50, minimum width=3cm, minimum height=1cm] (output) at (0,-6) {Results};
+
+            \draw[->, thick] (input) -- (process);
+            \draw[->, thick] (process) -- (analysis);
+            \draw[->, thick] (analysis) -- (output);
+        \end{tikzpicture}
+    \end{tikzfigure}
+
+    \textbf{Key Equations}
+
+    The core model is defined as:
+    \begin{equation*}
+        Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \epsilon
+    \end{equation*}
+
+    where $\beta_i$ represents the effect coefficients.
+}
+
+\block{Key Findings}{
+    \coloredbox[bgcolor=colorThree, framecolor=colorTwo]{
+        \textbf{Main Result:} Our approach achieves a \textbf{25\% improvement} over baseline methods while reducing computational cost by \textbf{40\%}.
+    }
+}
+
+%% ===================
+%% RIGHT COLUMN
+%% ===================
+\column{0.33}
+
+\block{Results}{
+    \textbf{Quantitative Results}
+
+    \begin{center}
+    \begin{tabular}{@{}lcc@{}}
+        \toprule
+        \textbf{Method} & \textbf{Accuracy} & \textbf{Time (s)} \\
+        \midrule
+        Baseline & 72.3\% & 45.2 \\
+        Previous Best & 78.1\% & 38.7 \\
+        \textbf{Our Method} & \textbf{85.6\%} & \textbf{27.1} \\
+        \bottomrule
+    \end{tabular}
+    \end{center}
+
+    \vspace{1em}
+
+    %% Placeholder for results figure
+    \begin{tikzfigure}[Performance comparison across conditions]
+        \begin{tikzpicture}[scale=1.2]
+            % Bar chart placeholder
+            \draw[fill=colorTwo!30] (0,0) rectangle (1.5,3);
+            \draw[fill=colorTwo!50] (2,0) rectangle (3.5,4);
+            \draw[fill=colorTwo!70] (4,0) rectangle (5.5,5);
+
+            \node at (0.75,-0.5) {A};
+            \node at (2.75,-0.5) {B};
+            \node at (4.75,-0.5) {C};
+
+            \node at (0.75,3.3) {72\%};
+            \node at (2.75,4.3) {78\%};
+            \node at (4.75,5.3) {86\%};
+        \end{tikzpicture}
+    \end{tikzfigure}
+
+    \textbf{Statistical Significance}
+
+    All improvements are statistically significant ($p < 0.001$, paired t-test with Bonferroni correction).
+}
+
+\block{Conclusions}{
+    \begin{itemize}[leftmargin=*]
+        \item Successfully demonstrated improved performance
+        \item Novel approach addresses key limitations of prior work
+        \item Results generalize across multiple domains
+        \item Open-source implementation available
+    \end{itemize}
+
+    \textbf{Future Work}
+    \begin{itemize}[leftmargin=*]
+        \item Extend to additional application domains
+        \item Investigate scalability to larger datasets
+        \item Explore integration with existing systems
+    \end{itemize}
+}
+
+\block{References}{
+    \small
+    \nocite{*}
+    \printbibliography[heading=none]
+}
+
+\block{Acknowledgments}{
+    \small
+    {{ACKNOWLEDGMENTS}}
+
+    \vspace{0.5em}
+
+    \textbf{Scan for more info:}
+
+    %% QR code placeholder
+    \begin{center}
+        \begin{tikzpicture}
+            \draw[fill=colorTwo!20] (0,0) rectangle (3,3);
+            \node at (1.5,1.5) {\small QR Code};
+        \end{tikzpicture}
+    \end{center}
+}
+
+\end{columns}
+
+\end{document}

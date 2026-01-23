@@ -1,0 +1,346 @@
+% Thesis Proposal Template
+% Category: thesis
+% Difficulty: intermediate
+% A research proposal for thesis/dissertation
+
+\documentclass[12pt]{article}
+
+% Page layout
+\usepackage[margin=1in]{geometry}
+\usepackage{setspace}
+\onehalfspacing
+
+% Typography
+\usepackage{microtype}
+\usepackage{parskip}
+
+% Math
+\usepackage{amsmath,amssymb,amsthm}
+
+% Graphics and tables
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{float}
+
+% Lists
+\usepackage{enumitem}
+
+% Citations
+\usepackage[numbers,sort&compress]{natbib}
+
+% Links
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+
+% Colors
+\usepackage{xcolor}
+
+% Section formatting
+\usepackage{titlesec}
+\titleformat{\section}{\large\bfseries}{\thesection.}{0.5em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{0.5em}{}
+\titleformat{\subsubsection}{\normalsize\itshape}{\thesubsubsection}{0.5em}{}
+
+% Header
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\leftmark}
+\fancyhead[R]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% Custom commands
+\newcommand{\proposaltitle}{{{TITLE}}}
+\newcommand{\authorname}{{{AUTHOR}}}
+\newcommand{\degreetype}{{{DEGREE}}}
+\newcommand{\fieldofstudy}{{{FIELD}}}
+\newcommand{\universityname}{{{UNIVERSITY}}}
+\newcommand{\departmentname}{{{DEPARTMENT}}}
+\newcommand{\advisorname}{{{ADVISOR}}}
+\newcommand{\committeemember}[1]{\item #1}
+
+\begin{document}
+
+%----------------------------------------------------------------------
+% TITLE PAGE
+%----------------------------------------------------------------------
+\begin{titlepage}
+    \centering
+    \vspace*{1in}
+
+    {\LARGE\bfseries \proposaltitle}
+
+    \vspace{0.5in}
+
+    {\large A Thesis Proposal Submitted to the Faculty of\\
+    \departmentname\\
+    \universityname}
+
+    \vspace{0.5in}
+
+    {\large In Partial Fulfillment of the Requirements for the Degree of\\
+    \degreetype\ in \fieldofstudy}
+
+    \vspace{1in}
+
+    {\large by\\[0.5em]
+    \authorname}
+
+    \vspace{1in}
+
+    {\large Advisor: \advisorname}
+
+    \vfill
+
+    {\large {{MONTH}} {{YEAR}}}
+\end{titlepage}
+
+%----------------------------------------------------------------------
+% COMMITTEE PAGE (Optional)
+%----------------------------------------------------------------------
+\newpage
+\section*{Thesis Committee}
+\addcontentsline{toc}{section}{Thesis Committee}
+
+\begin{itemize}[leftmargin=*,label={}]
+    \item \textbf{Advisor:} {{ADVISOR}}, {{ADVISOR_TITLE}}
+    \item \textbf{Committee Member:} {{COMMITTEE_MEMBER_1}}, {{COMMITTEE_MEMBER_1_TITLE}}
+    \item \textbf{Committee Member:} {{COMMITTEE_MEMBER_2}}, {{COMMITTEE_MEMBER_2_TITLE}}
+\end{itemize}
+
+%----------------------------------------------------------------------
+% ABSTRACT
+%----------------------------------------------------------------------
+\newpage
+\section*{Abstract}
+\addcontentsline{toc}{section}{Abstract}
+
+{{ABSTRACT}}
+
+\vspace{1em}
+\noindent\textbf{Keywords:} {{KEYWORDS}}
+
+%----------------------------------------------------------------------
+% TABLE OF CONTENTS
+%----------------------------------------------------------------------
+\newpage
+\tableofcontents
+
+%----------------------------------------------------------------------
+% INTRODUCTION
+%----------------------------------------------------------------------
+\newpage
+\section{Introduction}
+\label{sec:introduction}
+
+\subsection{Background and Motivation}
+
+{{BACKGROUND_MOTIVATION}}
+
+\subsection{Problem Statement}
+
+{{PROBLEM_STATEMENT}}
+
+\subsection{Significance of the Study}
+
+This research is significant for several reasons:
+
+\begin{enumerate}[leftmargin=*]
+    \item {{SIGNIFICANCE_1}}
+    \item {{SIGNIFICANCE_2}}
+    \item {{SIGNIFICANCE_3}}
+\end{enumerate}
+
+%----------------------------------------------------------------------
+% RESEARCH QUESTIONS AND OBJECTIVES
+%----------------------------------------------------------------------
+\section{Research Questions and Objectives}
+\label{sec:research-questions}
+
+\subsection{Research Questions}
+
+This thesis aims to address the following research questions:
+
+\begin{enumerate}[leftmargin=*,label=\textbf{RQ\arabic*:}]
+    \item {{RESEARCH_QUESTION_1}}
+    \item {{RESEARCH_QUESTION_2}}
+    \item {{RESEARCH_QUESTION_3}}
+\end{enumerate}
+
+\subsection{Research Objectives}
+
+The primary objectives of this research are:
+
+\begin{enumerate}[leftmargin=*]
+    \item {{OBJECTIVE_1}}
+    \item {{OBJECTIVE_2}}
+    \item {{OBJECTIVE_3}}
+\end{enumerate}
+
+\subsection{Hypotheses}
+
+Based on preliminary analysis, we propose the following hypotheses:
+
+\begin{enumerate}[leftmargin=*,label=\textbf{H\arabic*:}]
+    \item {{HYPOTHESIS_1}}
+    \item {{HYPOTHESIS_2}}
+\end{enumerate}
+
+%----------------------------------------------------------------------
+% LITERATURE REVIEW
+%----------------------------------------------------------------------
+\section{Literature Review}
+\label{sec:literature-review}
+
+\subsection{Theoretical Framework}
+
+{{THEORETICAL_FRAMEWORK}}
+
+\subsection{Related Work}
+
+\subsubsection{{{LITERATURE_TOPIC_1}}}
+
+{{LITERATURE_REVIEW_1}}
+
+\subsubsection{{{LITERATURE_TOPIC_2}}}
+
+{{LITERATURE_REVIEW_2}}
+
+\subsubsection{{{LITERATURE_TOPIC_3}}}
+
+{{LITERATURE_REVIEW_3}}
+
+\subsection{Gap in the Literature}
+
+{{LITERATURE_GAP}}
+
+%----------------------------------------------------------------------
+% PROPOSED METHODOLOGY
+%----------------------------------------------------------------------
+\section{Proposed Methodology}
+\label{sec:methodology}
+
+\subsection{Research Design}
+
+{{RESEARCH_DESIGN}}
+
+\subsection{Data Collection}
+
+\subsubsection{Data Sources}
+
+{{DATA_SOURCES}}
+
+\subsubsection{Sampling Strategy}
+
+{{SAMPLING_STRATEGY}}
+
+\subsection{Data Analysis}
+
+{{DATA_ANALYSIS}}
+
+\subsection{Tools and Technologies}
+
+The following tools and technologies will be used:
+
+\begin{itemize}[leftmargin=*]
+    \item {{TOOL_1}}
+    \item {{TOOL_2}}
+    \item {{TOOL_3}}
+\end{itemize}
+
+\subsection{Ethical Considerations}
+
+{{ETHICAL_CONSIDERATIONS}}
+
+%----------------------------------------------------------------------
+% TIMELINE
+%----------------------------------------------------------------------
+\section{Timeline and Milestones}
+\label{sec:timeline}
+
+\begin{table}[H]
+\centering
+\caption{Proposed Research Timeline}
+\label{tab:timeline}
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Phase} & \textbf{Activities} & \textbf{Duration} \\
+\midrule
+Phase 1 & Literature Review \& Proposal & {{PHASE_1_DURATION}} \\
+Phase 2 & {{PHASE_2_ACTIVITY}} & {{PHASE_2_DURATION}} \\
+Phase 3 & {{PHASE_3_ACTIVITY}} & {{PHASE_3_DURATION}} \\
+Phase 4 & {{PHASE_4_ACTIVITY}} & {{PHASE_4_DURATION}} \\
+Phase 5 & Thesis Writing \& Defense & {{PHASE_5_DURATION}} \\
+\midrule
+\multicolumn{2}{l}{\textbf{Total Duration}} & {{TOTAL_DURATION}} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+%----------------------------------------------------------------------
+% EXPECTED CONTRIBUTIONS
+%----------------------------------------------------------------------
+\section{Expected Contributions}
+\label{sec:contributions}
+
+This research is expected to make the following contributions:
+
+\subsection{Theoretical Contributions}
+
+\begin{enumerate}[leftmargin=*]
+    \item {{THEORETICAL_CONTRIBUTION_1}}
+    \item {{THEORETICAL_CONTRIBUTION_2}}
+\end{enumerate}
+
+\subsection{Practical Contributions}
+
+\begin{enumerate}[leftmargin=*]
+    \item {{PRACTICAL_CONTRIBUTION_1}}
+    \item {{PRACTICAL_CONTRIBUTION_2}}
+\end{enumerate}
+
+%----------------------------------------------------------------------
+% PRELIMINARY RESULTS (if any)
+%----------------------------------------------------------------------
+\section{Preliminary Results}
+\label{sec:preliminary}
+
+{{PRELIMINARY_RESULTS}}
+
+% If you have preliminary figures or tables, include them here
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.8\textwidth]{figures/preliminary.png}
+%     \caption{Preliminary results showing...}
+%     \label{fig:preliminary}
+% \end{figure}
+
+%----------------------------------------------------------------------
+% LIMITATIONS
+%----------------------------------------------------------------------
+\section{Potential Limitations}
+\label{sec:limitations}
+
+The proposed research may face the following limitations:
+
+\begin{enumerate}[leftmargin=*]
+    \item {{LIMITATION_1}}
+    \item {{LIMITATION_2}}
+    \item {{LIMITATION_3}}
+\end{enumerate}
+
+%----------------------------------------------------------------------
+% CONCLUSION
+%----------------------------------------------------------------------
+\section{Conclusion}
+\label{sec:conclusion}
+
+{{CONCLUSION}}
+
+%----------------------------------------------------------------------
+% REFERENCES
+%----------------------------------------------------------------------
+\newpage
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}

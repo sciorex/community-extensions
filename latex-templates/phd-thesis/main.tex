@@ -1,0 +1,213 @@
+% PhD Thesis/Dissertation Template
+% A comprehensive template for doctoral dissertations
+%
+% This template uses the book class with custom settings
+% Customize the preamble for your university's requirements
+%
+\documentclass[12pt,oneside,openright]{book}
+
+% ============================================================
+% PACKAGES
+% ============================================================
+
+% Page layout
+\usepackage[top=1in, bottom=1in, left=1.5in, right=1in]{geometry}
+\usepackage{setspace}
+\doublespacing  % Most universities require double spacing
+
+% Typography
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{microtype}
+
+% Mathematics
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+
+% Figures and tables
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{subcaption}
+\usepackage{float}
+
+% Code and algorithms
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{listings}
+
+% References and links
+\usepackage[backend=biber,style=numeric,sorting=nyt]{biblatex}
+\addbibresource{references.bib}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    urlcolor=blue
+}
+
+% Headers and footers
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[R]{\thepage}
+\fancyhead[L]{\leftmark}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% Appendices
+\usepackage[toc,page]{appendix}
+
+% Custom theorem environments
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+% ============================================================
+% DOCUMENT METADATA
+% ============================================================
+
+\title{{{TITLE}}}
+\author{{{AUTHOR}}}
+\date{{{MONTH}} {{YEAR}}}
+
+% Custom commands for title page
+\newcommand{\degree}{{{DEGREE}}}
+\newcommand{\field}{{{FIELD}}}
+\newcommand{\university}{{{UNIVERSITY}}}
+\newcommand{\department}{{{DEPARTMENT}}}
+\newcommand{\advisor}{{{ADVISOR}}}
+\newcommand{\gradyear}{{{YEAR}}}
+\newcommand{\gradmonth}{{{MONTH}}}
+
+% ============================================================
+% DOCUMENT
+% ============================================================
+
+\begin{document}
+
+% ============================================================
+% FRONT MATTER
+% ============================================================
+
+\frontmatter
+\pagestyle{plain}
+
+% ----- Title Page -----
+\begin{titlepage}
+\begin{center}
+\vspace*{1in}
+
+{\Large\bfseries {{TITLE}}}
+
+\vspace{1in}
+
+A dissertation submitted in partial fulfillment\\
+of the requirements for the degree of
+
+\vspace{0.5in}
+
+{\large {{DEGREE}}}\\
+in\\
+{\large {{FIELD}}}
+
+\vspace{1in}
+
+by
+
+\vspace{0.5in}
+
+{\large {{AUTHOR}}}
+
+\vspace{1in}
+
+{{DEPARTMENT}}\\
+{{UNIVERSITY}}\\
+{{MONTH}} {{YEAR}}
+
+\vfill
+
+Dissertation Advisor: {{ADVISOR}}
+
+\end{center}
+\end{titlepage}
+
+% ----- Copyright Page -----
+\newpage
+\thispagestyle{empty}
+\vspace*{\fill}
+\begin{center}
+\textcopyright\ {{YEAR}} {{AUTHOR}}\\
+All Rights Reserved
+\end{center}
+\vspace*{\fill}
+
+% ----- Abstract -----
+\include{front/abstract}
+
+% ----- Dedication (Optional) -----
+\newpage
+\thispagestyle{empty}
+\vspace*{2in}
+\begin{center}
+\textit{{{DEDICATION}}}
+\end{center}
+
+% ----- Acknowledgments -----
+\chapter*{Acknowledgments}
+\addcontentsline{toc}{chapter}{Acknowledgments}
+
+{{ACKNOWLEDGMENTS}}
+
+% ----- Table of Contents -----
+\tableofcontents
+
+% ----- List of Figures -----
+\listoffigures
+\addcontentsline{toc}{chapter}{List of Figures}
+
+% ----- List of Tables -----
+\listoftables
+\addcontentsline{toc}{chapter}{List of Tables}
+
+% ============================================================
+% MAIN MATTER
+% ============================================================
+
+\mainmatter
+\pagestyle{fancy}
+
+% Include chapters
+\include{chapters/chapter1}
+\include{chapters/chapter2}
+
+% Add more chapters as needed:
+% \include{chapters/chapter3}
+% \include{chapters/chapter4}
+% \include{chapters/chapter5}
+
+% ============================================================
+% BACK MATTER
+% ============================================================
+
+\backmatter
+
+% ----- Bibliography -----
+\printbibliography[heading=bibintoc,title={References}]
+
+% ----- Appendices -----
+\begin{appendices}
+\include{back/appendix}
+\end{appendices}
+
+\end{document}

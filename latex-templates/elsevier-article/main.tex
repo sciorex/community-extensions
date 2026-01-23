@@ -1,0 +1,176 @@
+%% Elsevier Article Template
+%% For submission to Elsevier journals
+%%
+%% Compile with: pdflatex main.tex && bibtex main && pdflatex main.tex && pdflatex main.tex
+
+\documentclass[preprint,12pt]{elsarticle}
+
+%% Use the option review for double line spacing
+%% \documentclass[preprint,review,12pt]{elsarticle}
+
+%% Use the options 1p, 3p, 5p for single column, 3-column, 5-column layouts
+%% \documentclass[final,1p,times]{elsarticle}
+%% \documentclass[final,3p,times]{elsarticle}
+
+%% Packages
+\usepackage{lineno}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+
+%% Enable line numbers for review
+%% \linenumbers
+
+%% Journal name
+\journal{{{JOURNAL_NAME}}}
+
+\begin{document}
+
+\begin{frontmatter}
+
+%% Title
+\title{{{TITLE}}}
+
+%% Authors
+\author[1]{{{AUTHOR_1}}\corref{cor1}}
+\ead{{{AUTHOR_1_EMAIL}}}
+\cortext[cor1]{Corresponding author}
+
+\author[2]{{{AUTHOR_2}}}
+\ead{{{AUTHOR_2_EMAIL}}}
+
+%% Affiliations
+\affiliation[1]{organization={{{AUTHOR_1_AFFILIATION}}},
+                addressline={{{AUTHOR_1_ADDRESS}}},
+                city={{{AUTHOR_1_CITY}}},
+                postcode={{{AUTHOR_1_POSTCODE}}},
+                country={{{AUTHOR_1_COUNTRY}}}}
+
+\affiliation[2]{organization={{{AUTHOR_2_AFFILIATION}}},
+                addressline={{{AUTHOR_2_ADDRESS}}},
+                city={{{AUTHOR_2_CITY}}},
+                postcode={{{AUTHOR_2_POSTCODE}}},
+                country={{{AUTHOR_2_COUNTRY}}}}
+
+%% Abstract
+\begin{abstract}
+{{ABSTRACT}}
+\end{abstract}
+
+%%Graphical abstract (optional)
+%\begin{graphicalabstract}
+%\includegraphics{grabs}
+%\end{graphicalabstract}
+
+%%Research highlights (optional)
+%\begin{highlights}
+%\item Research highlight 1
+%\item Research highlight 2
+%\end{highlights}
+
+%% Keywords
+\begin{keyword}
+{{KEYWORDS}}
+\end{keyword}
+
+\end{frontmatter}
+
+%% Main text
+\section{Introduction}
+\label{sec:introduction}
+
+The introduction should provide background context for the research problem and clearly state the objectives of the study. It should explain why this research is important and what gap in the literature it addresses \cite{smith2023computational}.
+
+The organization of this paper is as follows. Section~\ref{sec:methods} describes the materials and methods used. Section~\ref{sec:results} presents the experimental results. Section~\ref{sec:discussion} discusses the implications of our findings, and Section~\ref{sec:conclusion} concludes the paper.
+
+\section{Materials and Methods}
+\label{sec:methods}
+
+\subsection{Study Design}
+
+This section should describe the overall approach and methodology employed in the research. The methods should be described in sufficient detail to allow replication of the study \cite{johnson2022experimental}.
+
+\subsection{Data Collection}
+
+Describe the data sources, sampling procedures, and any instruments or tools used for data collection. Include information about ethical approvals where relevant.
+
+\subsection{Analysis}
+
+The analytical methods should be clearly explained, including any statistical tests, computational approaches, or theoretical frameworks applied \cite{williams2024statistical}.
+
+\begin{equation}
+    E = mc^2
+    \label{eq:example}
+\end{equation}
+
+Equation~\ref{eq:example} demonstrates the format for including mathematical expressions.
+
+\section{Results}
+\label{sec:results}
+
+Present the findings objectively without interpretation. Use tables and figures to present data clearly.
+
+\begin{table}[h]
+\centering
+\caption{Summary of experimental results.}
+\label{tab:results}
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+Parameter & Group A & Group B & Group C & $p$-value \\
+\midrule
+Metric 1 & 45.2 $\pm$ 3.1 & 52.8 $\pm$ 4.2 & 48.6 $\pm$ 2.9 & 0.023 \\
+Metric 2 & 78.4 $\pm$ 5.6 & 81.2 $\pm$ 6.1 & 79.9 $\pm$ 4.8 & 0.412 \\
+Metric 3 & 12.1 $\pm$ 1.8 & 15.6 $\pm$ 2.3 & 13.8 $\pm$ 2.0 & 0.008 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Primary Outcomes}
+
+Describe the main findings related to the primary research questions.
+
+\subsection{Secondary Outcomes}
+
+Present any additional findings that support or complement the primary results.
+
+\section{Discussion}
+\label{sec:discussion}
+
+Interpret the results in the context of existing literature. Discuss the implications of the findings, limitations of the study, and directions for future research \cite{chen2023review}.
+
+\subsection{Comparison with Previous Studies}
+
+Compare the current findings with those reported in the literature, explaining any discrepancies or consistencies.
+
+\subsection{Limitations}
+
+Acknowledge the limitations of the study and how they might affect the interpretation of results.
+
+\subsection{Future Directions}
+
+Suggest areas for future research based on the findings of this study.
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+Summarize the main findings and their significance. The conclusion should directly address the research objectives stated in the introduction.
+
+\section*{Declaration of Competing Interest}
+
+The authors declare that they have no known competing financial interests or personal relationships that could have appeared to influence the work reported in this paper.
+
+\section*{Data Availability}
+
+Data will be made available on request.
+
+\section*{Acknowledgments}
+
+{{ACKNOWLEDGMENTS}}
+
+%% References
+\bibliographystyle{elsarticle-num}
+\bibliography{references}
+
+\end{document}

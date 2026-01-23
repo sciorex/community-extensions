@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "lastUpdated": "2026-01-21T00:00:00Z",
+  "lastUpdated": "2026-01-23T00:00:00Z",
   "templates": [
     {
       "id": "ieee-conference",
@@ -124,6 +124,640 @@
       },
       "requiredPackages": ["beamer", "graphicx", "booktabs", "hyperref"],
       "updatedAt": "2026-01-21T00:00:00Z"
+    },
+    {
+      "id": "springer-lncs",
+      "name": "Springer LNCS",
+      "description": "Official Springer LNCS format for conference proceedings and book chapters. Widely used in computer science conferences.",
+      "category": "academic",
+      "difficulty": "intermediate",
+      "tags": ["springer", "lncs", "computer-science", "conference", "book-chapter"],
+      "version": "1.0.0",
+      "author": "Sciorex Team",
+      "downloadUrl": "latex-templates/springer-lncs",
+      "previewUrl": "latex-templates/springer-lncs/preview.png",
+      "files": ["main.tex", "references.bib", "llncs.cls", "splncs04.bst", "README.md"],
+      "placeholders": {
+        "TITLE": "Paper title",
+        "AUTHOR_1": "First author name",
+        "AUTHOR_1_AFFILIATION": "First author institution",
+        "AUTHOR_1_EMAIL": "First author email",
+        "ABSTRACT": "Paper abstract",
+        "KEYWORDS": "Comma-separated keywords"
+      },
+      "requiredPackages": ["llncs", "graphicx", "amsmath", "hyperref"],
+      "updatedAt": "2026-01-23T00:00:00Z"
+    },
+    {
+      "id": "neurips",
+      "name": "NeurIPS Conference",
+      "description": "Official NeurIPS conference paper template. The premier venue for machine learning and AI research.",
+      "category": "academic",
+      "difficulty": "intermediate",
+      "tags": ["neurips", "nips", "machine-learning", "ai", "deep-learning", "conference"],
+      "version": "1.0.0",
+      "author": "Sciorex Team",
+      "downloadUrl": "latex-templates/neurips",
+      "previewUrl": "latex-templates/neurips/preview.png",
+      "files": ["main.tex", "references.bib", "neurips_2024.sty", "README.md"],
+      "placeholders": {
+        "TITLE": "Paper title",
+        "AUTHOR_1": "First author name",
+        "AUTHOR_1_AFFILIATION": "Affiliation",
+        "ABSTRACT": "Paper abstract"
+      },
+      "requiredPackages": ["neurips_2024", "amsmath", "graphicx", "hyperref"],
+      "updatedAt": "2026-01-23T00:00:00Z"
+    },
+    {
+      "id": "cvpr",
+      "name": "CVPR/ICCV/ECCV",
+      "description": "Template for IEEE Computer Vision conferences (CVPR, ICCV, ECCV, WACV). Standard format for computer vision research.",
+      "category": "academic",
+      "difficulty": "intermediate",
+      "tags": ["cvpr", "iccv", "eccv", "computer-vision", "conference", "ieee"],
+      "version": "1.0.0",
+      "author": "Sciorex Team",
+      "downloadUrl": "latex-templates/cvpr",
+      "previewUrl": "latex-templates/cvpr/preview.png",
+      "files": ["main.tex", "references.bib", "cvpr.sty", "README.md"],
+      "placeholders": {
+        "TITLE": "Paper title",
+        "AUTHOR_1": "First author name",
+        "ABSTRACT": "Paper abstract",
+        "PAPER_ID": "Paper ID for camera-ready"
+      },
+      "requiredPackages": ["cvpr", "amsmath", "graphicx", "hyperref"],
+      "updatedAt": "2026-01-23T00:00:00Z"
+    },
+    {
+      "id": "phd-thesis",
+      "name": "PhD Thesis",
+      "description": "Complete PhD thesis/dissertation template with front matter, chapters, appendices, and bibliography. Customizable for different university requirements.",
+      "category": "thesis",
+      "difficulty": "advanced",
+      "tags": ["thesis", "phd", "dissertation", "academic", "graduate"],
+      "version": "1.0.0",
+      "author": "Sciorex Team",
+      "downloadUrl": "latex-templates/phd-thesis",
+      "previewUrl": "latex-templates/phd-thesis/preview.png",
+      "files": ["main.tex", "references.bib", "README.md", "front/abstract.tex", "chapters/chapter1.tex", "chapters/chapter2.tex", "back/appendix.tex"],
+      "placeholders": {
+        "TITLE": "Thesis title",
+        "AUTHOR": "Your name",
+        "DEGREE": "Doctor of Philosophy",
+        "FIELD": "Field of study",
+        "UNIVERSITY": "University name",
+        "ADVISOR": "Advisor name"
+      },
+      "requiredPackages": ["geometry", "setspace", "fancyhdr", "biblatex"],
+      "updatedAt": "2026-01-23T00:00:00Z"
+    },
+    {
+      "id": "academic-cv",
+      "name": "Academic CV",
+      "description": "Comprehensive academic CV template for faculty positions, grants, and academic applications. Includes sections for publications, teaching, grants, and service.",
+      "category": "cv",
+      "difficulty": "beginner",
+      "tags": ["cv", "curriculum-vitae", "academic", "resume", "career"],
+      "version": "1.0.0",
+      "author": "Sciorex Team",
+      "downloadUrl": "latex-templates/academic-cv",
+      "previewUrl": "latex-templates/academic-cv/preview.png",
+      "files": ["main.tex", "README.md"],
+      "placeholders": {
+        "NAME": "Full name",
+        "TITLE": "Current title/position",
+        "DEPARTMENT": "Department",
+        "UNIVERSITY": "University",
+        "EMAIL": "Email address"
+      },
+      "requiredPackages": ["geometry", "hyperref", "enumitem"],
+      "updatedAt": "2026-01-23T00:00:00Z"
+    },
+    {
+      "id": "elsevier-article",
+      "name": "Elsevier Journal Article",
+      "description": "Standard Elsevier journal article format. Used by hundreds of Elsevier journals across all scientific disciplines.",
+      "category": "academic",
+      "difficulty": "intermediate",
+      "tags": ["elsevier", "journal", "academic", "science", "multi-disciplinary"],
+      "version": "1.0.0",
+      "author": "Sciorex Team",
+      "downloadUrl": "latex-templates/elsevier-article",
+      "previewUrl": "latex-templates/elsevier-article/preview.png",
+      "files": ["main.tex", "references.bib", "elsarticle.cls", "README.md"],
+      "placeholders": {
+        "TITLE": "Article title",
+        "AUTHOR_1": "First author",
+        "ABSTRACT": "Article abstract",
+        "KEYWORDS": "Up to 6 keywords",
+        "JOURNAL_NAME": "Target journal name"
+      },
+      "requiredPackages": ["elsarticle", "amsmath", "graphicx"],
+      "updatedAt": "2026-01-23T00:00:00Z"
+    },
+    {
+      "id": "masters-thesis",
+      "name": "Master's Thesis",
+      "description": "Master's thesis template - shorter than PhD but with similar structure. Suitable for MS, MA, MEng degrees.",
+      "category": "thesis",
+      "difficulty": "intermediate",
+      "tags": ["thesis", "masters", "dissertation", "academic", "graduate"],
+      "version": "1.0.0",
+      "author": "Sciorex Team",
+      "downloadUrl": "latex-templates/masters-thesis",
+      "previewUrl": "latex-templates/masters-thesis/preview.png",
+      "files": ["main.tex", "references.bib", "README.md", "chapters/introduction.tex", "chapters/background.tex", "chapters/methodology.tex", "chapters/results.tex", "chapters/conclusion.tex"],
+      "placeholders": {
+        "TITLE": "Thesis title",
+        "AUTHOR": "Your name",
+        "DEGREE": "Master of Science",
+        "FIELD": "Field of study",
+        "UNIVERSITY": "University name"
+      },
+      "requiredPackages": ["geometry", "setspace", "fancyhdr", "biblatex"],
+      "updatedAt": "2026-01-23T00:00:00Z"
+    },
+    {
+      "id": "research-proposal",
+      "name": "Research Proposal",
+      "description": "Research or grant proposal template. Suitable for PhD proposals, grant applications, or project proposals.",
+      "category": "academic",
+      "difficulty": "intermediate",
+      "tags": ["proposal", "grant", "funding", "research", "academic"],
+      "version": "1.0.0",
+      "author": "Sciorex Team",
+      "downloadUrl": "latex-templates/research-proposal",
+      "previewUrl": "latex-templates/research-proposal/preview.png",
+      "files": ["main.tex", "references.bib", "README.md"],
+      "placeholders": {
+        "TITLE": "Project title",
+        "PI_NAME": "Principal Investigator",
+        "PI_AFFILIATION": "Institution",
+        "ABSTRACT": "Executive summary"
+      },
+      "requiredPackages": ["geometry", "hyperref", "graphicx"],
+      "updatedAt": "2026-01-23T00:00:00Z"
+    },
+    {
+      "id": "poster-a0",
+      "name": "Conference Poster (A0)",
+      "description": "A0-sized conference poster template with clean multi-column layout. Suitable for academic conferences and symposiums.",
+      "category": "presentation",
+      "difficulty": "intermediate",
+      "tags": ["poster", "conference", "presentation", "a0", "academic"],
+      "version": "1.0.0",
+      "author": "Sciorex Team",
+      "downloadUrl": "latex-templates/poster-a0",
+      "previewUrl": "latex-templates/poster-a0/preview.png",
+      "files": ["main.tex", "references.bib", "README.md"],
+      "placeholders": {
+        "TITLE": "Poster title",
+        "AUTHOR_1": "First author",
+        "AFFILIATION": "Institution",
+        "EMAIL": "Contact email"
+      },
+      "requiredPackages": ["tikzposter", "graphicx", "amsmath"],
+      "updatedAt": "2026-01-23T00:00:00Z"
+    },
+    {
+      "id": "beamer-metropolis",
+      "name": "Beamer Metropolis",
+      "description": "Modern, minimal presentation theme using the popular Metropolis theme. Clean typography and professional appearance.",
+      "category": "presentation",
+      "difficulty": "beginner",
+      "tags": ["beamer", "presentation", "slides", "metropolis", "modern", "minimal"],
+      "version": "1.0.0",
+      "author": "Sciorex Team",
+      "downloadUrl": "latex-templates/beamer-metropolis",
+      "previewUrl": "latex-templates/beamer-metropolis/preview.png",
+      "files": ["main.tex", "references.bib", "README.md"],
+      "placeholders": {
+        "TITLE": "Presentation title",
+        "SUBTITLE": "Subtitle",
+        "AUTHOR": "Presenter name",
+        "INSTITUTE": "Institution"
+      },
+      "requiredPackages": ["beamer", "metropolis"],
+      "updatedAt": "2026-01-23T00:00:00Z"
+    },
+    {
+      "id": "nature",
+      "name": "Nature Journal",
+      "description": "Template following Nature journal style guidelines. For high-impact scientific research across disciplines.",
+      "category": "academic",
+      "difficulty": "advanced",
+      "tags": ["nature", "journal", "science", "biology", "high-impact"],
+      "version": "1.0.0",
+      "author": "Sciorex Team",
+      "downloadUrl": "latex-templates/nature",
+      "previewUrl": "latex-templates/nature/preview.png",
+      "files": ["main.tex", "references.bib", "README.md"],
+      "placeholders": {
+        "TITLE": "Article title (max 10 words)",
+        "AUTHOR_1": "First author",
+        "ABSTRACT": "Abstract (150 words max)"
+      },
+      "requiredPackages": ["geometry", "natbib", "graphicx"],
+      "updatedAt": "2026-01-23T00:00:00Z"
+    },
+    {
+      "id": "apa7",
+      "name": "APA 7th Edition",
+      "description": "APA 7th Edition format for psychology, education, and social sciences. Includes proper heading levels, in-text citations, and reference formatting.",
+      "category": "academic",
+      "difficulty": "intermediate",
+      "tags": ["apa", "psychology", "social-science", "education", "journal"],
+      "version": "1.0.0",
+      "author": "Sciorex Team",
+      "downloadUrl": "latex-templates/apa7",
+      "previewUrl": "latex-templates/apa7/preview.png",
+      "files": ["main.tex", "references.bib", "README.md"],
+      "placeholders": {
+        "TITLE": "Paper title",
+        "AUTHOR": "Author name",
+        "AFFILIATION": "Institution",
+        "ABSTRACT": "Abstract",
+        "KEYWORDS": "Keywords"
+      },
+      "requiredPackages": ["apa7", "biblatex-apa"],
+      "updatedAt": "2026-01-23T00:00:00Z"
+    },
+    {
+      "id": "revtex",
+      "name": "APS/RevTeX (Physics)",
+      "description": "RevTeX 4.2 template for APS journals (Physical Review Letters, Physical Review A-E, etc.).",
+      "category": "academic",
+      "difficulty": "intermediate",
+      "tags": ["aps", "physics", "revtex", "physical-review", "journal"],
+      "version": "1.0.0",
+      "author": "Sciorex Team",
+      "downloadUrl": "latex-templates/revtex",
+      "previewUrl": "latex-templates/revtex/preview.png",
+      "files": ["main.tex", "references.bib", "README.md"],
+      "placeholders": {
+        "TITLE": "Paper title",
+        "AUTHOR_1": "First author",
+        "ABSTRACT": "Paper abstract"
+      },
+      "requiredPackages": ["revtex4-2", "amsmath", "graphicx"],
+      "updatedAt": "2026-01-23T00:00:00Z"
+    },
+    {
+      "id": "iclr",
+      "name": "ICLR Conference",
+      "description": "ICLR conference paper template. Top venue for deep learning research with OpenReview submission format.",
+      "category": "academic",
+      "difficulty": "intermediate",
+      "tags": ["iclr", "deep-learning", "conference", "ai", "machine-learning"],
+      "version": "1.0.0",
+      "author": "Sciorex Team",
+      "downloadUrl": "latex-templates/iclr",
+      "previewUrl": "latex-templates/iclr/preview.png",
+      "files": ["main.tex", "references.bib", "iclr2024_conference.sty", "README.md"],
+      "placeholders": {
+        "TITLE": "Paper title",
+        "AUTHOR_1": "First author",
+        "ABSTRACT": "Paper abstract"
+      },
+      "requiredPackages": ["iclr2024_conference", "amsmath", "graphicx"],
+      "updatedAt": "2026-01-23T00:00:00Z"
+    },
+    {
+      "id": "literature-review",
+      "name": "Literature Review",
+      "description": "Structured literature review or survey paper template. Useful for comprehensive reviews of research areas.",
+      "category": "academic",
+      "difficulty": "intermediate",
+      "tags": ["literature-review", "survey", "academic", "research"],
+      "version": "1.0.0",
+      "author": "Sciorex Team",
+      "downloadUrl": "latex-templates/literature-review",
+      "previewUrl": "latex-templates/literature-review/preview.png",
+      "files": ["main.tex", "references.bib", "README.md"],
+      "placeholders": {
+        "TITLE": "Review title",
+        "AUTHOR": "Author name",
+        "AFFILIATION": "Institution",
+        "ABSTRACT": "Abstract"
+      },
+      "requiredPackages": ["geometry", "hyperref", "natbib"],
+      "updatedAt": "2026-01-23T00:00:00Z"
+    },
+    {
+      "id": "aaai",
+      "name": "AAAI Conference",
+      "description": "AAAI conference paper format. Major AI conference with two-column format.",
+      "category": "academic",
+      "difficulty": "intermediate",
+      "tags": ["aaai", "ai", "artificial-intelligence", "conference"],
+      "version": "1.0.0",
+      "author": "Sciorex Team",
+      "downloadUrl": "latex-templates/aaai",
+      "previewUrl": "latex-templates/aaai/preview.png",
+      "files": ["main.tex", "references.bib", "aaai24.sty", "README.md"],
+      "placeholders": {
+        "TITLE": "Paper title",
+        "AUTHOR_1": "First author",
+        "ABSTRACT": "Paper abstract"
+      },
+      "requiredPackages": ["aaai24", "amsmath", "graphicx"],
+      "updatedAt": "2026-01-23T00:00:00Z"
+    },
+    {
+      "id": "jmlr",
+      "name": "JMLR Journal",
+      "description": "JMLR journal article format. Premier open-access machine learning journal.",
+      "category": "academic",
+      "difficulty": "intermediate",
+      "tags": ["jmlr", "machine-learning", "journal", "ai"],
+      "version": "1.0.0",
+      "author": "Sciorex Team",
+      "downloadUrl": "latex-templates/jmlr",
+      "previewUrl": "latex-templates/jmlr/preview.png",
+      "files": ["main.tex", "references.bib", "jmlr2e.sty", "README.md"],
+      "placeholders": {
+        "TITLE": "Paper title",
+        "AUTHOR_1": "First author",
+        "ABSTRACT": "Paper abstract"
+      },
+      "requiredPackages": ["jmlr2e", "amsmath", "graphicx"],
+      "updatedAt": "2026-01-23T00:00:00Z"
+    },
+    {
+      "id": "acs-article",
+      "name": "ACS Article (Chemistry)",
+      "description": "American Chemical Society journal article format. Standard for chemistry publications.",
+      "category": "academic",
+      "difficulty": "intermediate",
+      "tags": ["acs", "chemistry", "journal", "science"],
+      "version": "1.0.0",
+      "author": "Sciorex Team",
+      "downloadUrl": "latex-templates/acs-article",
+      "previewUrl": "latex-templates/acs-article/preview.png",
+      "files": ["main.tex", "references.bib", "README.md"],
+      "placeholders": {
+        "TITLE": "Article title",
+        "AUTHOR_1": "First author",
+        "ABSTRACT": "Abstract"
+      },
+      "requiredPackages": ["achemso", "amsmath", "graphicx"],
+      "updatedAt": "2026-01-23T00:00:00Z"
+    },
+    {
+      "id": "lab-report",
+      "name": "Lab Report",
+      "description": "Scientific lab report template for undergraduate/graduate courses. Standard experimental report format.",
+      "category": "academic",
+      "difficulty": "beginner",
+      "tags": ["lab", "report", "science", "undergraduate", "experiment"],
+      "version": "1.0.0",
+      "author": "Sciorex Team",
+      "downloadUrl": "latex-templates/lab-report",
+      "previewUrl": "latex-templates/lab-report/preview.png",
+      "files": ["main.tex", "references.bib", "README.md"],
+      "placeholders": {
+        "TITLE": "Experiment title",
+        "AUTHOR": "Student name",
+        "COURSE_CODE": "Course code",
+        "DATE": "Date"
+      },
+      "requiredPackages": ["geometry", "graphicx", "amsmath"],
+      "updatedAt": "2026-01-23T00:00:00Z"
+    },
+    {
+      "id": "technical-report",
+      "name": "Technical Report",
+      "description": "Technical report template for research institutions, companies, or internal documentation.",
+      "category": "general",
+      "difficulty": "beginner",
+      "tags": ["technical", "report", "documentation", "industry"],
+      "version": "1.0.0",
+      "author": "Sciorex Team",
+      "downloadUrl": "latex-templates/technical-report",
+      "previewUrl": "latex-templates/technical-report/preview.png",
+      "files": ["main.tex", "references.bib", "README.md"],
+      "placeholders": {
+        "TITLE": "Report title",
+        "AUTHOR": "Author name",
+        "ORGANIZATION": "Organization",
+        "REPORT_NUMBER": "Report number"
+      },
+      "requiredPackages": ["geometry", "graphicx", "hyperref"],
+      "updatedAt": "2026-01-23T00:00:00Z"
+    },
+    {
+      "id": "cover-letter",
+      "name": "Cover Letter",
+      "description": "Professional cover letter for job or academic applications.",
+      "category": "letter",
+      "difficulty": "beginner",
+      "tags": ["cover-letter", "job", "application", "professional"],
+      "version": "1.0.0",
+      "author": "Sciorex Team",
+      "downloadUrl": "latex-templates/cover-letter",
+      "previewUrl": "latex-templates/cover-letter/preview.png",
+      "files": ["main.tex", "README.md"],
+      "placeholders": {
+        "YOUR_NAME": "Your full name",
+        "YOUR_EMAIL": "Your email",
+        "RECIPIENT_NAME": "Hiring manager name",
+        "COMPANY_NAME": "Company name",
+        "POSITION": "Position applying for"
+      },
+      "requiredPackages": ["geometry", "hyperref"],
+      "updatedAt": "2026-01-23T00:00:00Z"
+    },
+    {
+      "id": "resume-modern",
+      "name": "Modern Resume",
+      "description": "Modern one-page resume with clean design. Suitable for industry positions.",
+      "category": "cv",
+      "difficulty": "beginner",
+      "tags": ["resume", "cv", "job", "modern", "professional"],
+      "version": "1.0.0",
+      "author": "Sciorex Team",
+      "downloadUrl": "latex-templates/resume-modern",
+      "previewUrl": "latex-templates/resume-modern/preview.png",
+      "files": ["main.tex", "README.md"],
+      "placeholders": {
+        "NAME": "Your full name",
+        "EMAIL": "Email address",
+        "PHONE": "Phone number",
+        "LINKEDIN": "LinkedIn URL"
+      },
+      "requiredPackages": ["geometry", "hyperref", "titlesec"],
+      "updatedAt": "2026-01-23T00:00:00Z"
+    },
+    {
+      "id": "lecture-notes",
+      "name": "Lecture Notes",
+      "description": "Formatted lecture notes template with theorem environments, examples, and exercises.",
+      "category": "teaching",
+      "difficulty": "intermediate",
+      "tags": ["lecture", "notes", "teaching", "course", "education"],
+      "version": "1.0.0",
+      "author": "Sciorex Team",
+      "downloadUrl": "latex-templates/lecture-notes",
+      "previewUrl": "latex-templates/lecture-notes/preview.png",
+      "files": ["main.tex", "references.bib", "README.md"],
+      "placeholders": {
+        "COURSE_CODE": "Course code",
+        "COURSE_NAME": "Course name",
+        "LECTURE_NUM": "Lecture number",
+        "INSTRUCTOR": "Instructor name"
+      },
+      "requiredPackages": ["amsthm", "tcolorbox", "amsmath"],
+      "updatedAt": "2026-01-23T00:00:00Z"
+    },
+    {
+      "id": "problem-set",
+      "name": "Problem Set / Homework",
+      "description": "Homework/problem set template with clear problem numbering and space for solutions.",
+      "category": "teaching",
+      "difficulty": "beginner",
+      "tags": ["homework", "problem-set", "assignment", "teaching", "course"],
+      "version": "1.0.0",
+      "author": "Sciorex Team",
+      "downloadUrl": "latex-templates/problem-set",
+      "previewUrl": "latex-templates/problem-set/preview.png",
+      "files": ["main.tex", "README.md"],
+      "placeholders": {
+        "COURSE_CODE": "Course code",
+        "COURSE_NAME": "Course name",
+        "PSET_NUMBER": "Problem set number",
+        "DUE_DATE": "Due date"
+      },
+      "requiredPackages": ["geometry", "amsmath", "enumitem"],
+      "updatedAt": "2026-01-23T00:00:00Z"
+    },
+    {
+      "id": "exam",
+      "name": "Exam Paper",
+      "description": "Exam/test paper template with instructions, point values, and answer spaces.",
+      "category": "teaching",
+      "difficulty": "intermediate",
+      "tags": ["exam", "test", "quiz", "teaching", "assessment"],
+      "version": "1.0.0",
+      "author": "Sciorex Team",
+      "downloadUrl": "latex-templates/exam",
+      "previewUrl": "latex-templates/exam/preview.png",
+      "files": ["main.tex", "README.md"],
+      "placeholders": {
+        "COURSE_CODE": "Course code",
+        "COURSE_NAME": "Course name",
+        "EXAM_TYPE": "Exam type (Midterm, Final)",
+        "DURATION": "Exam duration",
+        "TOTAL_POINTS": "Total points"
+      },
+      "requiredPackages": ["exam", "geometry", "amsmath"],
+      "updatedAt": "2026-01-23T00:00:00Z"
+    },
+    {
+      "id": "syllabus",
+      "name": "Course Syllabus",
+      "description": "Course syllabus template with schedule, policies, and grading information.",
+      "category": "teaching",
+      "difficulty": "beginner",
+      "tags": ["syllabus", "course", "teaching", "education"],
+      "version": "1.0.0",
+      "author": "Sciorex Team",
+      "downloadUrl": "latex-templates/syllabus",
+      "previewUrl": "latex-templates/syllabus/preview.png",
+      "files": ["main.tex", "README.md"],
+      "placeholders": {
+        "COURSE_CODE": "Course code",
+        "COURSE_NAME": "Course name",
+        "SEMESTER": "Semester",
+        "INSTRUCTOR": "Instructor name",
+        "EMAIL": "Instructor email"
+      },
+      "requiredPackages": ["geometry", "hyperref", "longtable"],
+      "updatedAt": "2026-01-23T00:00:00Z"
+    },
+    {
+      "id": "thesis-proposal",
+      "name": "Thesis Proposal",
+      "description": "Thesis/dissertation proposal template for graduate students.",
+      "category": "thesis",
+      "difficulty": "intermediate",
+      "tags": ["thesis", "proposal", "phd", "masters", "graduate"],
+      "version": "1.0.0",
+      "author": "Sciorex Team",
+      "downloadUrl": "latex-templates/thesis-proposal",
+      "previewUrl": "latex-templates/thesis-proposal/preview.png",
+      "files": ["main.tex", "references.bib", "README.md"],
+      "placeholders": {
+        "TITLE": "Thesis title",
+        "AUTHOR": "Student name",
+        "ADVISOR": "Advisor name",
+        "DEPARTMENT": "Department",
+        "UNIVERSITY": "University"
+      },
+      "requiredPackages": ["geometry", "hyperref", "natbib"],
+      "updatedAt": "2026-01-23T00:00:00Z"
+    },
+    {
+      "id": "white-paper",
+      "name": "White Paper",
+      "description": "White paper template for policy documents, industry reports, or position papers.",
+      "category": "general",
+      "difficulty": "intermediate",
+      "tags": ["white-paper", "policy", "industry", "report"],
+      "version": "1.0.0",
+      "author": "Sciorex Team",
+      "downloadUrl": "latex-templates/white-paper",
+      "previewUrl": "latex-templates/white-paper/preview.png",
+      "files": ["main.tex", "references.bib", "README.md"],
+      "placeholders": {
+        "TITLE": "White paper title",
+        "AUTHOR": "Author name",
+        "ORGANIZATION": "Organization"
+      },
+      "requiredPackages": ["geometry", "hyperref", "graphicx"],
+      "updatedAt": "2026-01-23T00:00:00Z"
+    },
+    {
+      "id": "poster-a1",
+      "name": "Conference Poster (A1)",
+      "description": "A1-sized poster for smaller conference presentations or departmental events.",
+      "category": "presentation",
+      "difficulty": "intermediate",
+      "tags": ["poster", "conference", "a1", "presentation"],
+      "version": "1.0.0",
+      "author": "Sciorex Team",
+      "downloadUrl": "latex-templates/poster-a1",
+      "previewUrl": "latex-templates/poster-a1/preview.png",
+      "files": ["main.tex", "references.bib", "README.md"],
+      "placeholders": {
+        "TITLE": "Poster title",
+        "AUTHOR_1": "First author",
+        "AFFILIATION": "Institution",
+        "EMAIL": "Contact email"
+      },
+      "requiredPackages": ["tikzposter", "graphicx", "amsmath"],
+      "updatedAt": "2026-01-23T00:00:00Z"
+    },
+    {
+      "id": "acm-chi",
+      "name": "ACM CHI",
+      "description": "ACM CHI conference paper template for Human-Computer Interaction research.",
+      "category": "academic",
+      "difficulty": "intermediate",
+      "tags": ["chi", "hci", "acm", "human-computer-interaction", "conference"],
+      "version": "1.0.0",
+      "author": "Sciorex Team",
+      "downloadUrl": "latex-templates/acm-chi",
+      "previewUrl": "latex-templates/acm-chi/preview.png",
+      "files": ["main.tex", "references.bib", "acmart.cls", "README.md"],
+      "placeholders": {
+        "TITLE": "Paper title",
+        "AUTHOR_1": "First author",
+        "ABSTRACT": "Paper abstract"
+      },
+      "requiredPackages": ["acmart"],
+      "updatedAt": "2026-01-23T00:00:00Z"
     }
   ],
   "categories": [
@@ -133,14 +767,34 @@
       "description": "Templates for academic papers, conferences, and journals"
     },
     {
-      "id": "general",
-      "name": "General Documents",
-      "description": "General-purpose document templates"
+      "id": "thesis",
+      "name": "Thesis & Dissertation",
+      "description": "Templates for PhD theses, Master's theses, and dissertation proposals"
     },
     {
       "id": "presentation",
       "name": "Presentations",
-      "description": "Slide deck and presentation templates"
+      "description": "Slide deck, poster, and presentation templates"
+    },
+    {
+      "id": "cv",
+      "name": "CV & Resume",
+      "description": "Templates for academic CVs and professional resumes"
+    },
+    {
+      "id": "teaching",
+      "name": "Teaching Materials",
+      "description": "Templates for syllabi, lecture notes, exams, and assignments"
+    },
+    {
+      "id": "general",
+      "name": "General Documents",
+      "description": "General-purpose document templates including reports and white papers"
+    },
+    {
+      "id": "letter",
+      "name": "Correspondence",
+      "description": "Templates for cover letters and formal correspondence"
     }
   ]
 }

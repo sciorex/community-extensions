@@ -1,0 +1,299 @@
+%% Lecture Notes Template
+%% Academic lecture notes with theorems, definitions, and examples
+%%
+%% Placeholders use {{PLACEHOLDER}} syntax for easy substitution
+
+\documentclass[11pt,a4paper]{article}
+
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{tcolorbox}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{graphicx}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{booktabs}
+
+% Colors
+\definecolor{theoremcolor}{RGB}{0,51,102}
+\definecolor{definitioncolor}{RGB}{102,51,0}
+\definecolor{examplecolor}{RGB}{0,102,51}
+\definecolor{remarkcolor}{RGB}{102,102,102}
+\definecolor{warningcolor}{RGB}{153,51,0}
+
+% Hyperref setup
+\hypersetup{
+    colorlinks=true,
+    linkcolor=theoremcolor,
+    urlcolor=theoremcolor,
+    citecolor=theoremcolor
+}
+
+% Theorem environments
+\tcbuselibrary{theorems,skins,breakable}
+
+\newtcbtheorem[number within=section]{theorem}{Theorem}{
+    colback=theoremcolor!5,
+    colframe=theoremcolor!80,
+    fonttitle=\bfseries,
+    breakable
+}{thm}
+
+\newtcbtheorem[number within=section]{definition}{Definition}{
+    colback=definitioncolor!5,
+    colframe=definitioncolor!80,
+    fonttitle=\bfseries,
+    breakable
+}{def}
+
+\newtcbtheorem[number within=section]{lemma}{Lemma}{
+    colback=theoremcolor!5,
+    colframe=theoremcolor!60,
+    fonttitle=\bfseries,
+    breakable
+}{lem}
+
+\newtcbtheorem[number within=section]{corollary}{Corollary}{
+    colback=theoremcolor!5,
+    colframe=theoremcolor!60,
+    fonttitle=\bfseries,
+    breakable
+}{cor}
+
+\newtcbtheorem[number within=section]{proposition}{Proposition}{
+    colback=theoremcolor!5,
+    colframe=theoremcolor!70,
+    fonttitle=\bfseries,
+    breakable
+}{prop}
+
+% Example environment
+\newtcbtheorem[number within=section]{example}{Example}{
+    colback=examplecolor!5,
+    colframe=examplecolor!80,
+    fonttitle=\bfseries,
+    breakable
+}{ex}
+
+% Remark environment
+\newtcbtheorem[number within=section]{remark}{Remark}{
+    colback=remarkcolor!5,
+    colframe=remarkcolor!60,
+    fonttitle=\bfseries,
+    breakable
+}{rem}
+
+% Warning/Important note environment
+\newtcolorbox{warning}{
+    colback=warningcolor!5,
+    colframe=warningcolor!80,
+    title={\textbf{Important}},
+    breakable
+}
+
+% Exercise environment
+\newcounter{exercise}[section]
+\renewcommand{\theexercise}{\thesection.\arabic{exercise}}
+\newenvironment{exercise}[1][]{
+    \refstepcounter{exercise}
+    \par\medskip\noindent
+    \textbf{Exercise \theexercise#1.}
+    \rmfamily
+}{\medskip}
+
+% Solution environment (can be hidden)
+\newenvironment{solution}{
+    \par\medskip\noindent
+    \textit{Solution.}
+}{\hfill$\square$\medskip}
+
+% Page style
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{{{COURSE_CODE}}: {{COURSE_NAME}}}
+\fancyhead[R]{Lecture {{LECTURE_NUM}}}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% Title
+\title{
+    \vspace{-1cm}
+    {\large {{COURSE_CODE}}: {{COURSE_NAME}}}\\[0.5em]
+    {\LARGE\bfseries Lecture {{LECTURE_NUM}}: {{LECTURE_TITLE}}}
+}
+\author{{{INSTRUCTOR}}\\{\small {{INSTITUTION}}}}
+\date{{{DATE}}}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\vspace{1em}
+
+% Learning objectives
+\begin{tcolorbox}[colback=blue!5,colframe=blue!40,title={\textbf{Learning Objectives}}]
+By the end of this lecture, you will be able to:
+\begin{itemize}[nosep]
+    \item {{OBJECTIVE_1}}
+    \item {{OBJECTIVE_2}}
+    \item {{OBJECTIVE_3}}
+\end{itemize}
+\end{tcolorbox}
+
+%% =============================================================================
+\section{Introduction}
+%% =============================================================================
+
+{{INTRO_TEXT}}
+
+In this lecture, we will explore the fundamental concepts of {{TOPIC}}. Building upon our previous discussion of {{PREVIOUS_TOPIC}}, we will develop a deeper understanding of {{KEY_CONCEPT}}.
+
+%% =============================================================================
+\section{Fundamental Definitions}
+%% =============================================================================
+
+We begin by establishing the key definitions that will be used throughout this lecture.
+
+\begin{definition}{{{DEFINITION_1_NAME}}}{def1}
+{{DEFINITION_1_TEXT}}
+\end{definition}
+
+Let us consider what this definition implies in practice.
+
+\begin{example}{Illustrating {{DEFINITION_1_NAME}}}{ex1}
+{{EXAMPLE_1_TEXT}}
+
+Consider the case where $x = {{EXAMPLE_VALUE}}$. Then we have:
+\[
+    {{EXAMPLE_EQUATION}}
+\]
+\end{example}
+
+\begin{definition}{{{DEFINITION_2_NAME}}}{def2}
+{{DEFINITION_2_TEXT}}
+\end{definition}
+
+\begin{remark}{Relationship between definitions}{rem1}
+Note that {{DEFINITION_1_NAME}} and {{DEFINITION_2_NAME}} are related through {{RELATIONSHIP_TEXT}}.
+\end{remark}
+
+%% =============================================================================
+\section{Main Results}
+%% =============================================================================
+
+We now present the main theoretical results of this lecture.
+
+\begin{theorem}{{{THEOREM_NAME}}}{main}
+{{THEOREM_STATEMENT}}
+\end{theorem}
+
+\begin{proof}
+{{PROOF_TEXT}}
+
+We proceed by {{PROOF_METHOD}}.
+
+\textit{Step 1:} {{PROOF_STEP_1}}
+
+\textit{Step 2:} {{PROOF_STEP_2}}
+
+Therefore, we conclude that {{PROOF_CONCLUSION}}.
+\end{proof}
+
+\begin{corollary}{Consequence of {{THEOREM_NAME}}}{cor1}
+{{COROLLARY_TEXT}}
+\end{corollary}
+
+\begin{example}{Application of {{THEOREM_NAME}}}{ex2}
+{{APPLICATION_EXAMPLE}}
+\end{example}
+
+%% =============================================================================
+\section{Extended Discussion}
+%% =============================================================================
+
+\subsection{Special Cases}
+
+{{SPECIAL_CASES_TEXT}}
+
+\begin{lemma}{{{LEMMA_NAME}}}{lem1}
+{{LEMMA_STATEMENT}}
+\end{lemma}
+
+\subsection{Connections to Other Topics}
+
+{{CONNECTIONS_TEXT}}
+
+\begin{warning}
+{{WARNING_TEXT}}
+\end{warning}
+
+%% =============================================================================
+\section{Worked Examples}
+%% =============================================================================
+
+\begin{example}{{{WORKED_EXAMPLE_NAME}}}{worked}
+\textbf{Problem:} {{WORKED_PROBLEM}}
+
+\textbf{Solution:}
+{{WORKED_SOLUTION}}
+\end{example}
+
+%% =============================================================================
+\section{Summary}
+%% =============================================================================
+
+In this lecture, we covered:
+\begin{itemize}
+    \item {{SUMMARY_POINT_1}}
+    \item {{SUMMARY_POINT_2}}
+    \item {{SUMMARY_POINT_3}}
+\end{itemize}
+
+\textbf{Key takeaways:}
+\begin{enumerate}
+    \item {{TAKEAWAY_1}}
+    \item {{TAKEAWAY_2}}
+\end{enumerate}
+
+%% =============================================================================
+\section{Exercises}
+%% =============================================================================
+
+\begin{exercise}
+{{EXERCISE_1}}
+\end{exercise}
+
+\begin{exercise}
+{{EXERCISE_2}}
+\end{exercise}
+
+\begin{exercise}[*]
+\textbf{(Challenge)} {{EXERCISE_3}}
+\end{exercise}
+
+%% =============================================================================
+\section*{Further Reading}
+%% =============================================================================
+
+For additional material on the topics covered in this lecture, see:
+\begin{itemize}
+    \item {{READING_1}}
+    \item {{READING_2}}
+\end{itemize}
+
+\textbf{Next lecture:} {{NEXT_LECTURE_TOPIC}}
+
+%% Bibliography (optional - uncomment if using citations)
+% \bibliographystyle{plain}
+% \bibliography{references}
+
+\end{document}

@@ -5,8 +5,8 @@
 <h1 align="center">Sciorex Community</h1>
 
 <p align="center">
-  <strong>Community-contributed agents, flows, and personas</strong><br>
-  Extend Sciorex with community-built AI agents, automated workflows, and council personas
+  <strong>Community-contributed agents, flows, personas, and LaTeX templates</strong><br>
+  Extend Sciorex with community-built AI agents, automated workflows, council personas, and LaTeX templates
 </p>
 
 <!-- Badges -->
@@ -27,7 +27,7 @@
 
 ## Overview
 
-This repository hosts community-contributed AI agents, automated workflows (flows), and LLM Council personas that extend Sciorex's capabilities. Users can browse, install, and update these extensions directly from within the Sciorex application.
+This repository hosts community-contributed AI agents, automated workflows (flows), LLM Council personas, and LaTeX templates that extend Sciorex's capabilities. Users can browse, install, and update these extensions directly from within the Sciorex application.
 
 ## Contents
 
@@ -86,6 +86,20 @@ Council personas give AI agents specific perspectives and expertise for LLM Coun
 | [The Pragmatist](personas/pragmatist.yaml) | Focuses on practical, actionable implementation with realistic constraints |
 | [The Researcher](personas/researcher.yaml) | Provides analysis, references, and evidence-based best practices |
 | [The Simplifier](personas/simplifier.yaml) | Advocates for the simplest effective solution, championing KISS and YAGNI |
+
+### LaTeX Templates
+
+Professional LaTeX document templates for academic papers, presentations, and general-purpose documents. Templates include placeholder support for easy customization.
+
+| Template | Description |
+|----------|-------------|
+| [IEEE Conference Paper](latex-templates/ieee/) | Standard IEEE conference paper template for engineering and computer science |
+| [ACM Conference Paper](latex-templates/acm/) | Official ACM conference paper template (sigconf format) |
+| [arXiv Preprint](latex-templates/arxiv/) | Clean template for arXiv preprints compatible with submission requirements |
+| [Basic Article](latex-templates/basic-article/) | Simple article template for essays, reports, and documentation |
+| [Beamer Presentation](latex-templates/beamer/) | Professional presentation template for academic and technical talks |
+
+See [latex-templates/README.md](latex-templates/README.md) for details on template structure and contributing new templates.
 
 ## Installation
 

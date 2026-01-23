@@ -1,0 +1,398 @@
+% Academic Curriculum Vitae Template
+% A comprehensive CV for faculty positions, grants, and academic applications
+%
+% This template uses standard article class with custom formatting
+% Suitable for academic positions, tenure applications, and grant proposals
+%
+\documentclass[11pt,letterpaper]{article}
+
+% ============================================================
+% PACKAGES
+% ============================================================
+
+% Page layout
+\usepackage[top=0.75in, bottom=0.75in, left=0.75in, right=0.75in]{geometry}
+\usepackage{parskip}
+
+% Typography
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{microtype}
+
+% Lists
+\usepackage{enumitem}
+\setlist[itemize]{leftmargin=*, nosep}
+\setlist[enumerate]{leftmargin=*, nosep}
+
+% Colors and links
+\usepackage{xcolor}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue!70!black,
+    urlcolor=blue!70!black,
+    citecolor=blue!70!black
+}
+
+% Tables
+\usepackage{tabularx}
+\usepackage{ltablex}
+\keepXColumns
+
+% Icons (optional - comment out if not installed)
+% \usepackage{fontawesome5}
+
+% Custom colors
+\definecolor{headercolor}{RGB}{0, 51, 102}
+\definecolor{rulecolor}{RGB}{150, 150, 150}
+
+% ============================================================
+% CUSTOM COMMANDS
+% ============================================================
+
+% Section formatting
+\usepackage{titlesec}
+\titleformat{\section}
+    {\Large\bfseries\color{headercolor}}
+    {}
+    {0em}
+    {}
+    [\vspace{-0.5em}\textcolor{rulecolor}{\rule{\textwidth}{0.5pt}}]
+
+\titlespacing*{\section}{0pt}{1.5ex plus 0.5ex minus 0.2ex}{1ex plus 0.2ex}
+
+% Subsection formatting
+\titleformat{\subsection}
+    {\large\bfseries}
+    {}
+    {0em}
+    {}
+
+% CV entry commands
+\newcommand{\cventry}[4]{%
+    \noindent\begin{tabularx}{\textwidth}{@{}X r@{}}
+        \textbf{#1} & #2 \\
+        \textit{#3} & \\
+    \end{tabularx}
+    #4
+    \vspace{0.5em}
+}
+
+\newcommand{\cventrysimple}[3]{%
+    \noindent\begin{tabularx}{\textwidth}{@{}X r@{}}
+        \textbf{#1} & #2 \\
+    \end{tabularx}
+    #3
+    \vspace{0.3em}
+}
+
+\newcommand{\cvpublication}[1]{%
+    \hangindent=1.5em
+    \hangafter=1
+    #1
+    \vspace{0.3em}
+}
+
+% ============================================================
+% DOCUMENT
+% ============================================================
+
+\begin{document}
+
+% ============================================================
+% HEADER
+% ============================================================
+
+\begin{center}
+    {\Huge\bfseries\color{headercolor} {{NAME}}}
+
+    \vspace{0.3em}
+
+    {{TITLE}}\\
+    {{DEPARTMENT}}, {{UNIVERSITY}}
+
+    \vspace{0.3em}
+
+    {{ADDRESS}}\\
+    Email: \href{mailto:{{EMAIL}}}{{{EMAIL}}} | Phone: {{PHONE}}\\
+    Website: \href{{{WEBSITE}}}{{{WEBSITE}}}\\
+    ORCID: \href{https://orcid.org/{{ORCID}}}{{{ORCID}}}
+\end{center}
+
+% ============================================================
+% EDUCATION
+% ============================================================
+
+\section{Education}
+
+\cventry{Ph.D. in [Field]}{[Year]}{[University], [Location]}{%
+    \begin{itemize}
+        \item Dissertation: ``[Dissertation Title]''
+        \item Advisor: [Advisor Name]
+        \item Committee: [Committee Members]
+    \end{itemize}
+}
+
+\cventry{M.S. in [Field]}{[Year]}{[University], [Location]}{%
+    \begin{itemize}
+        \item Thesis: ``[Thesis Title]''
+        \item Advisor: [Advisor Name]
+    \end{itemize}
+}
+
+\cventry{B.S. in [Field]}{[Year]}{[University], [Location]}{%
+    \begin{itemize}
+        \item [Honors, awards, or special achievements]
+        \item [Minor or concentration if applicable]
+    \end{itemize}
+}
+
+% ============================================================
+% ACADEMIC POSITIONS
+% ============================================================
+
+\section{Academic Positions}
+
+\cventry{[Current Title]}{[Year]--Present}{[Department], [University]}{%
+    \begin{itemize}
+        \item [Brief description of role and responsibilities]
+    \end{itemize}
+}
+
+\cventry{[Previous Title]}{[Year]--[Year]}{[Department], [University]}{%
+    \begin{itemize}
+        \item [Description of responsibilities]
+    \end{itemize}
+}
+
+\cventry{Postdoctoral Researcher}{[Year]--[Year]}{[Lab/Group], [University]}{%
+    \begin{itemize}
+        \item Advisor: [Name]
+        \item [Research focus]
+    \end{itemize}
+}
+
+% ============================================================
+% RESEARCH INTERESTS
+% ============================================================
+
+\section{Research Interests}
+
+[Primary Area 1], [Primary Area 2], [Primary Area 3], [Primary Area 4], [Primary Area 5]
+
+% ============================================================
+% PUBLICATIONS
+% ============================================================
+
+\section{Publications}
+
+\subsection{Journal Articles}
+
+\begin{enumerate}
+    \item \cvpublication{\textbf{[Your Name]}, [Co-author 1], and [Co-author 2]. ``[Paper Title].'' \textit{[Journal Name]}, vol. [X], no. [Y], pp. [Z--W], [Year]. DOI: [DOI]}
+
+    \item \cvpublication{[Co-author 1], \textbf{[Your Name]}, and [Co-author 2]. ``[Paper Title].'' \textit{[Journal Name]}, [Year]. (Under review)}
+
+    \item \cvpublication{[Author list with your name in bold]. ``[Paper Title].'' \textit{[Journal Name]}, [Year].}
+\end{enumerate}
+
+\subsection{Conference Papers}
+
+\begin{enumerate}
+    \item \cvpublication{\textbf{[Your Name]}, [Co-author 1], and [Co-author 2]. ``[Paper Title].'' In \textit{Proceedings of [Conference Name]}, [Location], [Year], pp. [X--Y].}
+
+    \item \cvpublication{[Author list]. ``[Paper Title].'' In \textit{Proceedings of [Conference Name]}, [Year]. (Oral/Spotlight presentation)}
+
+    \item \cvpublication{[Author list]. ``[Paper Title].'' In \textit{[Conference Name]}, [Year].}
+\end{enumerate}
+
+\subsection{Book Chapters}
+
+\begin{enumerate}
+    \item \cvpublication{\textbf{[Your Name]} and [Co-author]. ``[Chapter Title].'' In \textit{[Book Title]}, [Editor(s)], eds. [Publisher], [Year], pp. [X--Y].}
+\end{enumerate}
+
+\subsection{Preprints and Technical Reports}
+
+\begin{enumerate}
+    \item \cvpublication{\textbf{[Your Name]} et al. ``[Paper Title].'' arXiv preprint arXiv:[Number], [Year].}
+\end{enumerate}
+
+% ============================================================
+% GRANTS AND FUNDING
+% ============================================================
+
+\section{Grants and Funding}
+
+\cventry{[Grant Title]}{[Year]--[Year]}{[Funding Agency], \$[Amount]}{%
+    \begin{itemize}
+        \item Role: [PI/Co-PI/Co-I]
+        \item [Brief description of project]
+    \end{itemize}
+}
+
+\cventry{[Fellowship/Award Name]}{[Year]--[Year]}{[Organization], \$[Amount]}{%
+    \begin{itemize}
+        \item [Description]
+    \end{itemize}
+}
+
+% ============================================================
+% TEACHING EXPERIENCE
+% ============================================================
+
+\section{Teaching Experience}
+
+\subsection{Courses Taught}
+
+\begin{tabularx}{\textwidth}{@{}X l r@{}}
+    \textbf{[Course Number]: [Course Name]} & [University] & [Semester(s)] \\
+    \multicolumn{3}{@{}l@{}}{\quad\textit{[Role: Instructor/Co-Instructor]}, Enrollment: [X] students} \\[0.5em]
+
+    \textbf{[Course Number]: [Course Name]} & [University] & [Semester(s)] \\
+    \multicolumn{3}{@{}l@{}}{\quad\textit{[Role]}, Enrollment: [X] students} \\[0.5em]
+
+    \textbf{[Course Number]: [Course Name]} & [University] & [Semester(s)] \\
+    \multicolumn{3}{@{}l@{}}{\quad\textit{Teaching Assistant}, [Description]} \\
+\end{tabularx}
+
+\subsection{Curriculum Development}
+
+\begin{itemize}
+    \item Developed [new course/module] on [topic] at [University]
+    \item Created [materials/resources] for [course/program]
+\end{itemize}
+
+% ============================================================
+% STUDENTS SUPERVISED
+% ============================================================
+
+\section{Students Supervised}
+
+\subsection{Ph.D. Students}
+
+\begin{itemize}
+    \item \textbf{[Student Name]} (in progress, expected [Year]). Thesis: ``[Working Title]''
+    \item \textbf{[Student Name]} (graduated [Year]). Thesis: ``[Title]''. Current position: [Position]
+\end{itemize}
+
+\subsection{Master's Students}
+
+\begin{itemize}
+    \item \textbf{[Student Name]} (graduated [Year]). Thesis: ``[Title]''
+    \item \textbf{[Student Name]} (graduated [Year]). Project: ``[Title]''
+\end{itemize}
+
+\subsection{Undergraduate Students}
+
+\begin{itemize}
+    \item \textbf{[Student Name]} ([Year]). [Project/Thesis title]
+    \item \textbf{[Student Name]} ([Year]). [Project/Thesis title]
+\end{itemize}
+
+% ============================================================
+% PROFESSIONAL SERVICE
+% ============================================================
+
+\section{Professional Service}
+
+\subsection{Editorial Boards}
+
+\begin{itemize}
+    \item Associate Editor, \textit{[Journal Name]}, [Year]--Present
+    \item Guest Editor, \textit{[Journal Name]} Special Issue on [Topic], [Year]
+\end{itemize}
+
+\subsection{Conference Organization}
+
+\begin{itemize}
+    \item Program Chair, [Conference Name], [Year]
+    \item Area Chair, [Conference Name], [Year(s)]
+    \item Workshop Organizer, ``[Workshop Title],'' [Conference], [Year]
+\end{itemize}
+
+\subsection{Reviewer}
+
+\begin{itemize}
+    \item Journals: [Journal 1], [Journal 2], [Journal 3]
+    \item Conferences: [Conference 1], [Conference 2], [Conference 3]
+\end{itemize}
+
+\subsection{Departmental Service}
+
+\begin{itemize}
+    \item Member, [Committee Name], [Year]--[Year]
+    \item [Role], [Committee/Organization], [Year]--Present
+\end{itemize}
+
+% ============================================================
+% AWARDS AND HONORS
+% ============================================================
+
+\section{Awards and Honors}
+
+\begin{tabularx}{\textwidth}{@{}X r@{}}
+    [Award Name], [Organization] & [Year] \\
+    [Award Name], [Conference/Organization] & [Year] \\
+    [Fellowship/Scholarship Name], [Organization] & [Year] \\
+    Best Paper Award, [Conference Name] & [Year] \\
+    [Honor], [University] & [Year] \\
+\end{tabularx}
+
+% ============================================================
+% INVITED TALKS
+% ============================================================
+
+\section{Invited Talks}
+
+\begin{enumerate}
+    \item ``[Talk Title].'' [Event/Institution], [Location], [Date].
+
+    \item ``[Talk Title].'' [Event/Institution], [Location], [Date].
+
+    \item ``[Talk Title].'' [Event/Institution], [Location], [Date].
+\end{enumerate}
+
+% ============================================================
+% PROFESSIONAL MEMBERSHIPS
+% ============================================================
+
+\section{Professional Memberships}
+
+\begin{itemize}
+    \item Member, [Professional Society 1] (since [Year])
+    \item Member, [Professional Society 2] (since [Year])
+    \item Senior Member, [Professional Society 3] (since [Year])
+\end{itemize}
+
+% ============================================================
+% SKILLS
+% ============================================================
+
+\section{Technical Skills}
+
+\begin{description}[style=nextline, leftmargin=0pt]
+    \item[Programming Languages:] Python, C++, MATLAB, R, Julia
+    \item[Frameworks \& Tools:] PyTorch, TensorFlow, scikit-learn, Git, Docker
+    \item[Languages:] English (native), [Language 2] (fluent), [Language 3] (conversational)
+\end{description}
+
+% ============================================================
+% REFERENCES
+% ============================================================
+
+\section{References}
+
+Available upon request.
+
+% Or include references:
+% \begin{tabularx}{\textwidth}{@{}XX@{}}
+%     \textbf{[Name]} & \textbf{[Name]} \\
+%     [Title] & [Title] \\
+%     [Department] & [Department] \\
+%     [University] & [University] \\
+%     [Email] & [Email] \\
+%     [Phone] & [Phone] \\
+% \end{tabularx}
+
+\end{document}

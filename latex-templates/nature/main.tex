@@ -1,0 +1,184 @@
+% Nature Journal Article Template
+% Following Nature journal style guidelines
+% https://www.nature.com/nature/for-authors/formatting-guide
+
+\documentclass[11pt]{article}
+
+% Required packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{times}                    % Times font (Nature preference)
+\usepackage[margin=2.5cm]{geometry}   % Standard margins
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb}
+\usepackage{natbib}                   % Nature-style citations
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{lineno}                   % Line numbers for review
+\usepackage{setspace}                 % Double spacing for review
+
+% Nature formatting
+\linenumbers                          % Enable line numbers
+\doublespacing                        % Double spacing for submission
+
+% Hyperref setup
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    urlcolor=blue
+}
+
+% Remove section numbering (Nature style)
+\setcounter{secnumdepth}{0}
+
+%==============================================================================
+% TITLE (ideally 10 words or fewer)
+%==============================================================================
+\title{{{TITLE}}}
+
+%==============================================================================
+% AUTHORS AND AFFILIATIONS
+%==============================================================================
+\author{
+    {{AUTHOR_1}}$^{1,*}$,
+    {{AUTHOR_2}}$^{2}$,
+    {{AUTHOR_3}}$^{1,2}$
+}
+
+\date{}
+
+\begin{document}
+
+%==============================================================================
+% TITLE PAGE
+%==============================================================================
+\maketitle
+
+\noindent
+$^{1}${{AFFILIATION_1}}\\
+$^{2}${{AFFILIATION_2}}\\[0.5em]
+$^{*}$Correspondence: {{CORRESPONDING_EMAIL}}
+
+%==============================================================================
+% ABSTRACT (150 words maximum)
+%==============================================================================
+\begin{abstract}
+\noindent
+{{ABSTRACT}}
+\end{abstract}
+
+%==============================================================================
+% MAIN TEXT (typically under 3,000 words)
+% Nature articles do NOT use section headers in the main body
+%==============================================================================
+
+{{MAIN_TEXT}}
+
+% The main text should flow continuously without explicit section headers.
+% Include your introduction, results, and discussion as flowing prose.
+%
+% Example structure (implicit, not marked with headers):
+% - Opening paragraph: context and motivation
+% - Key results and findings
+% - Interpretation and implications
+% - Concluding remarks
+
+%==============================================================================
+% METHODS (separate section)
+%==============================================================================
+\section*{Methods}
+
+{{METHODS}}
+
+% Methods should provide sufficient detail for reproducibility.
+% Subsections can be used within Methods:
+
+\subsection*{Data Collection}
+
+{{METHODS_DATA}}
+
+\subsection*{Statistical Analysis}
+
+{{METHODS_ANALYSIS}}
+
+\subsection*{Experimental Procedures}
+
+{{METHODS_PROCEDURES}}
+
+%==============================================================================
+% REFERENCES
+%==============================================================================
+\bibliographystyle{naturemag}         % Nature bibliography style
+\bibliography{references}
+
+%==============================================================================
+% ACKNOWLEDGEMENTS
+%==============================================================================
+\section*{Acknowledgements}
+
+{{ACKNOWLEDGEMENTS}}
+
+%==============================================================================
+% AUTHOR CONTRIBUTIONS
+%==============================================================================
+\section*{Author Contributions}
+
+{{AUTHOR_CONTRIBUTIONS}}
+
+% Example: J.S. conceived the study. M.L. performed experiments. J.S. and M.L.
+% analyzed data. All authors contributed to writing the manuscript.
+
+%==============================================================================
+% COMPETING INTERESTS
+%==============================================================================
+\section*{Competing Interests}
+
+{{COMPETING_INTERESTS}}
+
+% State "The authors declare no competing interests." or describe any conflicts.
+
+%==============================================================================
+% DATA AVAILABILITY
+%==============================================================================
+\section*{Data Availability}
+
+{{DATA_AVAILABILITY}}
+
+%==============================================================================
+% CODE AVAILABILITY
+%==============================================================================
+\section*{Code Availability}
+
+{{CODE_AVAILABILITY}}
+
+%==============================================================================
+% EXTENDED DATA (Figures and Tables)
+%==============================================================================
+\clearpage
+\section*{Extended Data}
+
+% Extended Data figures and tables are peer-reviewed but appear only online.
+% Reference as "Extended Data Fig. 1" in the main text.
+
+\subsection*{Extended Data Fig. 1}
+
+{{EXTENDED_DATA_FIG_1_CAPTION}}
+
+% \begin{figure}[h]
+%     \centering
+%     \includegraphics[width=\textwidth]{extended_data_fig1.pdf}
+%     \caption{{{EXTENDED_DATA_FIG_1_CAPTION}}}
+% \end{figure}
+
+\subsection*{Extended Data Table 1}
+
+{{EXTENDED_DATA_TABLE_1_CAPTION}}
+
+%==============================================================================
+% SUPPLEMENTARY INFORMATION
+%==============================================================================
+% Supplementary Information (SI) is posted online and is not peer-reviewed.
+% Create a separate file for SI if needed.
+
+\end{document}

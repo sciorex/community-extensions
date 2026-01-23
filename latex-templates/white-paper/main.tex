@@ -1,0 +1,397 @@
+% White Paper Template
+% Category: general
+% Difficulty: intermediate
+% A professional white paper or technical brief
+
+\documentclass[11pt]{article}
+
+% Page layout
+\usepackage[margin=1in]{geometry}
+\usepackage{setspace}
+\onehalfspacing
+
+% Typography
+\usepackage{microtype}
+\usepackage{parskip}
+
+% Graphics and tables
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{wrapfig}
+
+% Lists
+\usepackage{enumitem}
+
+% Citations
+\usepackage[numbers]{natbib}
+
+% Links
+\usepackage[colorlinks=true,linkcolor=darkblue,citecolor=darkblue,urlcolor=darkblue]{hyperref}
+
+% Colors
+\usepackage{xcolor}
+\definecolor{darkblue}{RGB}{0,51,102}
+\definecolor{lightgray}{RGB}{245,245,245}
+\definecolor{accentcolor}{RGB}{0,120,174}
+
+% Boxes for highlights
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+
+\newtcolorbox{keypoint}{
+  colback=lightgray,
+  colframe=accentcolor,
+  fonttitle=\bfseries,
+  title=Key Point,
+  boxrule=1pt,
+  arc=2mm,
+  left=5mm,
+  right=5mm,
+  top=2mm,
+  bottom=2mm
+}
+
+\newtcolorbox{highlight}{
+  colback=accentcolor!10,
+  colframe=accentcolor,
+  boxrule=0pt,
+  leftrule=4pt,
+  arc=0mm,
+  left=5mm,
+  right=5mm,
+  top=2mm,
+  bottom=2mm
+}
+
+% Section formatting
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\color{darkblue}}{\thesection.}{0.5em}{}
+\titleformat{\subsection}{\large\bfseries\color{darkblue}}{\thesubsection}{0.5em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries}{\thesubsubsection}{0.5em}{}
+
+% Header and footer
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{gray}{{{ORGANIZATION}}}}
+\fancyhead[R]{\small\textcolor{gray}{White Paper}}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\begin{document}
+
+%----------------------------------------------------------------------
+% TITLE PAGE
+%----------------------------------------------------------------------
+\begin{titlepage}
+    \centering
+
+    % Organization logo placeholder
+    % \includegraphics[width=0.3\textwidth]{logo.png}\\[1cm]
+
+    \vspace*{1.5in}
+
+    {\Huge\bfseries\color{darkblue} {{TITLE}}}
+
+    \vspace{0.3in}
+
+    {\Large\color{accentcolor} {{SUBTITLE}}}
+
+    \vspace{1in}
+
+    {\large\textit{A White Paper by}}\\[0.3em]
+    {\Large\bfseries {{ORGANIZATION}}}
+
+    \vspace{1in}
+
+    {\large {{AUTHOR}}}\\[0.3em]
+    {\normalsize {{AUTHOR_TITLE}}}\\[0.5em]
+    {\normalsize\href{mailto:{{EMAIL}}}{{{EMAIL}}}}
+
+    \vfill
+
+    {\large {{DATE}}}
+
+    \vspace{0.5in}
+
+    {\small Version {{VERSION}}}
+
+\end{titlepage}
+
+%----------------------------------------------------------------------
+% EXECUTIVE SUMMARY
+%----------------------------------------------------------------------
+\newpage
+\section*{Executive Summary}
+\addcontentsline{toc}{section}{Executive Summary}
+
+{{EXECUTIVE_SUMMARY}}
+
+\begin{keypoint}
+{{KEY_TAKEAWAY}}
+\end{keypoint}
+
+%----------------------------------------------------------------------
+% TABLE OF CONTENTS
+%----------------------------------------------------------------------
+\newpage
+\tableofcontents
+
+%----------------------------------------------------------------------
+% INTRODUCTION
+%----------------------------------------------------------------------
+\newpage
+\section{Introduction}
+\label{sec:introduction}
+
+\subsection{The Challenge}
+
+{{CHALLENGE_DESCRIPTION}}
+
+\subsection{Purpose of This White Paper}
+
+This white paper aims to:
+
+\begin{enumerate}[leftmargin=*]
+    \item {{PURPOSE_1}}
+    \item {{PURPOSE_2}}
+    \item {{PURPOSE_3}}
+\end{enumerate}
+
+\subsection{Who Should Read This}
+
+This document is intended for:
+
+\begin{itemize}[leftmargin=*]
+    \item {{AUDIENCE_1}}
+    \item {{AUDIENCE_2}}
+    \item {{AUDIENCE_3}}
+\end{itemize}
+
+%----------------------------------------------------------------------
+% BACKGROUND
+%----------------------------------------------------------------------
+\section{Background}
+\label{sec:background}
+
+\subsection{Industry Context}
+
+{{INDUSTRY_CONTEXT}}
+
+\subsection{Current State}
+
+{{CURRENT_STATE}}
+
+\begin{highlight}
+{{STATISTICS_OR_FACT}}
+\end{highlight}
+
+\subsection{Market Trends}
+
+{{MARKET_TRENDS}}
+
+%----------------------------------------------------------------------
+% PROBLEM ANALYSIS
+%----------------------------------------------------------------------
+\section{Problem Analysis}
+\label{sec:problem}
+
+\subsection{Core Issues}
+
+{{CORE_ISSUES}}
+
+\subsection{Impact Assessment}
+
+The consequences of not addressing these issues include:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{{{IMPACT_AREA_1}}:} {{IMPACT_DESCRIPTION_1}}
+    \item \textbf{{{IMPACT_AREA_2}}:} {{IMPACT_DESCRIPTION_2}}
+    \item \textbf{{{IMPACT_AREA_3}}:} {{IMPACT_DESCRIPTION_3}}
+\end{itemize}
+
+\subsection{Root Causes}
+
+{{ROOT_CAUSES}}
+
+%----------------------------------------------------------------------
+% PROPOSED SOLUTION
+%----------------------------------------------------------------------
+\section{Proposed Solution}
+\label{sec:solution}
+
+\subsection{Overview}
+
+{{SOLUTION_OVERVIEW}}
+
+\subsection{Key Components}
+
+\subsubsection{{{COMPONENT_1_NAME}}}
+
+{{COMPONENT_1_DESCRIPTION}}
+
+\subsubsection{{{COMPONENT_2_NAME}}}
+
+{{COMPONENT_2_DESCRIPTION}}
+
+\subsubsection{{{COMPONENT_3_NAME}}}
+
+{{COMPONENT_3_DESCRIPTION}}
+
+\subsection{How It Works}
+
+{{HOW_IT_WORKS}}
+
+% Include a diagram if available
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.8\textwidth]{figures/solution-diagram.png}
+%     \caption{Solution Architecture}
+%     \label{fig:solution}
+% \end{figure}
+
+%----------------------------------------------------------------------
+% BENEFITS AND VALUE PROPOSITION
+%----------------------------------------------------------------------
+\section{Benefits and Value Proposition}
+\label{sec:benefits}
+
+\subsection{Primary Benefits}
+
+\begin{table}[H]
+\centering
+\caption{Key Benefits Summary}
+\label{tab:benefits}
+\begin{tabular}{@{}lp{8cm}@{}}
+\toprule
+\textbf{Benefit} & \textbf{Description} \\
+\midrule
+{{BENEFIT_1_NAME}} & {{BENEFIT_1_DESCRIPTION}} \\
+{{BENEFIT_2_NAME}} & {{BENEFIT_2_DESCRIPTION}} \\
+{{BENEFIT_3_NAME}} & {{BENEFIT_3_DESCRIPTION}} \\
+{{BENEFIT_4_NAME}} & {{BENEFIT_4_DESCRIPTION}} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Return on Investment}
+
+{{ROI_ANALYSIS}}
+
+\subsection{Competitive Advantage}
+
+{{COMPETITIVE_ADVANTAGE}}
+
+%----------------------------------------------------------------------
+% IMPLEMENTATION CONSIDERATIONS
+%----------------------------------------------------------------------
+\section{Implementation Considerations}
+\label{sec:implementation}
+
+\subsection{Prerequisites}
+
+Before implementation, organizations should ensure:
+
+\begin{enumerate}[leftmargin=*]
+    \item {{PREREQUISITE_1}}
+    \item {{PREREQUISITE_2}}
+    \item {{PREREQUISITE_3}}
+\end{enumerate}
+
+\subsection{Implementation Roadmap}
+
+\begin{table}[H]
+\centering
+\caption{Implementation Phases}
+\label{tab:roadmap}
+\begin{tabular}{@{}clll@{}}
+\toprule
+\textbf{Phase} & \textbf{Activities} & \textbf{Duration} & \textbf{Outcome} \\
+\midrule
+1 & {{PHASE_1_ACTIVITY}} & {{PHASE_1_DURATION}} & {{PHASE_1_OUTCOME}} \\
+2 & {{PHASE_2_ACTIVITY}} & {{PHASE_2_DURATION}} & {{PHASE_2_OUTCOME}} \\
+3 & {{PHASE_3_ACTIVITY}} & {{PHASE_3_DURATION}} & {{PHASE_3_OUTCOME}} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Success Factors}
+
+{{SUCCESS_FACTORS}}
+
+\subsection{Potential Challenges}
+
+{{POTENTIAL_CHALLENGES}}
+
+%----------------------------------------------------------------------
+% CASE STUDY (Optional)
+%----------------------------------------------------------------------
+\section{Case Study}
+\label{sec:case-study}
+
+\subsection{{{CASE_STUDY_COMPANY}} Overview}
+
+{{CASE_STUDY_BACKGROUND}}
+
+\subsection{Challenge}
+
+{{CASE_STUDY_CHALLENGE}}
+
+\subsection{Solution}
+
+{{CASE_STUDY_SOLUTION}}
+
+\subsection{Results}
+
+{{CASE_STUDY_RESULTS}}
+
+\begin{highlight}
+``{{TESTIMONIAL_QUOTE}}'' --- {{TESTIMONIAL_ATTRIBUTION}}
+\end{highlight}
+
+%----------------------------------------------------------------------
+% CONCLUSION
+%----------------------------------------------------------------------
+\section{Conclusion}
+\label{sec:conclusion}
+
+{{CONCLUSION}}
+
+\subsection{Recommendations}
+
+Based on the analysis presented in this white paper, we recommend:
+
+\begin{enumerate}[leftmargin=*]
+    \item {{RECOMMENDATION_1}}
+    \item {{RECOMMENDATION_2}}
+    \item {{RECOMMENDATION_3}}
+\end{enumerate}
+
+\subsection{Next Steps}
+
+{{NEXT_STEPS}}
+
+%----------------------------------------------------------------------
+% ABOUT THE ORGANIZATION
+%----------------------------------------------------------------------
+\section*{About {{ORGANIZATION}}}
+\addcontentsline{toc}{section}{About {{ORGANIZATION}}}
+
+{{ABOUT_ORGANIZATION}}
+
+\vspace{1em}
+\noindent\textbf{Contact:}\\
+{{CONTACT_ADDRESS}}\\
+{{CONTACT_PHONE}}\\
+\href{{{WEBSITE}}}{{{WEBSITE}}}
+
+%----------------------------------------------------------------------
+% REFERENCES
+%----------------------------------------------------------------------
+\newpage
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}

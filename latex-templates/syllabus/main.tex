@@ -1,0 +1,219 @@
+% Syllabus Template
+% Category: teaching
+% Difficulty: beginner
+% A course syllabus with schedule table and policies
+
+\documentclass[11pt]{article}
+
+% Page layout
+\usepackage[margin=1in]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+% Typography
+\usepackage{microtype}
+\usepackage{parskip}
+
+% Tables and lists
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{enumitem}
+
+% Links
+\usepackage[colorlinks=true,linkcolor=blue,urlcolor=blue]{hyperref}
+
+% Colors
+\usepackage{xcolor}
+\definecolor{headerblue}{RGB}{0,51,102}
+
+% Section formatting
+\usepackage{titlesec}
+\titleformat{\section}{\large\bfseries\color{headerblue}}{\thesection.}{0.5em}{}[\titlerule]
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{0.5em}{}
+
+% Header and footer
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{{{COURSE_CODE}}: {{COURSE_NAME}}}
+\fancyhead[R]{{{SEMESTER}} {{YEAR}}}
+\fancyfoot[C]{Page \thepage\ of \pageref{LastPage}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\begin{document}
+
+% Title section
+\begin{center}
+    {\LARGE\bfseries\color{headerblue} {{COURSE_CODE}}: {{COURSE_NAME}}}\\[0.5em]
+    {\large {{SEMESTER}} {{YEAR}}}\\[1em]
+\end{center}
+
+%----------------------------------------------------------------------
+\section{Instructor Information}
+%----------------------------------------------------------------------
+
+\begin{tabular}{@{}ll}
+    \textbf{Instructor:} & {{INSTRUCTOR}} \\
+    \textbf{Email:} & \href{mailto:{{EMAIL}}}{{{EMAIL}}} \\
+    \textbf{Office:} & {{OFFICE}} \\
+    \textbf{Office Hours:} & {{OFFICE_HOURS}} \\
+    \textbf{Class Time:} & {{CLASS_TIME}} \\
+    \textbf{Location:} & {{LOCATION}} \\
+\end{tabular}
+
+%----------------------------------------------------------------------
+\section{Course Description}
+%----------------------------------------------------------------------
+
+{{COURSE_DESCRIPTION}}
+
+%----------------------------------------------------------------------
+\section{Learning Objectives}
+%----------------------------------------------------------------------
+
+By the end of this course, students will be able to:
+
+\begin{enumerate}[leftmargin=*]
+    \item {{OBJECTIVE_1}}
+    \item {{OBJECTIVE_2}}
+    \item {{OBJECTIVE_3}}
+    \item {{OBJECTIVE_4}}
+    \item {{OBJECTIVE_5}}
+\end{enumerate}
+
+%----------------------------------------------------------------------
+\section{Required Materials}
+%----------------------------------------------------------------------
+
+\subsection{Textbook}
+\begin{itemize}[leftmargin=*]
+    \item {{TEXTBOOK_TITLE}} by {{TEXTBOOK_AUTHOR}}, {{TEXTBOOK_EDITION}}. ISBN: {{TEXTBOOK_ISBN}}
+\end{itemize}
+
+\subsection{Additional Materials}
+\begin{itemize}[leftmargin=*]
+    \item Access to the course learning management system (Canvas/Blackboard/Moodle)
+    \item Scientific calculator
+    \item Laptop for in-class activities (recommended)
+\end{itemize}
+
+%----------------------------------------------------------------------
+\section{Grading Policy}
+%----------------------------------------------------------------------
+
+\subsection{Grade Distribution}
+
+\begin{center}
+\begin{tabular}{lc}
+    \toprule
+    \textbf{Component} & \textbf{Weight} \\
+    \midrule
+    {{GRADE_COMPONENT_1}} & {{GRADE_WEIGHT_1}} \\
+    {{GRADE_COMPONENT_2}} & {{GRADE_WEIGHT_2}} \\
+    {{GRADE_COMPONENT_3}} & {{GRADE_WEIGHT_3}} \\
+    {{GRADE_COMPONENT_4}} & {{GRADE_WEIGHT_4}} \\
+    {{GRADE_COMPONENT_5}} & {{GRADE_WEIGHT_5}} \\
+    \midrule
+    \textbf{Total} & \textbf{100\%} \\
+    \bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Grading Scale}
+
+\begin{center}
+\begin{tabular}{cccccc}
+    \toprule
+    A: 90--100\% & B+: 87--89\% & B: 80--86\% & C+: 77--79\% & C: 70--76\% & D: 60--69\% \\
+    \bottomrule
+\end{tabular}
+\end{center}
+
+Below 60\% is considered failing (F).
+
+%----------------------------------------------------------------------
+\section{Course Schedule}
+%----------------------------------------------------------------------
+
+\textit{Note: This schedule is subject to change. Any modifications will be announced in class and posted on the course website.}
+
+\begin{center}
+\begin{longtable}{@{}clll@{}}
+    \toprule
+    \textbf{Week} & \textbf{Dates} & \textbf{Topics} & \textbf{Assignments} \\
+    \midrule
+    \endfirsthead
+    \toprule
+    \textbf{Week} & \textbf{Dates} & \textbf{Topics} & \textbf{Assignments} \\
+    \midrule
+    \endhead
+    \bottomrule
+    \endfoot
+    1 & {{WEEK_1_DATES}} & Introduction, Course Overview & Reading Ch. 1 \\
+    2 & {{WEEK_2_DATES}} & {{WEEK_2_TOPIC}} & {{WEEK_2_ASSIGNMENT}} \\
+    3 & {{WEEK_3_DATES}} & {{WEEK_3_TOPIC}} & {{WEEK_3_ASSIGNMENT}} \\
+    4 & {{WEEK_4_DATES}} & {{WEEK_4_TOPIC}} & {{WEEK_4_ASSIGNMENT}} \\
+    5 & {{WEEK_5_DATES}} & {{WEEK_5_TOPIC}} & {{WEEK_5_ASSIGNMENT}} \\
+    6 & {{WEEK_6_DATES}} & {{WEEK_6_TOPIC}} & {{WEEK_6_ASSIGNMENT}} \\
+    7 & {{WEEK_7_DATES}} & \textbf{Midterm Exam} & \\
+    8 & {{WEEK_8_DATES}} & {{WEEK_8_TOPIC}} & {{WEEK_8_ASSIGNMENT}} \\
+    9 & {{WEEK_9_DATES}} & {{WEEK_9_TOPIC}} & {{WEEK_9_ASSIGNMENT}} \\
+    10 & {{WEEK_10_DATES}} & {{WEEK_10_TOPIC}} & {{WEEK_10_ASSIGNMENT}} \\
+    11 & {{WEEK_11_DATES}} & {{WEEK_11_TOPIC}} & {{WEEK_11_ASSIGNMENT}} \\
+    12 & {{WEEK_12_DATES}} & {{WEEK_12_TOPIC}} & {{WEEK_12_ASSIGNMENT}} \\
+    13 & {{WEEK_13_DATES}} & {{WEEK_13_TOPIC}} & Project Due \\
+    14 & {{WEEK_14_DATES}} & Review Session & \\
+    15 & {{WEEK_15_DATES}} & \textbf{Final Exam} & \\
+\end{longtable}
+\end{center}
+
+%----------------------------------------------------------------------
+\section{Course Policies}
+%----------------------------------------------------------------------
+
+\subsection{Attendance}
+Regular attendance is expected. Students who miss more than three classes without valid excuse may have their final grade reduced. Please notify the instructor in advance if you must miss a class.
+
+\subsection{Late Work}
+Late assignments will be penalized 10\% per day for up to three days. After three days, late work will not be accepted unless prior arrangements have been made. Extensions may be granted for documented emergencies.
+
+\subsection{Academic Integrity}
+Academic dishonesty, including cheating, plagiarism, and fabrication, will not be tolerated. All work submitted must be your own. Violations will be reported to the Office of Academic Integrity and may result in course failure. When in doubt about what constitutes academic dishonesty, please ask.
+
+\subsection{Communication}
+The best way to reach me is via email. I will respond within 24--48 hours on weekdays. For urgent matters, please indicate ``URGENT'' in your subject line. Check your university email and the course website regularly for announcements.
+
+\subsection{Technology Policy}
+Laptops and tablets are permitted for note-taking and class activities. Please silence all devices during class. Recording of lectures requires prior permission from the instructor.
+
+%----------------------------------------------------------------------
+\section{University Policies}
+%----------------------------------------------------------------------
+
+\subsection{Disability Accommodations}
+Students with disabilities who require accommodations should contact the Disability Services Office and provide documentation to the instructor within the first two weeks of class. Reasonable accommodations will be made in accordance with university policy.
+
+\subsection{Title IX Statement}
+{{UNIVERSITY}} is committed to creating an environment free of discrimination and harassment. If you experience or witness sexual misconduct, please report it to the Title IX Coordinator.
+
+\subsection{Mental Health Resources}
+Your well-being is important. If you are struggling, please reach out to the Counseling Center at {{COUNSELING_CENTER_CONTACT}} or visit their office. Crisis resources are available 24/7.
+
+%----------------------------------------------------------------------
+\section{Additional Resources}
+%----------------------------------------------------------------------
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Tutoring Center:} Free tutoring available for this course
+    \item \textbf{Writing Center:} Help with writing assignments
+    \item \textbf{Library Resources:} Research guides and database access
+    \item \textbf{Office Hours:} Don't hesitate to visit during office hours or schedule an appointment
+\end{itemize}
+
+\vfill
+
+\begin{center}
+    \textit{I reserve the right to make changes to this syllabus as needed. Students will be notified of any changes in a timely manner.}
+\end{center}
+
+\end{document}

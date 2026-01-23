@@ -1,0 +1,288 @@
+% CVPR/ICCV/ECCV Conference Paper Template
+% Standard format for IEEE Computer Vision conferences
+%
+% Required: Download cvpr.sty from the conference website
+% https://cvpr.thecvf.com/Conferences/2024/AuthorGuidelines
+%
+% This template works for CVPR, ICCV, ECCV, and WACV
+%
+\documentclass[10pt,twocolumn,letterpaper]{article}
+
+\usepackage{cvpr}
+\usepackage{times}
+\usepackage{epsfig}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{subcaption}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage[pagebackref=true,breaklinks=true,colorlinks,bookmarks=false]{hyperref}
+
+% Paper ID for camera-ready (leave as is for submission)
+\def\cvprPaperID{{{PAPER_ID}}}
+\def\confName{CVPR}
+\def\confYear{2024}
+
+% Custom commands
+\newcommand{\eg}{\textit{e.g.}}
+\newcommand{\ie}{\textit{i.e.}}
+\newcommand{\etal}{\textit{et al.}}
+
+\begin{document}
+
+%%%%%%%%% TITLE
+\title{{{TITLE}}}
+
+\author{{{AUTHOR_1}}\\
+{{AUTHOR_1_AFFILIATION}}\\
+{\tt\small {{AUTHOR_1_EMAIL}}}
+\and
+{{AUTHOR_2}}\\
+{{AUTHOR_2_AFFILIATION}}\\
+{\tt\small {{AUTHOR_2_EMAIL}}}
+\and
+{{AUTHOR_3}}\\
+{{AUTHOR_3_AFFILIATION}}\\
+{\tt\small {{AUTHOR_3_EMAIL}}}
+}
+
+\maketitle
+
+%%%%%%%%% ABSTRACT
+\begin{abstract}
+{{ABSTRACT}}
+\end{abstract}
+
+%%%%%%%%% BODY TEXT
+\section{Introduction}
+\label{sec:intro}
+
+Computer vision has witnessed remarkable progress in recent years, driven by advances in deep learning and large-scale datasets~\cite{he2016deep,dosovitskiy2020image}. State-of-the-art methods now achieve human-level performance on many benchmark tasks, from image classification to object detection and semantic segmentation.
+
+However, several challenges remain in developing robust and efficient visual recognition systems:
+\begin{itemize}
+    \item \textbf{Generalization}: Models often fail to generalize to out-of-distribution data
+    \item \textbf{Efficiency}: Computational costs limit deployment in resource-constrained settings
+    \item \textbf{Interpretability}: Understanding what models learn remains difficult
+\end{itemize}
+
+In this paper, we address these challenges by proposing [method name], a novel approach that [brief description]. Our main contributions are:
+
+\begin{enumerate}
+    \item We introduce [contribution 1] that enables [benefit].
+    \item We propose [contribution 2] achieving [improvement].
+    \item We conduct comprehensive experiments on [datasets], demonstrating [results].
+\end{enumerate}
+
+\section{Related Work}
+\label{sec:related}
+
+\paragraph{Convolutional Neural Networks.}
+CNNs have been the backbone of computer vision for the past decade. Starting from AlexNet~\cite{krizhevsky2012imagenet}, architectures have grown deeper and more sophisticated. ResNet~\cite{he2016deep} introduced skip connections enabling training of very deep networks. Recent work has explored efficient architectures~\cite{howard2017mobilenets} and neural architecture search.
+
+\paragraph{Vision Transformers.}
+The Vision Transformer (ViT)~\cite{dosovitskiy2020image} demonstrated that pure transformer architectures can achieve competitive results on image classification when pre-trained on large datasets. Subsequent work has improved efficiency~\cite{liu2021swin} and extended transformers to dense prediction tasks.
+
+\paragraph{Self-Supervised Visual Learning.}
+Self-supervised methods learn representations without manual labels. Contrastive approaches~\cite{he2020momentum,chen2020simclr} learn by distinguishing positive pairs from negatives, while masked image modeling~\cite{he2022masked} reconstructs masked patches. These methods now rival supervised pre-training.
+
+\paragraph{Object Detection and Segmentation.}
+Modern detectors build on two-stage~\cite{ren2015faster} or single-stage designs. DETR~\cite{carion2020detr} reformulated detection as set prediction using transformers. Segment Anything~\cite{kirillov2023sam} demonstrated impressive zero-shot segmentation capabilities.
+
+\section{Method}
+\label{sec:method}
+
+\subsection{Overview}
+
+Figure~\ref{fig:overview} illustrates our overall approach. Given an input image $I \in \mathbb{R}^{H \times W \times 3}$, our method produces [output description].
+
+\begin{figure}[t]
+\centering
+% \includegraphics[width=\linewidth]{figures/overview.pdf}
+\fbox{\parbox{0.9\linewidth}{\centering\vspace{2em}Method Overview Figure\vspace{2em}}}
+\caption{Overview of our proposed method. [Description of the figure content.]}
+\label{fig:overview}
+\end{figure}
+
+\subsection{Feature Extraction}
+
+We employ a hierarchical feature extractor that produces multi-scale features:
+\begin{equation}
+    \{F_1, F_2, F_3, F_4\} = \text{Backbone}(I)
+\end{equation}
+where $F_i \in \mathbb{R}^{H_i \times W_i \times C_i}$ represents features at scale $i$.
+
+\subsection{Proposed Module}
+
+The core of our approach is the [Module Name], which processes features as follows:
+
+\begin{equation}
+    \hat{F} = \text{Softmax}\left(\frac{QK^T}{\sqrt{d}}\right)V + F
+\end{equation}
+
+where $Q$, $K$, $V$ are query, key, and value projections, and $d$ is the feature dimension.
+
+\paragraph{Component A.}
+Description of the first component and its purpose in the pipeline.
+
+\paragraph{Component B.}
+Description of the second component and how it improves upon existing methods.
+
+\subsection{Loss Function}
+
+We train our model with a combination of losses:
+\begin{equation}
+    \mathcal{L} = \mathcal{L}_{\text{cls}} + \lambda_1 \mathcal{L}_{\text{reg}} + \lambda_2 \mathcal{L}_{\text{aux}}
+\end{equation}
+
+where $\mathcal{L}_{\text{cls}}$ is cross-entropy loss, $\mathcal{L}_{\text{reg}}$ is regression loss, and $\mathcal{L}_{\text{aux}}$ is an auxiliary loss for [purpose].
+
+\section{Experiments}
+\label{sec:experiments}
+
+\subsection{Datasets}
+\label{sec:datasets}
+
+We evaluate our method on the following benchmarks:
+
+\begin{itemize}
+    \item \textbf{ImageNet-1K}~\cite{deng2009imagenet}: 1.28M training and 50K validation images across 1000 categories.
+    \item \textbf{COCO}~\cite{lin2014coco}: 118K training and 5K validation images with instance annotations.
+    \item \textbf{ADE20K}~\cite{zhou2017ade20k}: 20K training and 2K validation images for semantic segmentation.
+\end{itemize}
+
+\subsection{Implementation Details}
+\label{sec:implementation}
+
+We implement our method in PyTorch. Unless otherwise specified, we use the following settings:
+
+\begin{itemize}
+    \item \textbf{Optimizer}: AdamW with learning rate $10^{-4}$
+    \item \textbf{Batch size}: 16 per GPU, 8 GPUs total
+    \item \textbf{Training epochs}: 300 for ImageNet, 36 for COCO
+    \item \textbf{Data augmentation}: Random crop, flip, color jitter, mixup
+    \item \textbf{Hardware}: NVIDIA A100 GPUs
+\end{itemize}
+
+\subsection{Main Results}
+\label{sec:results}
+
+\paragraph{Image Classification.}
+Table~\ref{tab:classification} compares our method with state-of-the-art approaches on ImageNet-1K.
+
+\begin{table}[t]
+\centering
+\caption{Image classification results on ImageNet-1K validation set. $^\dagger$indicates using additional training data.}
+\label{tab:classification}
+\begin{tabular}{lccc}
+\toprule
+Method & Params & FLOPs & Top-1 \\
+\midrule
+ResNet-50~\cite{he2016deep} & 25M & 4.1G & 76.2 \\
+ResNet-101 & 45M & 7.9G & 77.4 \\
+ViT-B/16~\cite{dosovitskiy2020image} & 86M & 17.6G & 77.9 \\
+Swin-T~\cite{liu2021swin} & 29M & 4.5G & 81.3 \\
+Swin-B & 88M & 15.4G & 83.5 \\
+\midrule
+Ours-T & 28M & 4.2G & 82.1 \\
+Ours-S & 50M & 8.7G & 83.8 \\
+Ours-B & 89M & 15.8G & \textbf{84.6} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Object Detection.}
+Table~\ref{tab:detection} shows object detection and instance segmentation results on COCO.
+
+\begin{table}[t]
+\centering
+\caption{Object detection and instance segmentation on COCO val2017.}
+\label{tab:detection}
+\begin{tabular}{lcccccc}
+\toprule
+\multirow{2}{*}{Backbone} & \multicolumn{3}{c}{Box AP} & \multicolumn{3}{c}{Mask AP} \\
+\cmidrule(lr){2-4} \cmidrule(lr){5-7}
+& AP & AP$_{50}$ & AP$_{75}$ & AP & AP$_{50}$ & AP$_{75}$ \\
+\midrule
+ResNet-50 & 41.0 & 61.7 & 44.9 & 37.1 & 58.4 & 40.1 \\
+Swin-T & 46.0 & 68.1 & 50.3 & 41.6 & 65.1 & 44.9 \\
+\midrule
+Ours-T & 47.2 & 69.0 & 51.5 & 42.5 & 66.0 & 45.8 \\
+Ours-S & \textbf{49.1} & \textbf{70.5} & \textbf{53.8} & \textbf{43.9} & \textbf{67.4} & \textbf{47.3} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Ablation Studies}
+\label{sec:ablation}
+
+We conduct ablation studies on ImageNet-1K to analyze our design choices.
+
+\paragraph{Effect of Component A.}
+Table~\ref{tab:ablation} shows the contribution of each component.
+
+\begin{table}[t]
+\centering
+\caption{Ablation study on ImageNet-1K.}
+\label{tab:ablation}
+\begin{tabular}{ccc|c}
+\toprule
+Comp. A & Comp. B & Comp. C & Top-1 (\%) \\
+\midrule
+ &  &  & 79.2 \\
+\checkmark &  &  & 80.5 \\
+\checkmark & \checkmark &  & 81.4 \\
+\checkmark & \checkmark & \checkmark & \textbf{82.1} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Hyperparameter Sensitivity.}
+We analyze sensitivity to key hyperparameters including learning rate, weight decay, and architecture depth.
+
+\subsection{Qualitative Results}
+\label{sec:qualitative}
+
+Figure~\ref{fig:qualitative} shows qualitative results on challenging examples.
+
+\begin{figure}[t]
+\centering
+% \includegraphics[width=\linewidth]{figures/qualitative.pdf}
+\fbox{\parbox{0.9\linewidth}{\centering\vspace{3em}Qualitative Results Figure\vspace{3em}}}
+\caption{Qualitative results. (a) Input images. (b) Baseline results. (c) Our results. Our method produces [description of improvements].}
+\label{fig:qualitative}
+\end{figure}
+
+\section{Discussion}
+\label{sec:discussion}
+
+\paragraph{Computational Efficiency.}
+Our method achieves competitive accuracy while maintaining reasonable computational costs. The inference speed is X ms per image on an NVIDIA V100 GPU.
+
+\paragraph{Limitations.}
+While our approach shows strong performance, several limitations remain:
+\begin{itemize}
+    \item Limitation 1: Description
+    \item Limitation 2: Description
+\end{itemize}
+
+\paragraph{Failure Cases.}
+We observe failure cases in scenarios with [description of challenging conditions].
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+We presented [method name], a novel approach for [task]. Our method achieves state-of-the-art results on multiple benchmarks including ImageNet, COCO, and ADE20K. Key to our success is [insight]. Future work will explore extensions to [future directions].
+
+\paragraph{Acknowledgments.}
+{{ACKNOWLEDGMENTS}}
+
+{\small
+\bibliographystyle{ieee_fullname}
+\bibliography{references}
+}
+
+\end{document}

@@ -1,0 +1,294 @@
+% ACM CHI Conference Paper Template
+% Category: academic
+% Difficulty: intermediate
+% Human-Computer Interaction research paper format
+
+\documentclass[sigchi,review,anonymous]{acmart}
+
+% Remove copyright and ACM reference for draft
+\setcopyright{none}
+\settopmatter{printacmref=false}
+\renewcommand\footnotetextcopyrightpermission[1]{}
+\pagestyle{plain}
+
+% Packages
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{balance}
+
+% BibLaTeX settings (ACM template uses BibLaTeX by default)
+\bibliographystyle{ACM-Reference-Format}
+
+%----------------------------------------------------------------------
+% DOCUMENT METADATA
+%----------------------------------------------------------------------
+\title{{{TITLE}}}
+\subtitle{{{SUBTITLE}}}
+
+% Authors - Anonymous for review
+\author{{{AUTHOR_1}}}
+\authornote{Both authors contributed equally to this research.}
+\email{{{AUTHOR_1_EMAIL}}}
+\orcid{{{AUTHOR_1_ORCID}}}
+\affiliation{%
+  \institution{{{AUTHOR_1_INSTITUTION}}}
+  \department{{{AUTHOR_1_DEPARTMENT}}}
+  \city{{{AUTHOR_1_CITY}}}
+  \country{{{AUTHOR_1_COUNTRY}}}
+}
+
+\author{{{AUTHOR_2}}}
+\email{{{AUTHOR_2_EMAIL}}}
+\affiliation{%
+  \institution{{{AUTHOR_2_INSTITUTION}}}
+  \department{{{AUTHOR_2_DEPARTMENT}}}
+  \city{{{AUTHOR_2_CITY}}}
+  \country{{{AUTHOR_2_COUNTRY}}}
+}
+
+% Keywords and CCS concepts
+\keywords{{{KEYWORDS}}}
+
+% CCS Concepts - Generate at https://dl.acm.org/ccs
+\begin{CCSXML}
+<ccs2012>
+   <concept>
+       <concept_id>10003120.10003121.10003122</concept_id>
+       <concept_desc>Human-centered computing~HCI design and evaluation methods</concept_desc>
+       <concept_significance>500</concept_significance>
+   </concept>
+   <concept>
+       <concept_id>10003120.10003121.10003125</concept_id>
+       <concept_desc>Human-centered computing~User studies</concept_desc>
+       <concept_significance>300</concept_significance>
+   </concept>
+</ccs2012>
+\end{CCSXML}
+
+\ccsdesc[500]{Human-centered computing~HCI design and evaluation methods}
+\ccsdesc[300]{Human-centered computing~User studies}
+
+%----------------------------------------------------------------------
+% DOCUMENT
+%----------------------------------------------------------------------
+\begin{document}
+
+%----------------------------------------------------------------------
+% ABSTRACT
+%----------------------------------------------------------------------
+\begin{abstract}
+{{ABSTRACT}}
+\end{abstract}
+
+\maketitle
+
+%----------------------------------------------------------------------
+% INTRODUCTION
+%----------------------------------------------------------------------
+\section{Introduction}
+
+{{INTRODUCTION}}
+
+The contributions of this paper are:
+\begin{itemize}
+    \item {{CONTRIBUTION_1}}
+    \item {{CONTRIBUTION_2}}
+    \item {{CONTRIBUTION_3}}
+\end{itemize}
+
+%----------------------------------------------------------------------
+% RELATED WORK
+%----------------------------------------------------------------------
+\section{Related Work}
+
+\subsection{{{RELATED_WORK_TOPIC_1}}}
+
+{{RELATED_WORK_1}}
+
+\subsection{{{RELATED_WORK_TOPIC_2}}}
+
+{{RELATED_WORK_2}}
+
+\subsection{{{RELATED_WORK_TOPIC_3}}}
+
+{{RELATED_WORK_3}}
+
+%----------------------------------------------------------------------
+% SYSTEM DESIGN / METHODOLOGY
+%----------------------------------------------------------------------
+\section{{{METHODOLOGY_SECTION_TITLE}}}
+
+\subsection{Design Goals}
+
+Based on our literature review and formative studies, we identified the following design goals:
+
+\begin{description}
+    \item[DG1: {{DESIGN_GOAL_1_NAME}}] {{DESIGN_GOAL_1_DESCRIPTION}}
+    \item[DG2: {{DESIGN_GOAL_2_NAME}}] {{DESIGN_GOAL_2_DESCRIPTION}}
+    \item[DG3: {{DESIGN_GOAL_3_NAME}}] {{DESIGN_GOAL_3_DESCRIPTION}}
+\end{description}
+
+\subsection{System Overview}
+
+{{SYSTEM_OVERVIEW}}
+
+% Include system figure
+% \begin{figure}[h]
+%   \centering
+%   \includegraphics[width=\columnwidth]{figures/system.png}
+%   \caption{System architecture overview showing...}
+%   \Description{A detailed description for accessibility}
+%   \label{fig:system}
+% \end{figure}
+
+\subsection{{{COMPONENT_1_NAME}}}
+
+{{COMPONENT_1_DESCRIPTION}}
+
+\subsection{{{COMPONENT_2_NAME}}}
+
+{{COMPONENT_2_DESCRIPTION}}
+
+\subsection{Implementation}
+
+{{IMPLEMENTATION_DETAILS}}
+
+%----------------------------------------------------------------------
+% USER STUDY
+%----------------------------------------------------------------------
+\section{User Study}
+
+\subsection{Participants}
+
+{{PARTICIPANTS_DESCRIPTION}}
+
+\begin{table}[h]
+  \caption{Participant Demographics}
+  \label{tab:participants}
+  \begin{tabular}{llll}
+    \toprule
+    ID & Age & Gender & Experience \\
+    \midrule
+    P1 & {{P1_AGE}} & {{P1_GENDER}} & {{P1_EXPERIENCE}} \\
+    P2 & {{P2_AGE}} & {{P2_GENDER}} & {{P2_EXPERIENCE}} \\
+    P3 & {{P3_AGE}} & {{P3_GENDER}} & {{P3_EXPERIENCE}} \\
+    ... & ... & ... & ... \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{Study Design}
+
+{{STUDY_DESIGN}}
+
+\subsection{Procedure}
+
+{{PROCEDURE}}
+
+\subsection{Measures}
+
+We collected the following measures:
+
+\begin{itemize}
+    \item \textbf{{{MEASURE_1_NAME}}:} {{MEASURE_1_DESCRIPTION}}
+    \item \textbf{{{MEASURE_2_NAME}}:} {{MEASURE_2_DESCRIPTION}}
+    \item \textbf{{{MEASURE_3_NAME}}:} {{MEASURE_3_DESCRIPTION}}
+\end{itemize}
+
+\subsection{Analysis}
+
+{{ANALYSIS_APPROACH}}
+
+%----------------------------------------------------------------------
+% RESULTS
+%----------------------------------------------------------------------
+\section{Results}
+
+\subsection{Quantitative Results}
+
+{{QUANTITATIVE_RESULTS}}
+
+\begin{table}[h]
+  \caption{{{RESULTS_TABLE_CAPTION}}}
+  \label{tab:results}
+  \begin{tabular}{lccc}
+    \toprule
+    Condition & {{METRIC_1}} & {{METRIC_2}} & {{METRIC_3}} \\
+    \midrule
+    {{CONDITION_1}} & {{C1_M1}} & {{C1_M2}} & {{C1_M3}} \\
+    {{CONDITION_2}} & {{C2_M1}} & {{C2_M2}} & {{C2_M3}} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{Qualitative Findings}
+
+\subsubsection{{{THEME_1}}}
+
+{{THEME_1_FINDINGS}}
+
+\begin{quote}
+``{{PARTICIPANT_QUOTE_1}}'' (P{{QUOTE_1_PARTICIPANT}})
+\end{quote}
+
+\subsubsection{{{THEME_2}}}
+
+{{THEME_2_FINDINGS}}
+
+\subsubsection{{{THEME_3}}}
+
+{{THEME_3_FINDINGS}}
+
+%----------------------------------------------------------------------
+% DISCUSSION
+%----------------------------------------------------------------------
+\section{Discussion}
+
+\subsection{{{DISCUSSION_TOPIC_1}}}
+
+{{DISCUSSION_1}}
+
+\subsection{{{DISCUSSION_TOPIC_2}}}
+
+{{DISCUSSION_2}}
+
+\subsection{Design Implications}
+
+Based on our findings, we derive the following design implications:
+
+\begin{description}
+    \item[DI1:] {{DESIGN_IMPLICATION_1}}
+    \item[DI2:] {{DESIGN_IMPLICATION_2}}
+    \item[DI3:] {{DESIGN_IMPLICATION_3}}
+\end{description}
+
+\subsection{Limitations and Future Work}
+
+{{LIMITATIONS}}
+
+Future work should explore:
+\begin{itemize}
+    \item {{FUTURE_WORK_1}}
+    \item {{FUTURE_WORK_2}}
+\end{itemize}
+
+%----------------------------------------------------------------------
+% CONCLUSION
+%----------------------------------------------------------------------
+\section{Conclusion}
+
+{{CONCLUSION}}
+
+%----------------------------------------------------------------------
+% ACKNOWLEDGMENTS
+%----------------------------------------------------------------------
+\begin{acks}
+{{ACKNOWLEDGMENTS}}
+\end{acks}
+
+%----------------------------------------------------------------------
+% REFERENCES
+%----------------------------------------------------------------------
+\bibliography{references}
+
+\end{document}
