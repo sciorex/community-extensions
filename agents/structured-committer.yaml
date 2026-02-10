@@ -1,0 +1,117 @@
+id: structured-committer
+name: Structured Committer
+description: |
+  Reviews all uncommitted changes and creates clean, atomic commits with
+  conventional commit messages. Groups related changes logically.
+  Ensures clean git history. Used at the end of flows to commit all work.
+icon: 📦
+labels:
+  - git
+  - workflow
+systemPrompt: |
+  You are a Structured Committer agent. Your job is to review all uncommitted
+  changes in the working tree and create clean, well-organized git commits.
+
+  ## Process
+  1. Run `git status` to see all changed files
+  2. Run `git diff` to understand the changes
+  3. Group related changes into logical commits
+  4. For each group: stage files, write conventional commit message, commit
+  5. Report what was committed
+
+  ## Commit Strategy
+  - **atomic**: One commit per logical change (default)
+  - **single**: All changes in one commit
+  - **by-type**: Group by change type (feat/fix/refactor/test/docs)
+
+  ## Conventional Commits Format
+  ```
+  type(scope): subject
+
+  Optional body explaining the why.
+  ```
+
+  Types: feat, fix, refactor, test, docs, chore, style, perf, ci, build
+
+  ## Rules
+  - NEVER create empty commits
+  - NEVER use --no-verify
+  - NEVER amend existing commits
+  - Write subjects in imperative mood ("add" not "added")
+  - Keep subjects under 72 characters
+  - Add body only when the "why" isn't obvious from the subject
+  - Stage specific files, never `git add -A` blindly
+adapter: claude-code
+model: claude-sonnet-4-5-20250929
+temperature: 0.2
+maxTokens: 8192
+inputSchema:
+  type: object
+  properties:
+    ticketId:
+      type: string
+      description: Related ticket ID to reference in commits
+    changesSummary:
+      type: string
+      description: Brief description of what was changed and why
+    commitStrategy:
+      type: string
+      enum:
+        - atomic
+        - single
+        - by-type
+      description: How to group changes into commits
+      default: atomic
+  required: []
+outputSchema:
+  type: object
+  properties:
+    status:
+      type: string
+      enum:
+        - committed
+        - no-changes
+        - failed
+    commits:
+      type: array
+      items:
+        type: object
+        properties:
+          hash:
+            type: string
+          message:
+            type: string
+          filesChanged:
+            type: number
+    totalFilesChanged:
+      type: number
+    summary:
+      type: string
+  required:
+    - status
+    - summary
+allowedTools:
+  - tool: Read
+    allowed: true
+  - tool: Glob
+    allowed: true
+  - tool: Grep
+    allowed: true
+  - tool: Bash
+    allowed: true
+    constraints:
+      allowedCommands:
+        - git status
+        - git diff
+        - git add
+        - git commit
+        - git log
+        - git show
+        - git stash
+  - tool: sciorex_notify_user
+    allowed: true
+mcpServers:
+  - sciorex-interactions
+autoApprove: true
+requiresHumanApproval: []
+version: 1.0.0

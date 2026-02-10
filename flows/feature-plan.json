@@ -1,0 +1,238 @@
+{
+  "id": "feature-plan",
+  "name": "Feature Planning",
+  "description": "Transforms a feature request into a fully documented epic with sub-tickets. The planner agent asks questions interactively, creates specs, and generates an implementation plan. Supports iterative refinement.",
+  "nodes": [
+    {
+      "id": "trigger",
+      "type": "trigger",
+      "label": "Feature Request",
+      "position": {
+        "x": 340,
+        "y": 80
+      },
+      "triggerType": "manual",
+      "triggerConfig": {
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "ticketId": {
+              "type": "string",
+              "description": "Ticket ID with the feature request"
+            },
+            "ticketTitle": {
+              "type": "string",
+              "description": "Feature title"
+            },
+            "ticketDescription": {
+              "type": "string",
+              "description": "Feature description"
+            },
+            "codebasePath": {
+              "type": "string",
+              "description": "Path to explore for architecture context"
+            }
+          },
+          "required": [
+            "ticketTitle"
+          ]
+        }
+      },
+      "config": {}
+    },
+    {
+      "id": "planner",
+      "type": "agent",
+      "label": "Plan Feature",
+      "position": {
+        "x": 310,
+        "y": 342
+      },
+      "agentId": "interactive-planner",
+      "reuseSessionOnLoop": true,
+      "inputMapping": {
+        "ticketId": "$.trigger.ticketId",
+        "ticketTitle": "$.trigger.ticketTitle",
+        "ticketDescription": "$.trigger.ticketDescription",
+        "codebasePath": "$.trigger.codebasePath"
+      },
+      "outputMapping": {
+        "status": "$.output.status",
+        "epicId": "$.output.epicId",
+        "ticketsCreated": "$.output.ticketsCreated",
+        "docsCreated": "$.output.docsCreated",
+        "summary": "$.output.summary"
+      },
+      "config": {}
+    },
+    {
+      "id": "check-planned",
+      "type": "condition",
+      "label": "Planning Done?",
+      "position": {
+        "x": 320,
+        "y": 627
+      },
+      "conditions": [
+        {
+          "path": "$.nodes.planner.output.status",
+          "operator": "eq",
+          "value": "planned"
+        }
+      ],
+      "targetNodeId": "wait-approve",
+      "defaultTargetNodeId": "end-incomplete",
+      "config": {},
+      "logicOperator": "and"
+    },
+    {
+      "id": "wait-approve",
+      "type": "wait",
+      "label": "Review Plan",
+      "position": {
+        "x": 135,
+        "y": 950
+      },
+      "waitType": "input",
+      "prompt": "Review the feature specification, epic, and tickets. Approve or request changes.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "approve": {
+            "type": "boolean",
+            "description": "Approve the plan"
+          },
+          "changeRequest": {
+            "type": "string",
+            "description": "Changes to request"
+          }
+        },
+        "required": [
+          "approve"
+        ]
+      },
+      "config": {}
+    },
+    {
+      "id": "check-approved",
+      "type": "condition",
+      "label": "Approved?",
+      "position": {
+        "x": 145,
+        "y": 1232
+      },
+      "conditions": [
+        {
+          "path": "$.userResponses.wait-approve.approve",
+          "operator": "eq",
+          "value": true
+        }
+      ],
+      "targetNodeId": "end-success",
+      "defaultTargetNodeId": "planner",
+      "config": {},
+      "logicOperator": "and"
+    },
+    {
+      "id": "end-success",
+      "type": "end",
+      "label": "Plan Approved",
+      "position": {
+        "x": 195,
+        "y": 1555
+      },
+      "endType": "success",
+      "config": {}
+    },
+    {
+      "id": "end-incomplete",
+      "type": "end",
+      "label": "Planning Incomplete",
+      "position": {
+        "x": 535,
+        "y": 950
+      },
+      "endType": "failure",
+      "config": {}
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "source": "trigger",
+      "target": "planner"
+    },
+    {
+      "id": "e2",
+      "source": "planner",
+      "target": "check-planned"
+    },
+    {
+      "id": "e3-yes",
+      "source": "check-planned",
+      "target": "wait-approve",
+      "sourceHandle": "true",
+      "label": "Planned"
+    },
+    {
+      "id": "e3-no",
+      "source": "check-planned",
+      "target": "end-incomplete",
+      "sourceHandle": "false",
+      "label": "Incomplete"
+    },
+    {
+      "id": "e4",
+      "source": "wait-approve",
+      "target": "check-approved"
+    },
+    {
+      "id": "e5-yes",
+      "source": "check-approved",
+      "target": "end-success",
+      "sourceHandle": "true",
+      "label": "Approved"
+    },
+    {
+      "id": "e5-no",
+      "source": "check-approved",
+      "target": "planner",
+      "sourceHandle": "false",
+      "label": "Revise",
+      "waypoints": [
+        {
+          "x": 435,
+          "y": 1333.5
+        },
+        {
+          "x": 435,
+          "y": 1182.25
+        },
+        {
+          "x": 105,
+          "y": 1182.25
+        },
+        {
+          "x": 105,
+          "y": 1031
+        },
+        {
+          "x": 105,
+          "y": 728.5
+        },
+        {
+          "x": 105,
+          "y": 424.5
+        },
+        {
+          "x": 280,
+          "y": 424.5
+        }
+      ]
+    }
+  ],
+  "variables": {},
+  "labelIds": [],
+  "createdAt": "2025-01-01T00:00:00.000Z",
+  "updatedAt": "2026-02-10T18:22:42.443Z"
+}

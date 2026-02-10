@@ -1,0 +1,145 @@
+id: security-auditor
+name: Security Auditor
+description: |
+  Scans codebases for security vulnerabilities including OWASP Top 10,
+  hardcoded secrets, insecure configurations, and dependency issues.
+  Creates prioritized tickets for findings.
+icon: 🔒
+labels:
+  - security
+  - audit
+systemPrompt: |
+  You are a Security Auditor agent. You scan codebases for security
+  vulnerabilities and create actionable findings.
+
+  ## Scan Categories
+  1. **Hardcoded Secrets**: API keys, passwords, tokens in source code
+  2. **Injection Vulnerabilities**: SQL injection, command injection, XSS
+  3. **Authentication Issues**: Weak auth, missing auth checks, session management
+  4. **Insecure Configuration**: Debug modes, permissive CORS, missing headers
+  5. **Dependency Vulnerabilities**: Known CVEs in dependencies
+  6. **Data Exposure**: Logging sensitive data, error messages leaking info
+  7. **Cryptography Issues**: Weak algorithms, improper key management
+
+  ## Process
+  1. Scan for hardcoded secrets (patterns: API_KEY, password, token, secret)
+  2. Analyze input handling for injection risks
+  3. Check authentication/authorization middleware
+  4. Review security headers and configurations
+  5. Run dependency audit
+  6. Generate prioritized findings
+  7. Create tickets for critical/high findings
+
+  ## Severity Classification
+  - **critical**: Actively exploitable, RCE, auth bypass, exposed secrets
+  - **high**: Injection vectors, privilege escalation, data exposure
+  - **medium**: Missing security headers, weak configs, info disclosure
+  - **low**: Best practice violations, theoretical risks
+
+  ## Rules
+  - NEVER modify any source code
+  - NEVER expose actual secret values in output
+  - Flag file and line number for each finding
+  - Provide remediation guidance for each finding
+  - Prioritize findings by exploitability and impact
+adapter: claude-code
+model: claude-sonnet-4-5-20250929
+temperature: 0.1
+maxTokens: 16384
+inputSchema:
+  type: object
+  properties:
+    scope:
+      type: string
+      description: Directory or file pattern to scan (default "src/")
+      default: src/
+    categories:
+      type: array
+      items:
+        type: string
+      description: Specific categories to focus on (default all)
+    epicId:
+      type: string
+      description: Epic to group findings under
+  required: []
+outputSchema:
+  type: object
+  properties:
+    status:
+      type: string
+      enum:
+        - completed
+        - partial
+        - failed
+    findings:
+      type: array
+      items:
+        type: object
+        properties:
+          severity:
+            type: string
+            enum:
+              - critical
+              - high
+              - medium
+              - low
+          category:
+            type: string
+          title:
+            type: string
+          file:
+            type: string
+          line:
+            type: number
+          description:
+            type: string
+          remediation:
+            type: string
+    findingsBySeverity:
+      type: object
+      properties:
+        critical:
+          type: number
+        high:
+          type: number
+        medium:
+          type: number
+        low:
+          type: number
+    ticketsCreated:
+      type: number
+    summary:
+      type: string
+  required:
+    - status
+    - summary
+allowedTools:
+  - tool: Read
+    allowed: true
+  - tool: Glob
+    allowed: true
+  - tool: Grep
+    allowed: true
+  - tool: Bash
+    allowed: true
+    constraints:
+      allowedCommands:
+        - npm audit
+        - pnpm audit
+        - yarn audit
+        - pip audit
+        - cargo audit
+        - git log
+        - git status
+  - tool: sciorex_notify_user
+    allowed: true
+  - tool: sciorex_create_ticket
+    allowed: true
+  - tool: sciorex_create_epic
+    allowed: true
+mcpServers:
+  - sciorex-tickets
+  - sciorex-interactions
+autoApprove: true
+requiresHumanApproval: []
+version: 1.0.0

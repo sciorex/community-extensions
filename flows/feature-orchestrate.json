@@ -1,0 +1,279 @@
+{
+  "id": "feature-orchestrate",
+  "name": "Feature Orchestration",
+  "description": "Coordinates ticket execution within an Epic. Reviews statuses, analyzes dependencies, proposes next tickets to work on, and supports parallelization. Human-in-the-loop for all decisions.",
+  "nodes": [
+    {
+      "id": "trigger",
+      "type": "trigger",
+      "label": "Coordinate Epic",
+      "position": {
+        "x": 255,
+        "y": 80
+      },
+      "triggerType": "manual",
+      "triggerConfig": {
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "epicId": {
+              "type": "string",
+              "description": "Epic ID to coordinate"
+            }
+          },
+          "required": [
+            "epicId"
+          ]
+        }
+      },
+      "config": {}
+    },
+    {
+      "id": "coordinator",
+      "type": "agent",
+      "label": "Analyze Epic",
+      "position": {
+        "x": 225,
+        "y": 342
+      },
+      "agentId": "epic-coordinator",
+      "reuseSessionOnLoop": true,
+      "inputMapping": {
+        "epicId": "$.trigger.epicId",
+        "action": "$.variables.next"
+      },
+      "outputMapping": {
+        "epicId": "$.output.epicId",
+        "epicStatus": "$.output.epicStatus",
+        "totalTickets": "$.output.totalTickets",
+        "ticketsByStatus": "$.output.ticketsByStatus",
+        "recommendedNext": "$.output.recommendedNext",
+        "blockers": "$.output.blockers",
+        "summary": "$.output.summary"
+      },
+      "config": {}
+    },
+    {
+      "id": "check-all-done",
+      "type": "condition",
+      "label": "All Done?",
+      "position": {
+        "x": 235,
+        "y": 627
+      },
+      "conditions": [
+        {
+          "path": "$.nodes.coordinator.output.epicStatus",
+          "operator": "eq",
+          "value": "done"
+        }
+      ],
+      "targetNodeId": "end-complete",
+      "defaultTargetNodeId": "check-blocked",
+      "config": {},
+      "logicOperator": "and"
+    },
+    {
+      "id": "check-blocked",
+      "type": "condition",
+      "label": "Blocked?",
+      "position": {
+        "x": 460,
+        "y": 950
+      },
+      "conditions": [
+        {
+          "path": "$.nodes.coordinator.output.epicStatus",
+          "operator": "eq",
+          "value": "blocked"
+        }
+      ],
+      "targetNodeId": "end-blocked",
+      "defaultTargetNodeId": "wait-action",
+      "config": {},
+      "logicOperator": "and"
+    },
+    {
+      "id": "wait-action",
+      "type": "wait",
+      "label": "Choose Next Action",
+      "position": {
+        "x": 620,
+        "y": 1273
+      },
+      "waitType": "input",
+      "prompt": "Review the epic status and recommended next tickets. Choose how to proceed.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string",
+            "description": "start (begin recommended tickets), continue (re-check status later), done (finish orchestration)"
+          }
+        },
+        "required": [
+          "action"
+        ]
+      },
+      "config": {}
+    },
+    {
+      "id": "check-action",
+      "type": "condition",
+      "label": "Action?",
+      "position": {
+        "x": 630,
+        "y": 1555
+      },
+      "conditions": [
+        {
+          "path": "$.userResponses.wait-action.action",
+          "operator": "eq",
+          "value": "done"
+        }
+      ],
+      "targetNodeId": "end-paused",
+      "defaultTargetNodeId": "coordinator",
+      "config": {},
+      "logicOperator": "and"
+    },
+    {
+      "id": "end-complete",
+      "type": "end",
+      "label": "Epic Complete",
+      "position": {
+        "x": 60,
+        "y": 950
+      },
+      "endType": "success",
+      "config": {}
+    },
+    {
+      "id": "end-blocked",
+      "type": "end",
+      "label": "Epic Blocked",
+      "position": {
+        "x": 340,
+        "y": 1273
+      },
+      "endType": "failure",
+      "config": {}
+    },
+    {
+      "id": "end-paused",
+      "type": "end",
+      "label": "Orchestration Paused",
+      "position": {
+        "x": 670,
+        "y": 1878
+      },
+      "endType": "success",
+      "config": {}
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "source": "trigger",
+      "target": "coordinator"
+    },
+    {
+      "id": "e2",
+      "source": "coordinator",
+      "target": "check-all-done"
+    },
+    {
+      "id": "e3-done",
+      "source": "check-all-done",
+      "target": "end-complete",
+      "sourceHandle": "true",
+      "label": "All done"
+    },
+    {
+      "id": "e3-more",
+      "source": "check-all-done",
+      "target": "check-blocked",
+      "sourceHandle": "false",
+      "label": "Not done"
+    },
+    {
+      "id": "e4-blocked",
+      "source": "check-blocked",
+      "target": "end-blocked",
+      "sourceHandle": "true",
+      "label": "Blocked"
+    },
+    {
+      "id": "e4-ready",
+      "source": "check-blocked",
+      "target": "wait-action",
+      "sourceHandle": "false",
+      "label": "Has ready tickets"
+    },
+    {
+      "id": "e5",
+      "source": "wait-action",
+      "target": "check-action"
+    },
+    {
+      "id": "e6-done",
+      "source": "check-action",
+      "target": "end-paused",
+      "sourceHandle": "true",
+      "label": "Stop"
+    },
+    {
+      "id": "e6-continue",
+      "source": "check-action",
+      "target": "coordinator",
+      "sourceHandle": "false",
+      "label": "Continue",
+      "waypoints": [
+        {
+          "x": 920,
+          "y": 1656.5
+        },
+        {
+          "x": 920,
+          "y": 1505.25
+        },
+        {
+          "x": 310,
+          "y": 1505.25
+        },
+        {
+          "x": 310,
+          "y": 1354
+        },
+        {
+          "x": 310,
+          "y": 1202.75
+        },
+        {
+          "x": 30,
+          "y": 1202.75
+        },
+        {
+          "x": 30,
+          "y": 1051.5
+        },
+        {
+          "x": 30,
+          "y": 728.5
+        },
+        {
+          "x": 30,
+          "y": 424.5
+        },
+        {
+          "x": 195,
+          "y": 424.5
+        }
+      ]
+    }
+  ],
+  "variables": {},
+  "labelIds": [],
+  "createdAt": "2025-01-01T00:00:00.000Z",
+  "updatedAt": "2026-02-10T18:22:18.295Z"
+}

@@ -1,0 +1,333 @@
+{
+  "id": "pr-pipeline",
+  "name": "PR Pipeline",
+  "description": "Full ticket-to-PR workflow: plan changes, implement, run tests, review code quality, create PR. Linear pipeline with quality gates.",
+  "nodes": [
+    {
+      "id": "trigger",
+      "type": "trigger",
+      "label": "Start PR Pipeline",
+      "position": {
+        "x": 528.0625,
+        "y": 80
+      },
+      "triggerType": "manual",
+      "triggerConfig": {
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "ticketTitle": {
+              "type": "string",
+              "description": "Title of the task/feature"
+            },
+            "ticketDescription": {
+              "type": "string",
+              "description": "Full description of what needs to be done"
+            },
+            "acceptanceCriteria": {
+              "type": "string",
+              "description": "Acceptance criteria for the changes"
+            },
+            "baseBranch": {
+              "type": "string",
+              "description": "Base branch for the PR (default: main)"
+            }
+          },
+          "required": [
+            "ticketTitle",
+            "ticketDescription"
+          ]
+        }
+      },
+      "config": {}
+    },
+    {
+      "id": "implementer",
+      "type": "agent",
+      "label": "Implement Changes",
+      "position": {
+        "x": 516.0625,
+        "y": 342
+      },
+      "agentId": "code-executor",
+      "worktreeMode": "new",
+      "worktreeConfig": {
+        "label": "PR Pipeline",
+        "autoMergeOnSuccess": false,
+        "cleanupOnComplete": true
+      },
+      "inputMapping": {
+        "ticketTitle": "$.trigger.ticketTitle",
+        "ticketDescription": "$.trigger.ticketDescription",
+        "acceptanceCriteria": "$.trigger.acceptanceCriteria"
+      },
+      "outputMapping": {
+        "status": "$.output.status",
+        "filesModified": "$.output.filesModified",
+        "filesCreated": "$.output.filesCreated",
+        "selfAssessment": "$.output.selfAssessment",
+        "summary": "$.output.summary"
+      },
+      "config": {}
+    },
+    {
+      "id": "check-implemented",
+      "type": "condition",
+      "label": "Implemented?",
+      "position": {
+        "x": 508.5625,
+        "y": 574
+      },
+      "conditions": [
+        {
+          "path": "$.nodes.implementer.output.status",
+          "operator": "eq",
+          "value": "implemented"
+        }
+      ],
+      "targetNodeId": "reviewer",
+      "defaultTargetNodeId": "end-blocked",
+      "config": {},
+      "logicOperator": "and"
+    },
+    {
+      "id": "reviewer",
+      "type": "agent",
+      "label": "Code Review",
+      "position": {
+        "x": 257.375,
+        "y": 897
+      },
+      "agentId": "code-reviewer-e5f6a7b8",
+      "worktreeMode": "inherit",
+      "inheritWorktreeFromNodeId": "implementer",
+      "inputMapping": {
+        "code": "$.nodes.implementer.output.summary",
+        "context": "$.trigger.ticketDescription"
+      },
+      "outputMapping": {
+        "score": "$.output.score",
+        "issues": "$.output.issues",
+        "summary": "$.output.summary"
+      },
+      "config": {}
+    },
+    {
+      "id": "check-quality",
+      "type": "condition",
+      "label": "Quality OK?",
+      "position": {
+        "x": 252.375,
+        "y": 1169
+      },
+      "conditions": [
+        {
+          "path": "$.nodes.reviewer.output.score",
+          "operator": "gte",
+          "value": 6
+        }
+      ],
+      "targetNodeId": "wait-approve-pr",
+      "defaultTargetNodeId": "end-quality-fail",
+      "config": {},
+      "logicOperator": "and"
+    },
+    {
+      "id": "wait-approve-pr",
+      "type": "wait",
+      "label": "Approve PR Creation",
+      "position": {
+        "x": 22.5,
+        "y": 1492
+      },
+      "waitType": "approval",
+      "prompt": "Implementation complete and reviewed. Approve to create the Pull Request.",
+      "config": {}
+    },
+    {
+      "id": "check-pr-approved",
+      "type": "condition",
+      "label": "PR Approved?",
+      "position": {
+        "x": 32.5,
+        "y": 1774
+      },
+      "conditions": [
+        {
+          "path": "$.userResponses.wait-approve-pr.approved",
+          "operator": "eq",
+          "value": true
+        }
+      ],
+      "targetNodeId": "committer",
+      "defaultTargetNodeId": "end-cancelled",
+      "config": {},
+      "logicOperator": "and"
+    },
+    {
+      "id": "committer",
+      "type": "agent",
+      "label": "Commit Changes",
+      "position": {
+        "x": -109.25,
+        "y": 2097
+      },
+      "agentId": "structured-committer",
+      "worktreeMode": "inherit",
+      "inheritWorktreeFromNodeId": "implementer",
+      "inputMapping": {
+        "changesSummary": "$.nodes.implementer.output.summary"
+      },
+      "outputMapping": {
+        "status": "$.output.status",
+        "commits": "$.output.commits",
+        "summary": "$.output.summary"
+      },
+      "config": {}
+    },
+    {
+      "id": "pr-creator",
+      "type": "agent",
+      "label": "Create PR",
+      "position": {
+        "x": -104.75,
+        "y": 2349
+      },
+      "agentId": "pr-builder",
+      "worktreeMode": "inherit",
+      "inheritWorktreeFromNodeId": "implementer",
+      "inputMapping": {
+        "baseBranch": "$.trigger.baseBranch"
+      },
+      "outputMapping": {
+        "status": "$.output.status",
+        "prUrl": "$.output.prUrl",
+        "prNumber": "$.output.prNumber",
+        "summary": "$.output.summary"
+      },
+      "config": {}
+    },
+    {
+      "id": "end-success",
+      "type": "end",
+      "label": "PR Created",
+      "position": {
+        "x": -74.75,
+        "y": 2581
+      },
+      "endType": "success",
+      "config": {}
+    },
+    {
+      "id": "end-blocked",
+      "type": "end",
+      "label": "Implementation Blocked",
+      "position": {
+        "x": 804.75,
+        "y": 897
+      },
+      "endType": "failure",
+      "config": {}
+    },
+    {
+      "id": "end-quality-fail",
+      "type": "end",
+      "label": "Quality Too Low",
+      "position": {
+        "x": 519.75,
+        "y": 1492
+      },
+      "endType": "failure",
+      "config": {}
+    },
+    {
+      "id": "end-cancelled",
+      "type": "end",
+      "label": "Cancelled",
+      "position": {
+        "x": 239.75,
+        "y": 2097
+      },
+      "endType": "cancelled",
+      "config": {}
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "source": "trigger",
+      "target": "implementer"
+    },
+    {
+      "id": "e2",
+      "source": "implementer",
+      "target": "check-implemented"
+    },
+    {
+      "id": "e3-yes",
+      "source": "check-implemented",
+      "target": "reviewer",
+      "sourceHandle": "true",
+      "label": "Implemented"
+    },
+    {
+      "id": "e3-no",
+      "source": "check-implemented",
+      "target": "end-blocked",
+      "sourceHandle": "false",
+      "label": "Blocked"
+    },
+    {
+      "id": "e4",
+      "source": "reviewer",
+      "target": "check-quality"
+    },
+    {
+      "id": "e5-yes",
+      "source": "check-quality",
+      "target": "wait-approve-pr",
+      "sourceHandle": "true",
+      "label": "Score >= 6"
+    },
+    {
+      "id": "e5-no",
+      "source": "check-quality",
+      "target": "end-quality-fail",
+      "sourceHandle": "false",
+      "label": "Low quality"
+    },
+    {
+      "id": "e6",
+      "source": "wait-approve-pr",
+      "target": "check-pr-approved"
+    },
+    {
+      "id": "e7-yes",
+      "source": "check-pr-approved",
+      "target": "committer",
+      "sourceHandle": "true",
+      "label": "Approved"
+    },
+    {
+      "id": "e7-no",
+      "source": "check-pr-approved",
+      "target": "end-cancelled",
+      "sourceHandle": "false",
+      "label": "Cancel"
+    },
+    {
+      "id": "e8",
+      "source": "committer",
+      "target": "pr-creator"
+    },
+    {
+      "id": "e9",
+      "source": "pr-creator",
+      "target": "end-success"
+    }
+  ],
+  "variables": {},
+  "labelIds": [],
+  "createdAt": "2025-01-01T00:00:00.000Z",
+  "updatedAt": "2026-02-10T19:35:13.538Z"
+}

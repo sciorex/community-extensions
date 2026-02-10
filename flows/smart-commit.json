@@ -1,0 +1,201 @@
+{
+  "id": "smart-commit",
+  "name": "Smart Commit",
+  "description": "Reviews staged changes, auto-generates a quality commit message if code passes review, blocks if quality is too low. Quality gate for your commits.",
+  "nodes": [
+    {
+      "id": "trigger",
+      "type": "trigger",
+      "label": "Commit Changes",
+      "position": {
+        "x": 337,
+        "y": 80
+      },
+      "triggerType": "manual",
+      "triggerConfig": {
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "description": "Code diff to review and commit"
+            },
+            "context": {
+              "type": "string",
+              "description": "Context about the changes for better commit messages"
+            }
+          },
+          "required": []
+        }
+      },
+      "config": {}
+    },
+    {
+      "id": "reviewer",
+      "type": "agent",
+      "label": "Review Quality",
+      "position": {
+        "x": 325,
+        "y": 342
+      },
+      "agentId": "code-reviewer-e5f6a7b8",
+      "inputMapping": {
+        "code": "$.trigger.code",
+        "context": "$.trigger.context"
+      },
+      "outputMapping": {
+        "score": "$.output.score",
+        "summary": "$.output.summary",
+        "issues": "$.output.issues"
+      },
+      "config": {}
+    },
+    {
+      "id": "check-quality",
+      "type": "condition",
+      "label": "Quality >= 7?",
+      "position": {
+        "x": 320,
+        "y": 574
+      },
+      "conditions": [
+        {
+          "path": "$.nodes.reviewer.output.score",
+          "operator": "gte",
+          "value": 7
+        }
+      ],
+      "targetNodeId": "committer",
+      "defaultTargetNodeId": "wait-override",
+      "config": {},
+      "logicOperator": "and"
+    },
+    {
+      "id": "committer",
+      "type": "agent",
+      "label": "Generate Commit",
+      "position": {
+        "x": 148.25,
+        "y": 897
+      },
+      "agentId": "structured-committer",
+      "inputMapping": {
+        "changesSummary": "$.nodes.reviewer.output.summary"
+      },
+      "outputMapping": {
+        "status": "$.output.status",
+        "commits": "$.output.commits",
+        "summary": "$.output.summary"
+      },
+      "config": {}
+    },
+    {
+      "id": "wait-override",
+      "type": "wait",
+      "label": "Quality Below Threshold",
+      "position": {
+        "x": 497.25,
+        "y": 897
+      },
+      "waitType": "approval",
+      "prompt": "Code review score is below 7. Do you want to commit anyway?",
+      "config": {}
+    },
+    {
+      "id": "check-override",
+      "type": "condition",
+      "label": "Override?",
+      "position": {
+        "x": 507.25,
+        "y": 1179
+      },
+      "conditions": [
+        {
+          "path": "$.userResponses.wait-override.approved",
+          "operator": "eq",
+          "value": true
+        }
+      ],
+      "targetNodeId": "committer",
+      "defaultTargetNodeId": "end-blocked",
+      "config": {},
+      "logicOperator": "and"
+    },
+    {
+      "id": "end-committed",
+      "type": "end",
+      "label": "Committed",
+      "position": {
+        "x": 182.75,
+        "y": 1179
+      },
+      "endType": "success",
+      "config": {}
+    },
+    {
+      "id": "end-blocked",
+      "type": "end",
+      "label": "Commit Blocked",
+      "position": {
+        "x": 553.25,
+        "y": 1502
+      },
+      "endType": "cancelled",
+      "config": {}
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "source": "trigger",
+      "target": "reviewer"
+    },
+    {
+      "id": "e2",
+      "source": "reviewer",
+      "target": "check-quality"
+    },
+    {
+      "id": "e3-pass",
+      "source": "check-quality",
+      "target": "committer",
+      "sourceHandle": "true",
+      "label": "Quality OK"
+    },
+    {
+      "id": "e3-low",
+      "source": "check-quality",
+      "target": "wait-override",
+      "sourceHandle": "false",
+      "label": "Low quality"
+    },
+    {
+      "id": "e4",
+      "source": "committer",
+      "target": "end-committed"
+    },
+    {
+      "id": "e5",
+      "source": "wait-override",
+      "target": "check-override"
+    },
+    {
+      "id": "e6-yes",
+      "source": "check-override",
+      "target": "committer",
+      "sourceHandle": "true",
+      "label": "Override"
+    },
+    {
+      "id": "e6-no",
+      "source": "check-override",
+      "target": "end-blocked",
+      "sourceHandle": "false",
+      "label": "Cancel"
+    }
+  ],
+  "variables": {},
+  "labelIds": [],
+  "createdAt": "2025-01-01T00:00:00.000Z",
+  "updatedAt": "2026-02-10T19:34:51.459Z"
+}

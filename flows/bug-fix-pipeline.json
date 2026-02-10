@@ -1,0 +1,284 @@
+{
+  "id": "bug-fix-pipeline",
+  "name": "Bug Fix Pipeline",
+  "description": "Complete bug lifecycle: investigate root cause, get approval, fix, test, verify, commit. Uses worktrees for isolation and session resumption for context-aware retries.",
+  "nodes": [
+    {
+      "id": "trigger",
+      "type": "trigger",
+      "label": "Bug Report",
+      "position": {
+        "x": 340,
+        "y": 80
+      },
+      "triggerType": "manual",
+      "triggerConfig": {
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "ticketId": {
+              "type": "string",
+              "description": "Bug ticket ID"
+            },
+            "ticketTitle": {
+              "type": "string",
+              "description": "Bug title/summary"
+            },
+            "ticketDescription": {
+              "type": "string",
+              "description": "Full bug description with reproduction steps"
+            }
+          },
+          "required": [
+            "ticketTitle",
+            "ticketDescription"
+          ]
+        }
+      },
+      "config": {}
+    },
+    {
+      "id": "investigator",
+      "type": "agent",
+      "label": "Investigate & Fix",
+      "position": {
+        "x": 310,
+        "y": 342
+      },
+      "agentId": "bug-detective",
+      "reuseSessionOnLoop": true,
+      "worktreeMode": "new",
+      "worktreeConfig": {
+        "label": "Bug Fix",
+        "autoMergeOnSuccess": true,
+        "cleanupOnComplete": true
+      },
+      "inputMapping": {
+        "ticketId": "$.trigger.ticketId",
+        "ticketTitle": "$.trigger.ticketTitle",
+        "ticketDescription": "$.trigger.ticketDescription"
+      },
+      "outputMapping": {
+        "status": "$.output.status",
+        "rootCause": "$.output.rootCause",
+        "severity": "$.output.severity",
+        "fixApplied": "$.output.fixApplied",
+        "filesModified": "$.output.filesModified",
+        "summary": "$.output.summary"
+      },
+      "config": {}
+    },
+    {
+      "id": "check-fixed",
+      "type": "condition",
+      "label": "Fix Applied?",
+      "position": {
+        "x": 320,
+        "y": 627
+      },
+      "conditions": [
+        {
+          "path": "$.nodes.investigator.output.status",
+          "operator": "eq",
+          "value": "fixed"
+        }
+      ],
+      "targetNodeId": "tester",
+      "defaultTargetNodeId": "end-no-fix",
+      "config": {},
+      "logicOperator": "and"
+    },
+    {
+      "id": "tester",
+      "type": "agent",
+      "label": "Run Tests",
+      "position": {
+        "x": 167.5,
+        "y": 950
+      },
+      "agentId": "test-writer-c9d0e1f2",
+      "worktreeMode": "inherit",
+      "inheritWorktreeFromNodeId": "investigator",
+      "inputMapping": {
+        "code": "$.nodes.investigator.output.summary",
+        "filePath": "$.nodes.investigator.output.filesModified[0]",
+        "focusAreas": "$.nodes.investigator.output.rootCause"
+      },
+      "outputMapping": {
+        "tests": "$.output.tests",
+        "coverage": "$.output.coverage",
+        "summary": "$.output.summary"
+      },
+      "config": {}
+    },
+    {
+      "id": "wait-review",
+      "type": "wait",
+      "label": "Review Fix & Tests",
+      "position": {
+        "x": 140,
+        "y": 1202
+      },
+      "waitType": "approval",
+      "prompt": "Review the bug fix and tests. Approve to commit, or reject to retry the investigation.",
+      "config": {}
+    },
+    {
+      "id": "check-approved",
+      "type": "condition",
+      "label": "Approved?",
+      "position": {
+        "x": 150,
+        "y": 1484
+      },
+      "conditions": [
+        {
+          "path": "$.userResponses.wait-review.approved",
+          "operator": "eq",
+          "value": true
+        }
+      ],
+      "targetNodeId": "committer",
+      "defaultTargetNodeId": "investigator",
+      "config": {},
+      "logicOperator": "and"
+    },
+    {
+      "id": "committer",
+      "type": "agent",
+      "label": "Commit Fix",
+      "position": {
+        "x": 140,
+        "y": 1807
+      },
+      "agentId": "structured-committer",
+      "worktreeMode": "inherit",
+      "inheritWorktreeFromNodeId": "investigator",
+      "inputMapping": {
+        "ticketId": "$.trigger.ticketId",
+        "changesSummary": "$.nodes.investigator.output.summary"
+      },
+      "outputMapping": {
+        "status": "$.output.status",
+        "commits": "$.output.commits",
+        "summary": "$.output.summary"
+      },
+      "config": {}
+    },
+    {
+      "id": "end-success",
+      "type": "end",
+      "label": "Bug Fixed",
+      "position": {
+        "x": 200,
+        "y": 2092
+      },
+      "endType": "success",
+      "config": {}
+    },
+    {
+      "id": "end-no-fix",
+      "type": "end",
+      "label": "Not Fixed",
+      "position": {
+        "x": 540,
+        "y": 950
+      },
+      "endType": "failure",
+      "config": {}
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "source": "trigger",
+      "target": "investigator"
+    },
+    {
+      "id": "e2",
+      "source": "investigator",
+      "target": "check-fixed"
+    },
+    {
+      "id": "e3-yes",
+      "source": "check-fixed",
+      "target": "tester",
+      "sourceHandle": "true",
+      "label": "Fixed"
+    },
+    {
+      "id": "e3-no",
+      "source": "check-fixed",
+      "target": "end-no-fix",
+      "sourceHandle": "false",
+      "label": "Not fixed"
+    },
+    {
+      "id": "e4",
+      "source": "tester",
+      "target": "wait-review"
+    },
+    {
+      "id": "e5",
+      "source": "wait-review",
+      "target": "check-approved"
+    },
+    {
+      "id": "e6-yes",
+      "source": "check-approved",
+      "target": "committer",
+      "sourceHandle": "true",
+      "label": "Approved"
+    },
+    {
+      "id": "e6-no",
+      "source": "check-approved",
+      "target": "investigator",
+      "sourceHandle": "false",
+      "label": "Retry",
+      "waypoints": [
+        {
+          "x": 440,
+          "y": 1585.5
+        },
+        {
+          "x": 440,
+          "y": 1434.25
+        },
+        {
+          "x": 110,
+          "y": 1434.25
+        },
+        {
+          "x": 110,
+          "y": 1283
+        },
+        {
+          "x": 110,
+          "y": 1016
+        },
+        {
+          "x": 110,
+          "y": 728.5
+        },
+        {
+          "x": 110,
+          "y": 424.5
+        },
+        {
+          "x": 280,
+          "y": 424.5
+        }
+      ]
+    },
+    {
+      "id": "e7",
+      "source": "committer",
+      "target": "end-success"
+    }
+  ],
+  "variables": {},
+  "labelIds": [],
+  "createdAt": "2025-01-01T00:00:00.000Z",
+  "updatedAt": "2026-02-10T18:22:46.649Z"
+}

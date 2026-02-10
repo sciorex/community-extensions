@@ -1,0 +1,202 @@
+{
+  "id": "onboarding-gen",
+  "name": "Onboarding Guide Generator",
+  "description": "Generates a complete contributor onboarding package: analyzes the codebase, creates architecture docs, setup guides, CONTRIBUTING.md, and development workflows. Uses worktrees for isolation.",
+  "nodes": [
+    {
+      "id": "trigger",
+      "type": "trigger",
+      "label": "Generate Onboarding",
+      "position": {
+        "x": 322.5,
+        "y": 80
+      },
+      "triggerType": "manual",
+      "triggerConfig": {
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "projectName": {
+              "type": "string",
+              "description": "Name of the project"
+            },
+            "techStack": {
+              "type": "string",
+              "description": "Comma-separated tech stack"
+            }
+          },
+          "required": []
+        }
+      },
+      "config": {}
+    },
+    {
+      "id": "analyzer",
+      "type": "agent",
+      "label": "Analyze Codebase",
+      "position": {
+        "x": 310,
+        "y": 342
+      },
+      "agentId": "codebase-researcher-7e8f9a0b",
+      "worktreeMode": "new",
+      "worktreeConfig": {
+        "label": "Onboarding Docs",
+        "autoMergeOnSuccess": true,
+        "cleanupOnComplete": true
+      },
+      "inputMapping": {
+        "topic": "$.trigger.projectName",
+        "depth": "$.variables.deep"
+      },
+      "outputMapping": {
+        "summary": "$.output.summary",
+        "findings": "$.output.findings",
+        "relatedFiles": "$.output.relatedFiles"
+      },
+      "config": {}
+    },
+    {
+      "id": "writer",
+      "type": "agent",
+      "label": "Write Onboarding Docs",
+      "position": {
+        "x": 310,
+        "y": 574
+      },
+      "agentId": "onboarding-writer",
+      "worktreeMode": "inherit",
+      "inheritWorktreeFromNodeId": "analyzer",
+      "inputMapping": {
+        "projectName": "$.trigger.projectName",
+        "techStack": "$.trigger.techStack"
+      },
+      "outputMapping": {
+        "status": "$.output.status",
+        "filesCreated": "$.output.filesCreated",
+        "filesUpdated": "$.output.filesUpdated",
+        "summary": "$.output.summary"
+      },
+      "config": {}
+    },
+    {
+      "id": "wait-review",
+      "type": "wait",
+      "label": "Review Docs",
+      "position": {
+        "x": 310,
+        "y": 859
+      },
+      "waitType": "approval",
+      "prompt": "Review the generated onboarding documentation. Approve to commit.",
+      "config": {}
+    },
+    {
+      "id": "check-approved",
+      "type": "condition",
+      "label": "Approved?",
+      "position": {
+        "x": 320,
+        "y": 1141
+      },
+      "conditions": [
+        {
+          "path": "$.userResponses.wait-review.approved",
+          "operator": "eq",
+          "value": true
+        }
+      ],
+      "targetNodeId": "committer",
+      "defaultTargetNodeId": "end-cancelled",
+      "config": {},
+      "logicOperator": "and"
+    },
+    {
+      "id": "committer",
+      "type": "agent",
+      "label": "Commit Docs",
+      "position": {
+        "x": 140,
+        "y": 1464
+      },
+      "agentId": "structured-committer",
+      "worktreeMode": "inherit",
+      "inheritWorktreeFromNodeId": "analyzer",
+      "inputMapping": {
+        "changesSummary": "$.nodes.writer.output.summary"
+      },
+      "outputMapping": {
+        "status": "$.output.status",
+        "summary": "$.output.summary"
+      },
+      "config": {}
+    },
+    {
+      "id": "end-success",
+      "type": "end",
+      "label": "Onboarding Complete",
+      "position": {
+        "x": 190,
+        "y": 1749
+      },
+      "endType": "success",
+      "config": {}
+    },
+    {
+      "id": "end-cancelled",
+      "type": "end",
+      "label": "Cancelled",
+      "position": {
+        "x": 540,
+        "y": 1464
+      },
+      "endType": "cancelled",
+      "config": {}
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "source": "trigger",
+      "target": "analyzer"
+    },
+    {
+      "id": "e2",
+      "source": "analyzer",
+      "target": "writer"
+    },
+    {
+      "id": "e3",
+      "source": "writer",
+      "target": "wait-review"
+    },
+    {
+      "id": "e4",
+      "source": "wait-review",
+      "target": "check-approved"
+    },
+    {
+      "id": "e5-yes",
+      "source": "check-approved",
+      "target": "committer",
+      "sourceHandle": "true",
+      "label": "Approved"
+    },
+    {
+      "id": "e5-no",
+      "source": "check-approved",
+      "target": "end-cancelled",
+      "sourceHandle": "false",
+      "label": "Cancel"
+    },
+    {
+      "id": "e6",
+      "source": "committer",
+      "target": "end-success"
+    }
+  ],
+  "variables": {},
+  "labelIds": [],
+  "createdAt": "2025-01-01T00:00:00.000Z",
+  "updatedAt": "2026-02-10T18:23:49.498Z"
+}

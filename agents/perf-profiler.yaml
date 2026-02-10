@@ -1,0 +1,158 @@
+id: perf-profiler
+name: Performance Profiler
+description: |
+  Analyzes codebase for performance bottlenecks through static analysis,
+  identifies optimization opportunities, and implements targeted improvements.
+  Benchmarks before and after changes. Creates tickets for found issues.
+icon: ⏱️
+labels:
+  - performance
+  - optimization
+systemPrompt: |
+  You are a Performance Profiler agent. You identify and fix performance
+  bottlenecks through analysis and targeted optimization.
+
+  ## Analysis Techniques
+  1. **Static Analysis**: Find O(n²) loops, unnecessary re-renders, memory leaks
+  2. **Bundle Analysis**: Check bundle sizes, tree-shaking issues, large deps
+  3. **Database/Query**: N+1 queries, missing indexes, unoptimized queries
+  4. **Memory**: Large object allocations, event listener leaks, cache misses
+  5. **I/O**: Synchronous file operations, missing concurrency, serial API calls
+
+  ## Process
+  1. Understand the performance concern from the ticket/request
+  2. Explore the relevant code area
+  3. Identify potential bottlenecks through static analysis
+  4. Rank bottlenecks by likely impact
+  5. Create tickets for found issues using sciorex_create_ticket
+  6. Propose optimizations with expected improvement
+  7. Implement optimizations (if approved)
+  8. Write benchmark comparisons
+
+  ## Ticket Integration
+  - Create tickets for each bottleneck found: sciorex_create_ticket
+  - Add detailed comments with profiling data: sciorex_add_comment
+  - Notify user of critical findings: sciorex_notify_user
+
+  ## Common Optimizations
+  - Memoization for expensive computations
+  - Lazy loading for unused code/components
+  - Debouncing/throttling for frequent operations
+  - Caching for repeated lookups
+  - Parallel execution for independent async operations
+  - Virtualization for large lists
+
+  ## Rules
+  - Profile BEFORE optimizing - measure, don't guess
+  - Make one change at a time to isolate impact
+  - Never sacrifice correctness for performance
+  - Document the before/after metrics
+  - If no significant bottleneck found, report that honestly
+adapter: claude-code
+model: claude-sonnet-4-5-20250929
+temperature: 0.2
+maxTokens: 16384
+inputSchema:
+  type: object
+  properties:
+    targetArea:
+      type: string
+      description: File, directory, or feature to analyze
+    concern:
+      type: string
+      description: Specific performance concern (e.g., "slow page load", "high memory")
+    implement:
+      type: boolean
+      description: Whether to implement fixes or just report findings
+      default: false
+  required:
+    - targetArea
+outputSchema:
+  type: object
+  properties:
+    status:
+      type: string
+      enum:
+        - optimized
+        - analyzed
+        - no-issues
+        - failed
+    bottlenecks:
+      type: array
+      items:
+        type: object
+        properties:
+          file:
+            type: string
+          line:
+            type: number
+          issue:
+            type: string
+          impact:
+            type: string
+            enum:
+              - critical
+              - high
+              - medium
+              - low
+          suggestion:
+            type: string
+    optimizationsApplied:
+      type: array
+      items:
+        type: object
+        properties:
+          file:
+            type: string
+          change:
+            type: string
+          expectedImprovement:
+            type: string
+    filesModified:
+      type: array
+      items:
+        type: string
+    summary:
+      type: string
+  required:
+    - status
+    - summary
+allowedTools:
+  - tool: Read
+    allowed: true
+  - tool: Write
+    allowed: true
+  - tool: Edit
+    allowed: true
+  - tool: Glob
+    allowed: true
+  - tool: Grep
+    allowed: true
+  - tool: Bash
+    allowed: true
+    constraints:
+      allowedCommands:
+        - npm
+        - node
+        - npx
+        - pnpm
+        - yarn
+        - git status
+        - git diff
+  - tool: sciorex_notify_user
+    allowed: true
+  - tool: sciorex_request_approval
+    allowed: true
+  - tool: sciorex_create_ticket
+    allowed: true
+  - tool: sciorex_add_comment
+    allowed: true
+mcpServers:
+  - sciorex-interactions
+  - sciorex-tickets
+autoApprove: false
+requiresHumanApproval:
+  - Write
+  - Edit
+  - Bash
+version: 1.0.0

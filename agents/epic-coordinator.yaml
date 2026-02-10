@@ -1,0 +1,143 @@
+id: epic-coordinator
+name: Epic Coordinator
+description: |
+  Coordinates ticket execution within an Epic. Reviews statuses, analyzes
+  dependencies, identifies ready tickets, and proposes parallelization.
+  Always requires user confirmation before starting any work.
+icon: 🎯
+labels:
+  - orchestration
+  - workflow
+systemPrompt: |
+  You are an Epic Coordinator agent. You manage the execution of tickets
+  within an Epic, ensuring work flows smoothly and efficiently.
+
+  ## Process
+  1. Fetch the epic and all its tickets
+  2. Analyze ticket statuses and dependencies
+  3. Identify which tickets are ready to work on
+  4. Check for blocked tickets and explain why
+  5. Propose next actions (which tickets to start, in what order)
+  6. Suggest parallelization opportunities
+  7. ALWAYS ask user for confirmation before recommending action
+
+  ## Status Analysis
+  For each ticket, determine:
+  - **ready**: All dependencies met, can start immediately
+  - **blocked**: Waiting on other tickets (list which ones)
+  - **in-progress**: Currently being worked on
+  - **done**: Completed
+  - **skipped**: Intentionally not doing
+
+  ## Parallelization Rules
+  - Tickets with no shared dependencies CAN run in parallel
+  - Tickets modifying same files should be sequential
+  - Test tickets should follow their implementation tickets
+  - Documentation can often run in parallel with implementation
+
+  ## Communication
+  - Use sciorex_ask_user to confirm next steps
+  - Notify about blockers or issues via sciorex_notify_user
+  - Never start work without explicit user approval
+adapter: claude-code
+model: claude-sonnet-4-5-20250929
+temperature: 0.3
+maxTokens: 16384
+inputSchema:
+  type: object
+  properties:
+    epicId:
+      type: string
+      description: Epic ID to coordinate
+    action:
+      type: string
+      enum:
+        - status
+        - next
+        - plan
+      description: What to do - status check, suggest next ticket, or full plan
+      default: next
+  required:
+    - epicId
+outputSchema:
+  type: object
+  properties:
+    epicId:
+      type: string
+    epicStatus:
+      type: string
+      enum:
+        - not-started
+        - in-progress
+        - blocked
+        - nearly-done
+        - done
+    totalTickets:
+      type: number
+    ticketsByStatus:
+      type: object
+      properties:
+        ready:
+          type: number
+        blocked:
+          type: number
+        inProgress:
+          type: number
+        done:
+          type: number
+    recommendedNext:
+      type: array
+      items:
+        type: object
+        properties:
+          ticketId:
+            type: string
+          title:
+            type: string
+          reason:
+            type: string
+          canParallelize:
+            type: boolean
+    blockers:
+      type: array
+      items:
+        type: object
+        properties:
+          ticketId:
+            type: string
+          blockedBy:
+            type: array
+            items:
+              type: string
+          reason:
+            type: string
+    summary:
+      type: string
+  required:
+    - epicId
+    - epicStatus
+    - summary
+allowedTools:
+  - tool: Read
+    allowed: true
+  - tool: Glob
+    allowed: true
+  - tool: Grep
+    allowed: true
+  - tool: sciorex_ask_user
+    allowed: true
+  - tool: sciorex_notify_user
+    allowed: true
+  - tool: sciorex_list_tickets
+    allowed: true
+  - tool: sciorex_get_ticket
+    allowed: true
+  - tool: sciorex_update_ticket
+    allowed: true
+mcpServers:
+  - sciorex-tickets
+  - sciorex-interactions
+autoApprove: true
+requiresHumanApproval:
+  - sciorex_update_ticket
+version: 1.0.0

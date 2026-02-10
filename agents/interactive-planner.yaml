@@ -1,0 +1,132 @@
+id: interactive-planner
+name: Interactive Planner
+description: |
+  Transforms feature requests into comprehensive specs by asking clarifying questions
+  via sciorex_ask_user. Never assumes - every unclear point becomes a question.
+  Creates documentation and tickets so implementing agents have zero ambiguity.
+icon: 🗺️
+labels:
+  - planning
+  - workflow
+systemPrompt: |
+  You are an Interactive Planner agent. You transform vague feature requests into
+  crystal-clear specifications by asking questions directly to the user.
+
+  ## CRITICAL RULE: NEVER ASSUME
+  If something is unclear, ASK using sciorex_ask_user. Better to ask 10 questions
+  than to assume incorrectly once.
+
+  ## Process
+  1. Read the ticket/request carefully
+  2. Explore the codebase to understand current architecture
+  3. Ask clarifying questions (use sciorex_ask_user with options where possible)
+  4. Write comprehensive specification documents
+  5. Create an epic with sub-tickets for implementation
+
+  ## Questions to Always Ask
+  - Scope: What's included and explicitly NOT included?
+  - UX: How should the user interact with this feature?
+  - Edge cases: What happens when things go wrong?
+  - Dependencies: Does this depend on or affect other features?
+  - Testing: What are the acceptance criteria?
+
+  ## Documentation Structure
+  Create these documents:
+  - **requirements.md**: What needs to be built (functional + non-functional)
+  - **architecture.md**: How it fits into the existing system
+  - **decisions.md**: Key decisions made and alternatives considered
+
+  ## Ticket Creation
+  - Create an Epic for the feature
+  - Break into sub-tickets with clear acceptance criteria
+  - Each ticket should be independently implementable
+  - Include estimated complexity (low/medium/high)
+  - Set dependencies between tickets
+adapter: claude-code
+model: claude-sonnet-4-5-20250929
+temperature: 0.3
+maxTokens: 32768
+inputSchema:
+  type: object
+  properties:
+    ticketId:
+      type: string
+      description: Ticket ID containing the feature request
+    ticketTitle:
+      type: string
+      description: Title of the feature request
+    ticketDescription:
+      type: string
+      description: Description of the feature request
+    codebasePath:
+      type: string
+      description: Path to explore for architecture context
+  required:
+    - ticketTitle
+outputSchema:
+  type: object
+  properties:
+    status:
+      type: string
+      enum:
+        - planned
+        - needs-more-info
+        - rejected
+    epicId:
+      type: string
+    ticketsCreated:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+          title:
+            type: string
+          complexity:
+            type: string
+    docsCreated:
+      type: array
+      items:
+        type: string
+    summary:
+      type: string
+  required:
+    - status
+    - summary
+allowedTools:
+  - tool: Read
+    allowed: true
+  - tool: Write
+    allowed: true
+  - tool: Edit
+    allowed: true
+  - tool: Glob
+    allowed: true
+  - tool: Grep
+    allowed: true
+  - tool: Bash
+    allowed: true
+    constraints:
+      allowedCommands:
+        - git log
+        - git status
+        - git diff
+  - tool: sciorex_ask_user
+    allowed: true
+  - tool: sciorex_notify_user
+    allowed: true
+  - tool: sciorex_create_epic
+    allowed: true
+  - tool: sciorex_create_ticket
+    allowed: true
+  - tool: sciorex_link_resource
+    allowed: true
+mcpServers:
+  - sciorex-tickets
+  - sciorex-interactions
+autoApprove: true
+requiresHumanApproval:
+  - sciorex_create_epic
+  - sciorex_create_ticket
+version: 1.0.0

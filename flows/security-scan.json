@@ -1,0 +1,341 @@
+{
+  "id": "security-scan",
+  "name": "Security Audit",
+  "description": "Full security lifecycle: scan codebase for vulnerabilities, prioritize findings, fix critical issues with approval, verify fixes. Creates tickets for non-critical findings.",
+  "nodes": [
+    {
+      "id": "trigger",
+      "type": "trigger",
+      "label": "Start Security Audit",
+      "position": {
+        "x": 322.25,
+        "y": 80
+      },
+      "triggerType": "manual",
+      "triggerConfig": {
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "scope": {
+              "type": "string",
+              "description": "Directory to scan (default: src/)"
+            },
+            "categories": {
+              "type": "string",
+              "description": "Comma-separated categories to focus on"
+            }
+          },
+          "required": []
+        }
+      },
+      "config": {}
+    },
+    {
+      "id": "scanner",
+      "type": "agent",
+      "label": "Scan for Vulnerabilities",
+      "position": {
+        "x": 309.75,
+        "y": 342
+      },
+      "agentId": "security-auditor",
+      "inputMapping": {
+        "scope": "$.trigger.scope"
+      },
+      "outputMapping": {
+        "status": "$.output.status",
+        "findings": "$.output.findings",
+        "findingsBySeverity": "$.output.findingsBySeverity",
+        "ticketsCreated": "$.output.ticketsCreated",
+        "summary": "$.output.summary"
+      },
+      "config": {}
+    },
+    {
+      "id": "check-critical",
+      "type": "condition",
+      "label": "Critical Issues?",
+      "position": {
+        "x": 313.75,
+        "y": 574
+      },
+      "conditions": [
+        {
+          "path": "$.nodes.scanner.output.findingsBySeverity.critical",
+          "operator": "gt",
+          "value": 0
+        }
+      ],
+      "targetNodeId": "wait-fix-critical",
+      "defaultTargetNodeId": "check-high",
+      "config": {},
+      "logicOperator": "and"
+    },
+    {
+      "id": "check-high",
+      "type": "condition",
+      "label": "High Issues?",
+      "position": {
+        "x": 657.5,
+        "y": 897
+      },
+      "conditions": [
+        {
+          "path": "$.nodes.scanner.output.findingsBySeverity.high",
+          "operator": "gt",
+          "value": 0
+        }
+      ],
+      "targetNodeId": "wait-fix-high",
+      "defaultTargetNodeId": "end-clean",
+      "config": {},
+      "logicOperator": "and"
+    },
+    {
+      "id": "wait-fix-critical",
+      "type": "wait",
+      "label": "Fix Critical Issues?",
+      "position": {
+        "x": -40,
+        "y": 897
+      },
+      "waitType": "approval",
+      "prompt": "Critical security vulnerabilities found. Approve to auto-fix critical issues, or reject to handle manually.",
+      "config": {}
+    },
+    {
+      "id": "check-fix-critical",
+      "type": "condition",
+      "label": "Fix Approved?",
+      "position": {
+        "x": -30,
+        "y": 1220
+      },
+      "conditions": [
+        {
+          "path": "$.userResponses.wait-fix-critical.approved",
+          "operator": "eq",
+          "value": true
+        }
+      ],
+      "targetNodeId": "fixer",
+      "defaultTargetNodeId": "end-manual",
+      "config": {},
+      "logicOperator": "and"
+    },
+    {
+      "id": "wait-fix-high",
+      "type": "wait",
+      "label": "Fix High Issues?",
+      "position": {
+        "x": 472.5,
+        "y": 1220
+      },
+      "waitType": "approval",
+      "prompt": "High severity issues found. Approve to auto-fix, or reject to handle via tickets.",
+      "config": {}
+    },
+    {
+      "id": "check-fix-high",
+      "type": "condition",
+      "label": "Fix Approved?",
+      "position": {
+        "x": 482.5,
+        "y": 1543
+      },
+      "conditions": [
+        {
+          "path": "$.userResponses.wait-fix-high.approved",
+          "operator": "eq",
+          "value": true
+        }
+      ],
+      "targetNodeId": "fixer",
+      "defaultTargetNodeId": "end-tickets-only",
+      "config": {},
+      "logicOperator": "and"
+    },
+    {
+      "id": "fixer",
+      "type": "agent",
+      "label": "Fix Vulnerabilities",
+      "position": {
+        "x": -177.5,
+        "y": 1543
+      },
+      "agentId": "code-executor",
+      "worktreeMode": "new",
+      "worktreeConfig": {
+        "label": "Security Fixes",
+        "autoMergeOnSuccess": true,
+        "cleanupOnComplete": true
+      },
+      "inputMapping": {
+        "ticketTitle": "$.nodes.scanner.output.summary",
+        "ticketDescription": "$.nodes.scanner.output.summary"
+      },
+      "outputMapping": {
+        "status": "$.output.status",
+        "filesModified": "$.output.filesModified",
+        "summary": "$.output.summary"
+      },
+      "config": {}
+    },
+    {
+      "id": "committer",
+      "type": "agent",
+      "label": "Commit Fixes",
+      "position": {
+        "x": -177,
+        "y": 1866
+      },
+      "agentId": "structured-committer",
+      "worktreeMode": "inherit",
+      "inheritWorktreeFromNodeId": "fixer",
+      "inputMapping": {
+        "changesSummary": "$.nodes.fixer.output.summary"
+      },
+      "outputMapping": {
+        "status": "$.output.status",
+        "summary": "$.output.summary"
+      },
+      "config": {}
+    },
+    {
+      "id": "end-fixed",
+      "type": "end",
+      "label": "Vulnerabilities Fixed",
+      "position": {
+        "x": -152.5,
+        "y": 2118
+      },
+      "endType": "success",
+      "config": {}
+    },
+    {
+      "id": "end-clean",
+      "type": "end",
+      "label": "No Critical/High Issues",
+      "position": {
+        "x": 872.5,
+        "y": 1220
+      },
+      "endType": "success",
+      "config": {}
+    },
+    {
+      "id": "end-manual",
+      "type": "end",
+      "label": "Manual Fix Required",
+      "position": {
+        "x": 172.5,
+        "y": 1543
+      },
+      "endType": "failure",
+      "config": {}
+    },
+    {
+      "id": "end-tickets-only",
+      "type": "end",
+      "label": "Tickets Created",
+      "position": {
+        "x": 530.5,
+        "y": 1866
+      },
+      "endType": "success",
+      "config": {}
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "source": "trigger",
+      "target": "scanner"
+    },
+    {
+      "id": "e2",
+      "source": "scanner",
+      "target": "check-critical"
+    },
+    {
+      "id": "e3-critical",
+      "source": "check-critical",
+      "target": "wait-fix-critical",
+      "sourceHandle": "true",
+      "label": "Critical found"
+    },
+    {
+      "id": "e3-no-critical",
+      "source": "check-critical",
+      "target": "check-high",
+      "sourceHandle": "false",
+      "label": "No critical"
+    },
+    {
+      "id": "e4-high",
+      "source": "check-high",
+      "target": "wait-fix-high",
+      "sourceHandle": "true",
+      "label": "High found"
+    },
+    {
+      "id": "e4-clean",
+      "source": "check-high",
+      "target": "end-clean",
+      "sourceHandle": "false",
+      "label": "Clean"
+    },
+    {
+      "id": "e5",
+      "source": "wait-fix-critical",
+      "target": "check-fix-critical"
+    },
+    {
+      "id": "e6-fix",
+      "source": "check-fix-critical",
+      "target": "fixer",
+      "sourceHandle": "true",
+      "label": "Fix"
+    },
+    {
+      "id": "e6-manual",
+      "source": "check-fix-critical",
+      "target": "end-manual",
+      "sourceHandle": "false",
+      "label": "Manual"
+    },
+    {
+      "id": "e7",
+      "source": "wait-fix-high",
+      "target": "check-fix-high"
+    },
+    {
+      "id": "e8-fix",
+      "source": "check-fix-high",
+      "target": "fixer",
+      "sourceHandle": "true",
+      "label": "Fix"
+    },
+    {
+      "id": "e8-skip",
+      "source": "check-fix-high",
+      "target": "end-tickets-only",
+      "sourceHandle": "false",
+      "label": "Skip"
+    },
+    {
+      "id": "e9",
+      "source": "fixer",
+      "target": "committer"
+    },
+    {
+      "id": "e10",
+      "source": "committer",
+      "target": "end-fixed"
+    }
+  ],
+  "variables": {},
+  "labelIds": [],
+  "createdAt": "2025-01-01T00:00:00.000Z",
+  "updatedAt": "2026-02-10T19:34:58.261Z"
+}

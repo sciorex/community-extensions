@@ -1,0 +1,147 @@
+{
+  "id": "dep-audit",
+  "name": "Dependency Audit",
+  "description": "Audits project dependencies for security vulnerabilities, outdated packages, and unused deps. Optionally creates an epic with tickets for findings. Alerts on critical vulnerabilities.",
+  "nodes": [
+    {
+      "id": "trigger",
+      "type": "trigger",
+      "label": "Start Audit",
+      "position": {
+        "x": 340,
+        "y": 80
+      },
+      "triggerType": "manual",
+      "triggerConfig": {
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "createEpic": {
+              "type": "boolean",
+              "description": "Create an epic to track remediation tickets"
+            },
+            "skipUnused": {
+              "type": "boolean",
+              "description": "Skip unused dependency check (can be slow)"
+            }
+          },
+          "required": []
+        }
+      },
+      "config": {}
+    },
+    {
+      "id": "auditor",
+      "type": "agent",
+      "label": "Audit Dependencies",
+      "position": {
+        "x": 310,
+        "y": 342
+      },
+      "agentId": "dep-auditor",
+      "inputMapping": {
+        "skipUnused": "$.trigger.skipUnused"
+      },
+      "outputMapping": {
+        "status": "$.output.status",
+        "packageManager": "$.output.packageManager",
+        "totalDependencies": "$.output.totalDependencies",
+        "securityVulnerabilities": "$.output.securityVulnerabilities",
+        "outdatedPackages": "$.output.outdatedPackages",
+        "unusedDependencies": "$.output.unusedDependencies",
+        "ticketsCreated": "$.output.ticketsCreated",
+        "summary": "$.output.summary"
+      },
+      "config": {}
+    },
+    {
+      "id": "check-critical",
+      "type": "condition",
+      "label": "Critical Vulns?",
+      "position": {
+        "x": 320,
+        "y": 627
+      },
+      "conditions": [
+        {
+          "path": "$.nodes.auditor.output.securityVulnerabilities.critical",
+          "operator": "gt",
+          "value": 0
+        }
+      ],
+      "targetNodeId": "wait-critical",
+      "defaultTargetNodeId": "end-success",
+      "config": {},
+      "logicOperator": "and"
+    },
+    {
+      "id": "wait-critical",
+      "type": "wait",
+      "label": "Critical Vulnerabilities Found",
+      "position": {
+        "x": 139.5,
+        "y": 950
+      },
+      "waitType": "approval",
+      "prompt": "Critical security vulnerabilities were found in your dependencies. Review the audit results and decide how to proceed.",
+      "config": {}
+    },
+    {
+      "id": "end-success",
+      "type": "end",
+      "label": "Audit Complete",
+      "position": {
+        "x": 539.5,
+        "y": 950
+      },
+      "endType": "success",
+      "config": {}
+    },
+    {
+      "id": "end-critical",
+      "type": "end",
+      "label": "Audit Complete (Critical)",
+      "position": {
+        "x": 189.5,
+        "y": 1232
+      },
+      "endType": "failure",
+      "config": {}
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "source": "trigger",
+      "target": "auditor"
+    },
+    {
+      "id": "e2",
+      "source": "auditor",
+      "target": "check-critical"
+    },
+    {
+      "id": "e3-critical",
+      "source": "check-critical",
+      "target": "wait-critical",
+      "sourceHandle": "true",
+      "label": "Critical found"
+    },
+    {
+      "id": "e3-ok",
+      "source": "check-critical",
+      "target": "end-success",
+      "sourceHandle": "false",
+      "label": "No critical"
+    },
+    {
+      "id": "e4",
+      "source": "wait-critical",
+      "target": "end-critical"
+    }
+  ],
+  "variables": {},
+  "labelIds": [],
+  "createdAt": "2025-01-01T00:00:00.000Z",
+  "updatedAt": "2026-02-10T18:22:23.627Z"
+}

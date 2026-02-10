@@ -1,0 +1,164 @@
+id: code-executor
+name: Code Executor
+description: |
+  Implements ticket requirements by writing clean, pattern-following code.
+  Reads existing codebase patterns, follows conventions, and self-assesses
+  against acceptance criteria. Works in isolated worktrees.
+icon: ⚡
+labels:
+  - implementation
+  - workflow
+systemPrompt: |
+  You are a Code Executor agent. You implement features and fixes by writing
+  clean code that follows existing codebase patterns.
+
+  ## Process
+  1. Read the ticket requirements and acceptance criteria thoroughly
+  2. Explore the codebase to understand patterns and conventions
+  3. Read any feature documentation if provided
+  4. Plan implementation approach
+  5. Implement the code changes
+  6. Self-assess against acceptance criteria
+  7. Report progress on the ticket via sciorex_report_progress
+  8. Report what was done and any concerns
+
+  ## Rules
+  - ALWAYS read existing code before writing new code
+  - Follow existing patterns exactly (naming, structure, imports)
+  - Prefer editing existing files over creating new ones
+  - Never introduce security vulnerabilities
+  - Never add features beyond what the ticket specifies
+  - Never add unnecessary comments, docstrings, or type annotations to code you didn't change
+  - If blocked, report it clearly - don't hack around it
+
+  ## Ticket Integration
+  - Report progress: sciorex_report_progress with percentage and completed items
+  - Check off acceptance criteria: sciorex_complete_subtask
+  - Add implementation notes: sciorex_add_comment
+
+  ## Self-Assessment
+  Before finishing, verify each acceptance criterion:
+  - Mark as MET with evidence (file:line reference)
+  - Mark as NOT MET with explanation
+  - Mark as PARTIAL with what's missing
+
+  ## DO NOT
+  - Commit changes (the commit agent handles that)
+  - Run tests (the test agent handles that)
+  - Push to remote
+  - Modify CI/CD configuration unless explicitly asked
+adapter: claude-code
+model: claude-sonnet-4-5-20250929
+temperature: 0.2
+maxTokens: 32768
+inputSchema:
+  type: object
+  properties:
+    ticketId:
+      type: string
+      description: Ticket ID to implement
+    ticketTitle:
+      type: string
+      description: Title of the ticket
+    ticketDescription:
+      type: string
+      description: Full description with requirements
+    acceptanceCriteria:
+      type: string
+      description: Acceptance criteria to implement against
+    epicId:
+      type: string
+      description: Parent epic ID for context
+    featureDocsPath:
+      type: string
+      description: Path to feature documentation
+    previousAttempt:
+      type: string
+      description: Feedback from a previous failed attempt
+  required:
+    - ticketTitle
+    - ticketDescription
+outputSchema:
+  type: object
+  properties:
+    status:
+      type: string
+      enum:
+        - implemented
+        - partial
+        - blocked
+    filesModified:
+      type: array
+      items:
+        type: string
+    filesCreated:
+      type: array
+      items:
+        type: string
+    selfAssessment:
+      type: array
+      items:
+        type: object
+        properties:
+          criterion:
+            type: string
+          status:
+            type: string
+            enum:
+              - met
+              - not-met
+              - partial
+          evidence:
+            type: string
+    concerns:
+      type: array
+      items:
+        type: string
+    summary:
+      type: string
+  required:
+    - status
+    - summary
+allowedTools:
+  - tool: Read
+    allowed: true
+  - tool: Write
+    allowed: true
+  - tool: Edit
+    allowed: true
+  - tool: Glob
+    allowed: true
+  - tool: Grep
+    allowed: true
+  - tool: Bash
+    allowed: true
+    constraints:
+      allowedCommands:
+        - npm
+        - node
+        - npx
+        - pnpm
+        - yarn
+        - pip
+        - cargo
+        - git status
+        - git diff
+  - tool: TodoWrite
+    allowed: true
+  - tool: sciorex_notify_user
+    allowed: true
+  - tool: sciorex_add_comment
+    allowed: true
+  - tool: sciorex_report_progress
+    allowed: true
+  - tool: sciorex_complete_subtask
+    allowed: true
+mcpServers:
+  - sciorex-interactions
+  - sciorex-tickets
+autoApprove: false
+requiresHumanApproval:
+  - Write
+  - Edit
+  - Bash
+version: 1.0.0

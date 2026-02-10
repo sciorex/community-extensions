@@ -1,0 +1,209 @@
+{
+  "id": "test-booster",
+  "name": "Test Coverage Booster",
+  "description": "Analyzes test coverage gaps, generates missing tests, runs them, and commits if passing. Iterates until coverage target is met or user stops.",
+  "nodes": [
+    {
+      "id": "trigger",
+      "type": "trigger",
+      "label": "Boost Coverage",
+      "position": {
+        "x": 340,
+        "y": 80
+      },
+      "triggerType": "manual",
+      "triggerConfig": {
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "targetPath": {
+              "type": "string",
+              "description": "File or directory to write tests for"
+            },
+            "framework": {
+              "type": "string",
+              "description": "Test framework (jest, vitest, pytest, etc.)"
+            },
+            "focusAreas": {
+              "type": "string",
+              "description": "Specific areas to focus on (edge cases, error handling, etc.)"
+            }
+          },
+          "required": [
+            "targetPath"
+          ]
+        }
+      },
+      "config": {}
+    },
+    {
+      "id": "test-writer",
+      "type": "agent",
+      "label": "Generate Tests",
+      "position": {
+        "x": 337.5,
+        "y": 342
+      },
+      "agentId": "test-writer-c9d0e1f2",
+      "reuseSessionOnLoop": true,
+      "inputMapping": {
+        "filePath": "$.trigger.targetPath",
+        "code": "$.trigger.targetPath",
+        "framework": "$.trigger.framework",
+        "focusAreas": "$.trigger.focusAreas"
+      },
+      "outputMapping": {
+        "framework": "$.output.framework",
+        "tests": "$.output.tests",
+        "coverage": "$.output.coverage",
+        "summary": "$.output.summary"
+      },
+      "config": {}
+    },
+    {
+      "id": "wait-review",
+      "type": "wait",
+      "label": "Review Tests",
+      "position": {
+        "x": 310,
+        "y": 574
+      },
+      "waitType": "input",
+      "prompt": "Review the generated tests. Approve to commit, request changes, or add more tests.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "approve": {
+            "type": "boolean",
+            "description": "Approve and commit the tests"
+          },
+          "feedback": {
+            "type": "string",
+            "description": "Feedback for generating more/better tests"
+          }
+        },
+        "required": [
+          "approve"
+        ]
+      },
+      "config": {}
+    },
+    {
+      "id": "check-approved",
+      "type": "condition",
+      "label": "Approved?",
+      "position": {
+        "x": 320,
+        "y": 856
+      },
+      "conditions": [
+        {
+          "path": "$.userResponses.wait-review.approve",
+          "operator": "eq",
+          "value": true
+        }
+      ],
+      "targetNodeId": "committer",
+      "defaultTargetNodeId": "test-writer",
+      "config": {},
+      "logicOperator": "and"
+    },
+    {
+      "id": "committer",
+      "type": "agent",
+      "label": "Commit Tests",
+      "position": {
+        "x": 335.5,
+        "y": 1179
+      },
+      "agentId": "structured-committer",
+      "inputMapping": {
+        "changesSummary": "$.nodes.test-writer.output.summary",
+        "commitStrategy": "$.variables.single"
+      },
+      "outputMapping": {
+        "status": "$.output.status",
+        "commits": "$.output.commits",
+        "summary": "$.output.summary"
+      },
+      "config": {}
+    },
+    {
+      "id": "end-success",
+      "type": "end",
+      "label": "Tests Added",
+      "position": {
+        "x": 370,
+        "y": 1411
+      },
+      "endType": "success",
+      "config": {}
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "source": "trigger",
+      "target": "test-writer"
+    },
+    {
+      "id": "e2",
+      "source": "test-writer",
+      "target": "wait-review"
+    },
+    {
+      "id": "e3",
+      "source": "wait-review",
+      "target": "check-approved"
+    },
+    {
+      "id": "e4-yes",
+      "source": "check-approved",
+      "target": "committer",
+      "sourceHandle": "true",
+      "label": "Approved"
+    },
+    {
+      "id": "e4-no",
+      "source": "check-approved",
+      "target": "test-writer",
+      "sourceHandle": "false",
+      "label": "More tests",
+      "waypoints": [
+        {
+          "x": 610,
+          "y": 957.5
+        },
+        {
+          "x": 610,
+          "y": 806.25
+        },
+        {
+          "x": 280,
+          "y": 806.25
+        },
+        {
+          "x": 280,
+          "y": 655
+        },
+        {
+          "x": 280,
+          "y": 398
+        },
+        {
+          "x": 307.5,
+          "y": 398
+        }
+      ]
+    },
+    {
+      "id": "e5",
+      "source": "committer",
+      "target": "end-success"
+    }
+  ],
+  "variables": {},
+  "labelIds": [],
+  "createdAt": "2025-01-01T00:00:00.000Z",
+  "updatedAt": "2026-02-10T19:34:45.933Z"
+}

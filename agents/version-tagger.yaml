@@ -1,0 +1,130 @@
+id: version-tagger
+name: Version Tagger
+description: |
+  Bumps version numbers in project files (package.json, pyproject.toml, Cargo.toml, etc.),
+  creates a git commit with the version bump, tags it, and optionally pushes to origin.
+  Comments on related tickets about the release.
+icon: 🏷️
+labels:
+  - release
+  - git
+systemPrompt: |
+  You are a Version Tagger agent. Your job is to bump version numbers across
+  project files, commit the changes, create a git tag, and optionally push.
+
+  ## Process
+  1. Detect project type and find all version files
+  2. Read current version from the primary version file
+  3. Apply the requested version bump (or use the explicit version)
+  4. Update ALL version files consistently
+  5. Stage and commit with message: "chore: bump version to X.Y.Z"
+  6. Create an annotated git tag: vX.Y.Z
+  7. Push to origin if requested
+  8. If a ticketId is provided, add a release comment to the ticket
+
+  ## Version Files to Check
+  - package.json (Node.js)
+  - pyproject.toml, setup.py, setup.cfg (Python)
+  - Cargo.toml (Rust)
+  - build.gradle, pom.xml (Java)
+  - version.txt, VERSION (generic)
+
+  ## Ticket Integration
+  - Add release comment on tickets: sciorex_add_comment
+  - Search for tickets to reference: sciorex_search_tickets
+
+  ## Rules
+  - Follow semantic versioning strictly
+  - Update ALL files that contain the version number
+  - Never create a tag that already exists
+  - Verify clean working tree before starting (warn if dirty)
+  - Use annotated tags with release message
+adapter: claude-code
+model: claude-sonnet-4-5-20250929
+temperature: 0.1
+maxTokens: 4096
+inputSchema:
+  type: object
+  properties:
+    bump:
+      type: string
+      enum:
+        - major
+        - minor
+        - patch
+      description: Semver bump type
+    explicitVersion:
+      type: string
+      description: Explicit version to set (overrides bump)
+    push:
+      type: boolean
+      description: Whether to push commit and tag to origin
+      default: false
+    tagMessage:
+      type: string
+      description: Custom tag annotation message
+    ticketId:
+      type: string
+      description: Ticket to comment on about the release
+  required: []
+outputSchema:
+  type: object
+  properties:
+    status:
+      type: string
+      enum:
+        - tagged
+        - failed
+        - dirty-tree
+    previousVersion:
+      type: string
+    newVersion:
+      type: string
+    tagName:
+      type: string
+    filesUpdated:
+      type: array
+      items:
+        type: string
+    pushed:
+      type: boolean
+    summary:
+      type: string
+  required:
+    - status
+    - summary
+allowedTools:
+  - tool: Read
+    allowed: true
+  - tool: Edit
+    allowed: true
+  - tool: Glob
+    allowed: true
+  - tool: Grep
+    allowed: true
+  - tool: Bash
+    allowed: true
+    constraints:
+      allowedCommands:
+        - git tag
+        - git commit
+        - git add
+        - git status
+        - git describe
+        - git push
+        - git log
+        - git diff
+  - tool: sciorex_notify_user
+    allowed: true
+  - tool: sciorex_add_comment
+    allowed: true
+  - tool: sciorex_search_tickets
+    allowed: true
+mcpServers:
+  - sciorex-interactions
+  - sciorex-tickets
+autoApprove: false
+requiresHumanApproval:
+  - Edit
+  - Bash
+version: 1.0.0

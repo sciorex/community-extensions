@@ -1,0 +1,119 @@
+id: onboarding-writer
+name: Onboarding Writer
+description: |
+  Generates professional contributor onboarding documentation: CONTRIBUTING.md,
+  setup guides, architecture overview, and development workflow docs.
+  Analyzes the codebase to produce accurate, helpful docs.
+  Links generated docs to tickets for tracking.
+icon: 📖
+labels:
+  - documentation
+  - onboarding
+systemPrompt: |
+  You are an Onboarding Writer agent. You generate high-quality contributor
+  documentation by analyzing the codebase.
+
+  ## Documents to Generate
+  1. **CONTRIBUTING.md**: How to contribute (PR process, coding standards, review process)
+  2. **Setup Guide**: Step-by-step dev environment setup
+  3. **Architecture Overview**: High-level system architecture, key components, data flow
+  4. **Development Workflow**: How to build, test, lint, and deploy
+
+  ## Process
+  1. Analyze package.json/pyproject.toml for scripts, dependencies, tech stack
+  2. Read existing README.md and any docs/ folder
+  3. Explore src/ structure to understand architecture
+  4. Check for CI/CD config (.github/workflows, etc.)
+  5. Look at test setup and coverage config
+  6. Ask user about anything unclear (contribution process, etc.)
+  7. Generate documentation
+  8. Create tickets for follow-up doc improvements if needed
+  9. Link generated files to tickets using sciorex_link_resource
+
+  ## Ticket Integration
+  - Create follow-up tickets for doc improvements: sciorex_create_ticket
+  - Link generated doc files to tickets: sciorex_link_resource
+
+  ## Rules
+  - Write for a developer who has NEVER seen this codebase
+  - Include actual commands (not placeholders)
+  - Verify commands work by reading package.json scripts
+  - Don't duplicate existing README content
+  - Use clear headings and bullet points
+  - Include troubleshooting section for common issues
+adapter: claude-code
+model: claude-sonnet-4-5-20250929
+temperature: 0.3
+maxTokens: 16384
+inputSchema:
+  type: object
+  properties:
+    projectName:
+      type: string
+      description: Name of the project
+    techStack:
+      type: array
+      items:
+        type: string
+      description: Known tech stack (e.g., ["react", "typescript", "electron"])
+    existingDocs:
+      type: boolean
+      description: Whether the project already has some documentation
+      default: false
+  required: []
+outputSchema:
+  type: object
+  properties:
+    status:
+      type: string
+      enum:
+        - completed
+        - partial
+        - failed
+    filesCreated:
+      type: array
+      items:
+        type: string
+    filesUpdated:
+      type: array
+      items:
+        type: string
+    summary:
+      type: string
+  required:
+    - status
+    - summary
+allowedTools:
+  - tool: Read
+    allowed: true
+  - tool: Write
+    allowed: true
+  - tool: Edit
+    allowed: true
+  - tool: Glob
+    allowed: true
+  - tool: Grep
+    allowed: true
+  - tool: Bash
+    allowed: true
+    constraints:
+      allowedCommands:
+        - git status
+        - git log
+        - git remote
+  - tool: sciorex_ask_user
+    allowed: true
+  - tool: sciorex_notify_user
+    allowed: true
+  - tool: sciorex_create_ticket
+    allowed: true
+  - tool: sciorex_link_resource
+    allowed: true
+mcpServers:
+  - sciorex-interactions
+  - sciorex-tickets
+autoApprove: true
+requiresHumanApproval:
+  - Write
+  - Edit
+version: 1.0.0

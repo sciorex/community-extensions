@@ -1,0 +1,195 @@
+{
+  "id": "doc-gen-flow",
+  "name": "Documentation Generator",
+  "description": "Analyzes a codebase area, generates comprehensive documentation (API docs, architecture, README), and commits after review. Uses codebase-researcher for analysis and doc-generator for writing.",
+  "nodes": [
+    {
+      "id": "trigger",
+      "type": "trigger",
+      "label": "Generate Docs",
+      "position": {
+        "x": 340,
+        "y": 80
+      },
+      "triggerType": "manual",
+      "triggerConfig": {
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "targetPath": {
+              "type": "string",
+              "description": "File or directory to document"
+            },
+            "docType": {
+              "type": "string",
+              "description": "Type of docs: jsdoc, readme, api, architecture, all"
+            }
+          },
+          "required": [
+            "targetPath"
+          ]
+        }
+      },
+      "config": {}
+    },
+    {
+      "id": "researcher",
+      "type": "agent",
+      "label": "Analyze Codebase",
+      "position": {
+        "x": 310,
+        "y": 342
+      },
+      "agentId": "codebase-researcher-7e8f9a0b",
+      "inputMapping": {
+        "topic": "$.trigger.targetPath",
+        "depth": "$.variables.medium"
+      },
+      "outputMapping": {
+        "summary": "$.output.summary",
+        "findings": "$.output.findings",
+        "relatedFiles": "$.output.relatedFiles"
+      },
+      "config": {}
+    },
+    {
+      "id": "doc-writer",
+      "type": "agent",
+      "label": "Write Documentation",
+      "position": {
+        "x": 323.5,
+        "y": 574
+      },
+      "agentId": "doc-generator-3a4b5c6d",
+      "inputMapping": {
+        "code": "$.nodes.researcher.output.summary",
+        "filePath": "$.trigger.targetPath",
+        "type": "$.trigger.docType"
+      },
+      "outputMapping": {
+        "type": "$.output.type",
+        "documentation": "$.output.documentation",
+        "summary": "$.output.summary"
+      },
+      "config": {}
+    },
+    {
+      "id": "wait-review",
+      "type": "wait",
+      "label": "Review Docs",
+      "position": {
+        "x": 310,
+        "y": 806
+      },
+      "waitType": "approval",
+      "prompt": "Review the generated documentation. Approve to commit.",
+      "config": {}
+    },
+    {
+      "id": "check-approved",
+      "type": "condition",
+      "label": "Approved?",
+      "position": {
+        "x": 320,
+        "y": 1088
+      },
+      "conditions": [
+        {
+          "path": "$.userResponses.wait-review.approved",
+          "operator": "eq",
+          "value": true
+        }
+      ],
+      "targetNodeId": "committer",
+      "defaultTargetNodeId": "end-cancelled",
+      "config": {},
+      "logicOperator": "and"
+    },
+    {
+      "id": "committer",
+      "type": "agent",
+      "label": "Commit Docs",
+      "position": {
+        "x": 140,
+        "y": 1411
+      },
+      "agentId": "structured-committer",
+      "inputMapping": {
+        "changesSummary": "$.nodes.doc-writer.output.summary",
+        "commitStrategy": "$.variables.single"
+      },
+      "outputMapping": {
+        "status": "$.output.status",
+        "summary": "$.output.summary"
+      },
+      "config": {}
+    },
+    {
+      "id": "end-success",
+      "type": "end",
+      "label": "Docs Generated",
+      "position": {
+        "x": 197,
+        "y": 1696
+      },
+      "endType": "success",
+      "config": {}
+    },
+    {
+      "id": "end-cancelled",
+      "type": "end",
+      "label": "Cancelled",
+      "position": {
+        "x": 540,
+        "y": 1411
+      },
+      "endType": "cancelled",
+      "config": {}
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "source": "trigger",
+      "target": "researcher"
+    },
+    {
+      "id": "e2",
+      "source": "researcher",
+      "target": "doc-writer"
+    },
+    {
+      "id": "e3",
+      "source": "doc-writer",
+      "target": "wait-review"
+    },
+    {
+      "id": "e4",
+      "source": "wait-review",
+      "target": "check-approved"
+    },
+    {
+      "id": "e5-yes",
+      "source": "check-approved",
+      "target": "committer",
+      "sourceHandle": "true",
+      "label": "Approved"
+    },
+    {
+      "id": "e5-no",
+      "source": "check-approved",
+      "target": "end-cancelled",
+      "sourceHandle": "false",
+      "label": "Cancel"
+    },
+    {
+      "id": "e6",
+      "source": "committer",
+      "target": "end-success"
+    }
+  ],
+  "variables": {},
+  "labelIds": [],
+  "createdAt": "2025-01-01T00:00:00.000Z",
+  "updatedAt": "2026-02-10T18:21:53.447Z"
+}

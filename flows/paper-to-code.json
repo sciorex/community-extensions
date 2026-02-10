@@ -1,0 +1,339 @@
+{
+  "id": "paper-to-code",
+  "name": "Paper to Implementation",
+  "description": "Takes a research paper, extracts the core algorithm/method, implements it in code, writes tests, and validates. Bridges the gap between research and working software.",
+  "nodes": [
+    {
+      "id": "trigger",
+      "type": "trigger",
+      "label": "Paper Input",
+      "position": {
+        "x": 340,
+        "y": 80
+      },
+      "triggerType": "manual",
+      "triggerConfig": {
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "paperTopic": {
+              "type": "string",
+              "description": "Paper title or topic to search for"
+            },
+            "paperUrl": {
+              "type": "string",
+              "description": "Direct URL to the paper (optional)"
+            },
+            "targetLanguage": {
+              "type": "string",
+              "description": "Implementation language (python, typescript, rust, etc.)"
+            },
+            "outputPath": {
+              "type": "string",
+              "description": "Directory for the implementation"
+            }
+          },
+          "required": [
+            "paperTopic"
+          ]
+        }
+      },
+      "config": {}
+    },
+    {
+      "id": "reader",
+      "type": "agent",
+      "label": "Analyze Paper",
+      "position": {
+        "x": 310,
+        "y": 342
+      },
+      "agentId": "paper-reader",
+      "inputMapping": {
+        "topic": "$.trigger.paperTopic",
+        "maxPapers": "$.variables.three"
+      },
+      "outputMapping": {
+        "papers": "$.output.papers",
+        "synthesis": "$.output.synthesis",
+        "summary": "$.output.summary"
+      },
+      "config": {}
+    },
+    {
+      "id": "wait-confirm",
+      "type": "wait",
+      "label": "Confirm Paper & Algorithm",
+      "position": {
+        "x": 310,
+        "y": 627
+      },
+      "waitType": "input",
+      "prompt": "Review the paper analysis. Confirm which algorithm/method to implement.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "approve": {
+            "type": "boolean",
+            "description": "Proceed with implementation"
+          },
+          "algorithm": {
+            "type": "string",
+            "description": "Specific algorithm or section to implement"
+          }
+        },
+        "required": [
+          "approve"
+        ]
+      },
+      "config": {}
+    },
+    {
+      "id": "check-confirmed",
+      "type": "condition",
+      "label": "Confirmed?",
+      "position": {
+        "x": 320,
+        "y": 909
+      },
+      "conditions": [
+        {
+          "path": "$.userResponses.wait-confirm.approve",
+          "operator": "eq",
+          "value": true
+        }
+      ],
+      "targetNodeId": "implementer",
+      "defaultTargetNodeId": "end-cancelled",
+      "config": {},
+      "logicOperator": "and"
+    },
+    {
+      "id": "implementer",
+      "type": "agent",
+      "label": "Implement Algorithm",
+      "position": {
+        "x": 140,
+        "y": 1232
+      },
+      "agentId": "code-executor",
+      "reuseSessionOnLoop": true,
+      "inputMapping": {
+        "ticketTitle": "$.nodes.reader.output.summary",
+        "ticketDescription": "$.nodes.reader.output.synthesis",
+        "acceptanceCriteria": "$.userResponses.wait-confirm.algorithm"
+      },
+      "outputMapping": {
+        "status": "$.output.status",
+        "filesModified": "$.output.filesModified",
+        "filesCreated": "$.output.filesCreated",
+        "summary": "$.output.summary"
+      },
+      "config": {}
+    },
+    {
+      "id": "tester",
+      "type": "agent",
+      "label": "Write & Run Tests",
+      "position": {
+        "x": 166,
+        "y": 1517
+      },
+      "agentId": "test-writer-c9d0e1f2",
+      "inputMapping": {
+        "code": "$.nodes.implementer.output.summary",
+        "filePath": "$.nodes.implementer.output.filesCreated[0]",
+        "focusAreas": "$.nodes.reader.output.synthesis"
+      },
+      "outputMapping": {
+        "tests": "$.output.tests",
+        "coverage": "$.output.coverage",
+        "summary": "$.output.summary"
+      },
+      "config": {}
+    },
+    {
+      "id": "wait-validate",
+      "type": "wait",
+      "label": "Validate Results",
+      "position": {
+        "x": 140,
+        "y": 1749
+      },
+      "waitType": "input",
+      "prompt": "Review the implementation and tests. Does the output match the paper's expected results?",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "valid": {
+            "type": "boolean",
+            "description": "Implementation matches paper results"
+          },
+          "feedback": {
+            "type": "string",
+            "description": "Feedback for improvement"
+          }
+        },
+        "required": [
+          "valid"
+        ]
+      },
+      "config": {}
+    },
+    {
+      "id": "check-valid",
+      "type": "condition",
+      "label": "Valid?",
+      "position": {
+        "x": 150,
+        "y": 2031
+      },
+      "conditions": [
+        {
+          "path": "$.userResponses.wait-validate.valid",
+          "operator": "eq",
+          "value": true
+        }
+      ],
+      "targetNodeId": "committer",
+      "defaultTargetNodeId": "implementer",
+      "config": {},
+      "logicOperator": "and"
+    },
+    {
+      "id": "committer",
+      "type": "agent",
+      "label": "Commit Implementation",
+      "position": {
+        "x": 140,
+        "y": 2354
+      },
+      "agentId": "structured-committer",
+      "inputMapping": {
+        "changesSummary": "$.nodes.implementer.output.summary"
+      },
+      "outputMapping": {
+        "status": "$.output.status",
+        "summary": "$.output.summary"
+      },
+      "config": {}
+    },
+    {
+      "id": "end-success",
+      "type": "end",
+      "label": "Implementation Complete",
+      "position": {
+        "x": 190,
+        "y": 2639
+      },
+      "endType": "success",
+      "config": {}
+    },
+    {
+      "id": "end-cancelled",
+      "type": "end",
+      "label": "Cancelled",
+      "position": {
+        "x": 540,
+        "y": 1232
+      },
+      "endType": "cancelled",
+      "config": {}
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "source": "trigger",
+      "target": "reader"
+    },
+    {
+      "id": "e2",
+      "source": "reader",
+      "target": "wait-confirm"
+    },
+    {
+      "id": "e3",
+      "source": "wait-confirm",
+      "target": "check-confirmed"
+    },
+    {
+      "id": "e4-yes",
+      "source": "check-confirmed",
+      "target": "implementer",
+      "sourceHandle": "true",
+      "label": "Confirmed"
+    },
+    {
+      "id": "e4-no",
+      "source": "check-confirmed",
+      "target": "end-cancelled",
+      "sourceHandle": "false",
+      "label": "Cancel"
+    },
+    {
+      "id": "e5",
+      "source": "implementer",
+      "target": "tester"
+    },
+    {
+      "id": "e6",
+      "source": "tester",
+      "target": "wait-validate"
+    },
+    {
+      "id": "e7",
+      "source": "wait-validate",
+      "target": "check-valid"
+    },
+    {
+      "id": "e8-yes",
+      "source": "check-valid",
+      "target": "committer",
+      "sourceHandle": "true",
+      "label": "Valid"
+    },
+    {
+      "id": "e8-no",
+      "source": "check-valid",
+      "target": "implementer",
+      "sourceHandle": "false",
+      "label": "Retry",
+      "waypoints": [
+        {
+          "x": 440,
+          "y": 2132.5
+        },
+        {
+          "x": 440,
+          "y": 1981.25
+        },
+        {
+          "x": 110,
+          "y": 1981.25
+        },
+        {
+          "x": 110,
+          "y": 1830
+        },
+        {
+          "x": 110,
+          "y": 1573
+        },
+        {
+          "x": 110,
+          "y": 1314.5
+        }
+      ]
+    },
+    {
+      "id": "e9",
+      "source": "committer",
+      "target": "end-success"
+    }
+  ],
+  "variables": {},
+  "labelIds": [],
+  "createdAt": "2025-01-01T00:00:00.000Z",
+  "updatedAt": "2026-02-10T18:24:38.192Z"
+}

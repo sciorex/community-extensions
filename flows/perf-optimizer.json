@@ -1,0 +1,250 @@
+{
+  "id": "perf-optimizer",
+  "name": "Performance Optimizer",
+  "description": "Profiles a codebase area, identifies bottlenecks, plans optimizations, implements them with approval, and benchmarks before/after. Data-driven performance improvement.",
+  "nodes": [
+    {
+      "id": "trigger",
+      "type": "trigger",
+      "label": "Performance Target",
+      "position": {
+        "x": 412.375,
+        "y": 80
+      },
+      "triggerType": "manual",
+      "triggerConfig": {
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "targetArea": {
+              "type": "string",
+              "description": "File or directory to optimize"
+            },
+            "concern": {
+              "type": "string",
+              "description": "Performance concern (slow load, high memory, etc.)"
+            }
+          },
+          "required": [
+            "targetArea"
+          ]
+        }
+      },
+      "config": {}
+    },
+    {
+      "id": "profiler",
+      "type": "agent",
+      "label": "Profile & Analyze",
+      "position": {
+        "x": 422.875,
+        "y": 342
+      },
+      "agentId": "perf-profiler",
+      "inputMapping": {
+        "targetArea": "$.trigger.targetArea",
+        "concern": "$.trigger.concern",
+        "implement": "$.variables.false"
+      },
+      "outputMapping": {
+        "status": "$.output.status",
+        "bottlenecks": "$.output.bottlenecks",
+        "summary": "$.output.summary"
+      },
+      "config": {}
+    },
+    {
+      "id": "check-issues",
+      "type": "condition",
+      "label": "Issues Found?",
+      "position": {
+        "x": 404.875,
+        "y": 574
+      },
+      "conditions": [
+        {
+          "path": "$.nodes.profiler.output.status",
+          "operator": "neq",
+          "value": "no-issues"
+        }
+      ],
+      "targetNodeId": "wait-approve",
+      "defaultTargetNodeId": "end-clean",
+      "config": {},
+      "logicOperator": "and"
+    },
+    {
+      "id": "wait-approve",
+      "type": "wait",
+      "label": "Approve Optimizations",
+      "position": {
+        "x": 167.75,
+        "y": 897
+      },
+      "waitType": "approval",
+      "prompt": "Performance bottlenecks identified. Review the analysis and approve to implement optimizations.",
+      "config": {}
+    },
+    {
+      "id": "check-approved",
+      "type": "condition",
+      "label": "Approved?",
+      "position": {
+        "x": 177.75,
+        "y": 1179
+      },
+      "conditions": [
+        {
+          "path": "$.userResponses.wait-approve.approved",
+          "operator": "eq",
+          "value": true
+        }
+      ],
+      "targetNodeId": "optimizer",
+      "defaultTargetNodeId": "end-report-only",
+      "config": {},
+      "logicOperator": "and"
+    },
+    {
+      "id": "optimizer",
+      "type": "agent",
+      "label": "Implement Optimizations",
+      "position": {
+        "x": -1.5,
+        "y": 1502
+      },
+      "agentId": "perf-profiler",
+      "resumeFromNodeId": "profiler",
+      "worktreeMode": "new",
+      "worktreeConfig": {
+        "label": "Performance Optimization",
+        "autoMergeOnSuccess": true,
+        "cleanupOnComplete": true
+      },
+      "inputMapping": {
+        "targetArea": "$.trigger.targetArea",
+        "concern": "$.nodes.profiler.output.summary",
+        "implement": "$.variables.true"
+      },
+      "outputMapping": {
+        "status": "$.output.status",
+        "optimizationsApplied": "$.output.optimizationsApplied",
+        "filesModified": "$.output.filesModified",
+        "summary": "$.output.summary"
+      },
+      "config": {}
+    },
+    {
+      "id": "committer",
+      "type": "agent",
+      "label": "Commit Optimizations",
+      "position": {
+        "x": 8,
+        "y": 1754
+      },
+      "agentId": "structured-committer",
+      "worktreeMode": "inherit",
+      "inheritWorktreeFromNodeId": "optimizer",
+      "inputMapping": {
+        "changesSummary": "$.nodes.optimizer.output.summary"
+      },
+      "outputMapping": {
+        "status": "$.output.status",
+        "summary": "$.output.summary"
+      },
+      "config": {}
+    },
+    {
+      "id": "end-optimized",
+      "type": "end",
+      "label": "Optimized",
+      "position": {
+        "x": 58,
+        "y": 1986
+      },
+      "endType": "success",
+      "config": {}
+    },
+    {
+      "id": "end-clean",
+      "type": "end",
+      "label": "No Issues Found",
+      "position": {
+        "x": 677.5,
+        "y": 897
+      },
+      "endType": "success",
+      "config": {}
+    },
+    {
+      "id": "end-report-only",
+      "type": "end",
+      "label": "Report Only",
+      "position": {
+        "x": 397.5,
+        "y": 1502
+      },
+      "endType": "success",
+      "config": {}
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "source": "trigger",
+      "target": "profiler"
+    },
+    {
+      "id": "e2",
+      "source": "profiler",
+      "target": "check-issues"
+    },
+    {
+      "id": "e3-yes",
+      "source": "check-issues",
+      "target": "wait-approve",
+      "sourceHandle": "true",
+      "label": "Issues found"
+    },
+    {
+      "id": "e3-no",
+      "source": "check-issues",
+      "target": "end-clean",
+      "sourceHandle": "false",
+      "label": "Clean"
+    },
+    {
+      "id": "e4",
+      "source": "wait-approve",
+      "target": "check-approved"
+    },
+    {
+      "id": "e5-yes",
+      "source": "check-approved",
+      "target": "optimizer",
+      "sourceHandle": "true",
+      "label": "Optimize"
+    },
+    {
+      "id": "e5-no",
+      "source": "check-approved",
+      "target": "end-report-only",
+      "sourceHandle": "false",
+      "label": "Report only"
+    },
+    {
+      "id": "e6",
+      "source": "optimizer",
+      "target": "committer"
+    },
+    {
+      "id": "e7",
+      "source": "committer",
+      "target": "end-optimized"
+    }
+  ],
+  "variables": {},
+  "labelIds": [],
+  "createdAt": "2025-01-01T00:00:00.000Z",
+  "updatedAt": "2026-02-10T19:35:18.749Z"
+}

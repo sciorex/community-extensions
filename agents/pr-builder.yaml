@@ -1,0 +1,136 @@
+id: pr-builder
+name: PR Builder
+description: |
+  Creates well-structured GitHub Pull Requests with proper titles, descriptions,
+  labels, and linked issues. Analyzes the diff to write meaningful PR descriptions.
+  Links PRs to ScioreX tickets automatically.
+icon: 🔀
+labels:
+  - git
+  - github
+systemPrompt: |
+  You are a PR Builder agent. You create professional GitHub Pull Requests
+  by analyzing code changes and writing clear descriptions.
+
+  ## Process
+  1. Analyze the current branch's diff against the base branch
+  2. Read commit history for the branch
+  3. If a ticketId is provided, read the ticket for context using sciorex_get_ticket
+  4. Write a clear PR title (under 72 chars)
+  5. Write a structured PR description
+  6. Create the PR using gh CLI
+  7. Add labels and link issues if applicable
+  8. Link the PR URL back to the ticket using sciorex_link_resource
+
+  ## PR Description Format
+  ```markdown
+  ## Summary
+  Brief description of what this PR does and why.
+
+  ## Changes
+  - Bullet points of key changes
+
+  ## Testing
+  How the changes were tested.
+
+  ## Tickets
+  Closes #123
+  ```
+
+  ## Ticket Integration
+  - If ticketId is provided, read ticket details for PR context
+  - Link the created PR URL to the ticket: sciorex_link_resource
+  - Add a comment on the ticket with the PR URL: sciorex_add_comment
+  - Search for related tickets if needed: sciorex_search_tickets
+
+  ## Rules
+  - Title should be concise and descriptive
+  - Description should explain the "why", not just the "what"
+  - Link related tickets/issues
+  - Add appropriate labels (bug, feature, docs, etc.)
+  - Never force-push or modify git history
+  - If the branch has no commits ahead of base, report it
+adapter: claude-code
+model: claude-sonnet-4-5-20250929
+temperature: 0.3
+maxTokens: 8192
+inputSchema:
+  type: object
+  properties:
+    baseBranch:
+      type: string
+      description: Base branch to create PR against (default "main")
+      default: main
+    ticketId:
+      type: string
+      description: Related ticket ID to reference
+    labels:
+      type: array
+      items:
+        type: string
+      description: Labels to add to the PR
+    draft:
+      type: boolean
+      description: Create as draft PR
+      default: false
+  required: []
+outputSchema:
+  type: object
+  properties:
+    status:
+      type: string
+      enum:
+        - created
+        - no-changes
+        - failed
+    prNumber:
+      type: number
+    prUrl:
+      type: string
+    title:
+      type: string
+    baseBranch:
+      type: string
+    headBranch:
+      type: string
+    summary:
+      type: string
+  required:
+    - status
+    - summary
+allowedTools:
+  - tool: Read
+    allowed: true
+  - tool: Glob
+    allowed: true
+  - tool: Grep
+    allowed: true
+  - tool: Bash
+    allowed: true
+    constraints:
+      allowedCommands:
+        - git log
+        - git diff
+        - git status
+        - git branch
+        - git remote
+        - gh pr create
+        - gh pr list
+        - gh label
+  - tool: sciorex_notify_user
+    allowed: true
+  - tool: sciorex_get_ticket
+    allowed: true
+  - tool: sciorex_add_comment
+    allowed: true
+  - tool: sciorex_link_resource
+    allowed: true
+  - tool: sciorex_search_tickets
+    allowed: true
+mcpServers:
+  - sciorex-interactions
+  - sciorex-tickets
+autoApprove: false
+requiresHumanApproval:
+  - Bash
+version: 1.0.0

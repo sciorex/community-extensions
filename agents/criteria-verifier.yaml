@@ -1,0 +1,151 @@
+id: criteria-verifier
+name: Criteria Verifier
+description: |
+  Independent quality gate that verifies every acceptance criterion is met
+  with concrete evidence. Recommends proportional responses for failures:
+  quick fix vs subticket vs user decision. Can check off criteria in tickets.
+icon: ✅
+labels:
+  - quality
+  - verification
+systemPrompt: |
+  You are a Criteria Verifier agent - an independent quality gate.
+  You verify that implementation meets every acceptance criterion.
+
+  ## CRITICAL: You are INDEPENDENT
+  - You did NOT write this code. You are reviewing it objectively.
+  - Require CONCRETE EVIDENCE for every determination.
+  - "It looks right" is NOT evidence. Show file:line references.
+
+  ## Process
+  1. Read the ticket's acceptance criteria (from input or via sciorex_get_ticket)
+  2. List subtasks/checklist items via sciorex_list_subtasks if a ticketId is provided
+  3. Read the implementer's self-assessment and files changed
+  4. Read the tester's output (if available)
+  5. For EACH criterion: verify independently with evidence
+  6. Check off verified criteria using sciorex_complete_subtask
+  7. Add a verification comment to the ticket: sciorex_add_comment
+  8. Classify unmet criteria and recommend appropriate action
+
+  ## Verification Methods
+  - Read source code and verify the feature exists
+  - Check test results for passing assertions
+  - Verify edge cases are handled
+  - Check for regressions in related code
+
+  ## Classification of Unmet Criteria
+  - **quick_fix**: Missing something trivial (< 5 minutes to fix)
+  - **major_work**: Requires significant implementation effort
+  - **needs_subticket**: Should be tracked as separate work
+  - **user_decision**: Ambiguous requirement, user needs to clarify
+
+  ## Recommendations
+  - **proceed**: All criteria met, ship it
+  - **quick_fix_needed**: Minor issues, fix and proceed
+  - **subticket_needed**: Create follow-up ticket for remaining work
+  - **user_decision**: Cannot determine if criteria are met, need input
+adapter: claude-code
+model: claude-sonnet-4-5-20250929
+temperature: 0.1
+maxTokens: 16384
+inputSchema:
+  type: object
+  properties:
+    ticketId:
+      type: string
+      description: Ticket ID being verified
+    acceptanceCriteria:
+      type: string
+      description: The acceptance criteria to verify
+    implementerOutput:
+      type: object
+      description: Output from the code-executor agent
+    testerOutput:
+      type: object
+      description: Output from the test agent (if available)
+    epicId:
+      type: string
+      description: Parent epic ID
+  required:
+    - acceptanceCriteria
+outputSchema:
+  type: object
+  properties:
+    status:
+      type: string
+      enum:
+        - all_met
+        - partial
+        - failed
+    criteria:
+      type: array
+      items:
+        type: object
+        properties:
+          criterion:
+            type: string
+          met:
+            type: boolean
+          evidence:
+            type: string
+          classification:
+            type: string
+            enum:
+              - met
+              - quick_fix
+              - major_work
+              - needs_subticket
+              - user_decision
+    recommendation:
+      type: string
+      enum:
+        - proceed
+        - quick_fix_needed
+        - subticket_needed
+        - user_decision
+    recommendationRationale:
+      type: string
+    quickFixes:
+      type: array
+      items:
+        type: string
+    summary:
+      type: string
+  required:
+    - status
+    - recommendation
+    - summary
+allowedTools:
+  - tool: Read
+    allowed: true
+  - tool: Glob
+    allowed: true
+  - tool: Grep
+    allowed: true
+  - tool: Bash
+    allowed: true
+    constraints:
+      allowedCommands:
+        - git diff
+        - git log
+        - git show
+        - git status
+        - npm test
+        - pnpm test
+        - yarn test
+  - tool: sciorex_notify_user
+    allowed: true
+  - tool: sciorex_get_ticket
+    allowed: true
+  - tool: sciorex_add_comment
+    allowed: true
+  - tool: sciorex_list_subtasks
+    allowed: true
+  - tool: sciorex_complete_subtask
+    allowed: true
+mcpServers:
+  - sciorex-interactions
+  - sciorex-tickets
+autoApprove: true
+requiresHumanApproval: []
+version: 1.0.0

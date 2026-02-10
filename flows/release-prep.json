@@ -1,0 +1,256 @@
+{
+  "id": "release-prep",
+  "name": "Release Preparation",
+  "description": "Prepares a new release: analyzes git history, generates changelog, bumps version, tags, and optionally pushes. Supports iterative changelog editing before final commit.",
+  "nodes": [
+    {
+      "id": "trigger",
+      "type": "trigger",
+      "label": "Start Release",
+      "position": {
+        "x": 340,
+        "y": 80
+      },
+      "triggerType": "manual",
+      "triggerConfig": {
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "bump": {
+              "type": "string",
+              "description": "Version bump type (major/minor/patch). Leave empty for auto-detection."
+            },
+            "sinceTag": {
+              "type": "string",
+              "description": "Git tag to generate changelog from (default: latest tag)"
+            },
+            "push": {
+              "type": "boolean",
+              "description": "Push commit and tag to origin after tagging"
+            }
+          },
+          "required": []
+        }
+      },
+      "config": {}
+    },
+    {
+      "id": "changelog",
+      "type": "agent",
+      "label": "Generate Changelog",
+      "position": {
+        "x": 325.5,
+        "y": 342
+      },
+      "agentId": "changelog-writer",
+      "reuseSessionOnLoop": true,
+      "inputMapping": {
+        "sinceTag": "$.trigger.sinceTag",
+        "newVersion": "$.trigger.bump"
+      },
+      "outputMapping": {
+        "status": "$.output.status",
+        "previousVersion": "$.output.previousVersion",
+        "newVersion": "$.output.newVersion",
+        "versionBump": "$.output.versionBump",
+        "summary": "$.output.summary"
+      },
+      "config": {}
+    },
+    {
+      "id": "check-changes",
+      "type": "condition",
+      "label": "Changes Found?",
+      "position": {
+        "x": 320,
+        "y": 574
+      },
+      "conditions": [
+        {
+          "path": "$.nodes.changelog.output.status",
+          "operator": "eq",
+          "value": "updated"
+        }
+      ],
+      "targetNodeId": "wait-review",
+      "defaultTargetNodeId": "end-no-changes",
+      "config": {},
+      "logicOperator": "and"
+    },
+    {
+      "id": "wait-review",
+      "type": "wait",
+      "label": "Review Changelog",
+      "position": {
+        "x": 140,
+        "y": 897
+      },
+      "waitType": "input",
+      "prompt": "Review the generated changelog. Approve to proceed with version bump and tag, or provide changes to request.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "approve": {
+            "type": "boolean",
+            "description": "Approve the changelog as-is"
+          },
+          "changeRequest": {
+            "type": "string",
+            "description": "Changes to request (leave empty if approving)"
+          }
+        },
+        "required": [
+          "approve"
+        ]
+      },
+      "config": {}
+    },
+    {
+      "id": "check-approved",
+      "type": "condition",
+      "label": "Approved?",
+      "position": {
+        "x": 150,
+        "y": 1179
+      },
+      "conditions": [
+        {
+          "path": "$.userResponses.wait-review.approve",
+          "operator": "eq",
+          "value": true
+        }
+      ],
+      "targetNodeId": "tagger",
+      "defaultTargetNodeId": "changelog",
+      "config": {},
+      "logicOperator": "and"
+    },
+    {
+      "id": "tagger",
+      "type": "agent",
+      "label": "Version Bump & Tag",
+      "position": {
+        "x": 157.5,
+        "y": 1502
+      },
+      "agentId": "version-tagger",
+      "inputMapping": {
+        "bump": "$.nodes.changelog.output.versionBump",
+        "push": "$.trigger.push"
+      },
+      "outputMapping": {
+        "status": "$.output.status",
+        "newVersion": "$.output.newVersion",
+        "tagName": "$.output.tagName",
+        "summary": "$.output.summary"
+      },
+      "config": {}
+    },
+    {
+      "id": "end-success",
+      "type": "end",
+      "label": "Release Ready",
+      "position": {
+        "x": 200,
+        "y": 1734
+      },
+      "endType": "success",
+      "config": {}
+    },
+    {
+      "id": "end-no-changes",
+      "type": "end",
+      "label": "No Changes",
+      "position": {
+        "x": 540,
+        "y": 897
+      },
+      "endType": "cancelled",
+      "config": {}
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "source": "trigger",
+      "target": "changelog"
+    },
+    {
+      "id": "e2",
+      "source": "changelog",
+      "target": "check-changes"
+    },
+    {
+      "id": "e3-yes",
+      "source": "check-changes",
+      "target": "wait-review",
+      "sourceHandle": "true",
+      "label": "Changes found"
+    },
+    {
+      "id": "e3-no",
+      "source": "check-changes",
+      "target": "end-no-changes",
+      "sourceHandle": "false",
+      "label": "No changes"
+    },
+    {
+      "id": "e4",
+      "source": "wait-review",
+      "target": "check-approved"
+    },
+    {
+      "id": "e5-yes",
+      "source": "check-approved",
+      "target": "tagger",
+      "sourceHandle": "true",
+      "label": "Approved"
+    },
+    {
+      "id": "e5-no",
+      "source": "check-approved",
+      "target": "changelog",
+      "sourceHandle": "false",
+      "label": "Revise",
+      "waypoints": [
+        {
+          "x": 440,
+          "y": 1280.5
+        },
+        {
+          "x": 440,
+          "y": 1129.25
+        },
+        {
+          "x": 110,
+          "y": 1129.25
+        },
+        {
+          "x": 110,
+          "y": 978
+        },
+        {
+          "x": 110,
+          "y": 675.5
+        },
+        {
+          "x": 110,
+          "y": 398
+        },
+        {
+          "x": 295.5,
+          "y": 398
+        }
+      ]
+    },
+    {
+      "id": "e6",
+      "source": "tagger",
+      "target": "end-success"
+    }
+  ],
+  "variables": {},
+  "labelIds": [],
+  "createdAt": "2025-01-01T00:00:00.000Z",
+  "updatedAt": "2026-02-10T19:35:04.888Z"
+}

@@ -1,0 +1,286 @@
+{
+  "id": "ci-doctor",
+  "name": "CI/CD Doctor",
+  "description": "Diagnoses CI/CD failures: analyzes build logs, distinguishes real failures from flaky tests, fixes the root cause, verifies the fix passes.",
+  "nodes": [
+    {
+      "id": "trigger",
+      "type": "trigger",
+      "label": "CI Failure",
+      "position": {
+        "x": 340,
+        "y": 80
+      },
+      "triggerType": "manual",
+      "triggerConfig": {
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "failureLog": {
+              "type": "string",
+              "description": "CI failure log or error output"
+            },
+            "ciUrl": {
+              "type": "string",
+              "description": "URL to the CI run (optional)"
+            },
+            "branch": {
+              "type": "string",
+              "description": "Branch where CI failed"
+            }
+          },
+          "required": [
+            "failureLog"
+          ]
+        }
+      },
+      "config": {}
+    },
+    {
+      "id": "investigator",
+      "type": "agent",
+      "label": "Diagnose Failure",
+      "position": {
+        "x": 310,
+        "y": 342
+      },
+      "agentId": "bug-detective",
+      "reuseSessionOnLoop": true,
+      "inputMapping": {
+        "ticketTitle": "$.trigger.failureLog",
+        "ticketDescription": "$.trigger.failureLog"
+      },
+      "outputMapping": {
+        "status": "$.output.status",
+        "rootCause": "$.output.rootCause",
+        "severity": "$.output.severity",
+        "fixApplied": "$.output.fixApplied",
+        "filesModified": "$.output.filesModified",
+        "summary": "$.output.summary"
+      },
+      "config": {}
+    },
+    {
+      "id": "check-fixed",
+      "type": "condition",
+      "label": "Fix Applied?",
+      "position": {
+        "x": 320,
+        "y": 627
+      },
+      "conditions": [
+        {
+          "path": "$.nodes.investigator.output.fixApplied",
+          "operator": "eq",
+          "value": true
+        }
+      ],
+      "targetNodeId": "tester",
+      "defaultTargetNodeId": "wait-manual",
+      "config": {},
+      "logicOperator": "and"
+    },
+    {
+      "id": "tester",
+      "type": "agent",
+      "label": "Verify Fix",
+      "position": {
+        "x": 137.5,
+        "y": 950
+      },
+      "agentId": "test-writer-c9d0e1f2",
+      "inputMapping": {
+        "code": "$.nodes.investigator.output.summary",
+        "filePath": "$.nodes.investigator.output.filesModified[0]",
+        "focusAreas": "$.nodes.investigator.output.rootCause"
+      },
+      "outputMapping": {
+        "tests": "$.output.tests",
+        "summary": "$.output.summary"
+      },
+      "config": {}
+    },
+    {
+      "id": "wait-approve-fix",
+      "type": "wait",
+      "label": "Approve Fix",
+      "position": {
+        "x": 110,
+        "y": 1232
+      },
+      "waitType": "approval",
+      "prompt": "CI failure diagnosed and fix applied. Tests written. Approve to commit the fix.",
+      "config": {}
+    },
+    {
+      "id": "check-approve-fix",
+      "type": "condition",
+      "label": "Approved?",
+      "position": {
+        "x": 120,
+        "y": 1514
+      },
+      "conditions": [
+        {
+          "path": "$.userResponses.wait-approve-fix.approved",
+          "operator": "eq",
+          "value": true
+        }
+      ],
+      "targetNodeId": "committer",
+      "defaultTargetNodeId": "investigator",
+      "config": {},
+      "logicOperator": "and"
+    },
+    {
+      "id": "committer",
+      "type": "agent",
+      "label": "Commit Fix",
+      "position": {
+        "x": 110,
+        "y": 1837
+      },
+      "agentId": "structured-committer",
+      "inputMapping": {
+        "changesSummary": "$.nodes.investigator.output.summary"
+      },
+      "outputMapping": {
+        "status": "$.output.status",
+        "summary": "$.output.summary"
+      },
+      "config": {}
+    },
+    {
+      "id": "end-success",
+      "type": "end",
+      "label": "CI Fixed",
+      "position": {
+        "x": 170,
+        "y": 2122
+      },
+      "endType": "success",
+      "config": {}
+    },
+    {
+      "id": "wait-manual",
+      "type": "wait",
+      "label": "Manual Intervention",
+      "position": {
+        "x": 510,
+        "y": 950
+      },
+      "waitType": "approval",
+      "prompt": "Could not auto-fix the CI failure. Root cause analysis is available. Manual intervention needed.",
+      "config": {}
+    },
+    {
+      "id": "end-manual",
+      "type": "end",
+      "label": "Needs Manual Fix",
+      "position": {
+        "x": 561.5,
+        "y": 1232
+      },
+      "endType": "failure",
+      "config": {}
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "source": "trigger",
+      "target": "investigator"
+    },
+    {
+      "id": "e2",
+      "source": "investigator",
+      "target": "check-fixed"
+    },
+    {
+      "id": "e3-fixed",
+      "source": "check-fixed",
+      "target": "tester",
+      "sourceHandle": "true",
+      "label": "Fixed"
+    },
+    {
+      "id": "e3-manual",
+      "source": "check-fixed",
+      "target": "wait-manual",
+      "sourceHandle": "false",
+      "label": "Can't auto-fix"
+    },
+    {
+      "id": "e4",
+      "source": "tester",
+      "target": "wait-approve-fix"
+    },
+    {
+      "id": "e5",
+      "source": "wait-approve-fix",
+      "target": "check-approve-fix"
+    },
+    {
+      "id": "e6-yes",
+      "source": "check-approve-fix",
+      "target": "committer",
+      "sourceHandle": "true",
+      "label": "Approved"
+    },
+    {
+      "id": "e6-no",
+      "source": "check-approve-fix",
+      "target": "investigator",
+      "sourceHandle": "false",
+      "label": "Retry",
+      "waypoints": [
+        {
+          "x": 410,
+          "y": 1615.5
+        },
+        {
+          "x": 410,
+          "y": 1464.25
+        },
+        {
+          "x": 80,
+          "y": 1464.25
+        },
+        {
+          "x": 80,
+          "y": 1313
+        },
+        {
+          "x": 80,
+          "y": 1031
+        },
+        {
+          "x": 80,
+          "y": 728.5
+        },
+        {
+          "x": 80,
+          "y": 424.5
+        },
+        {
+          "x": 280,
+          "y": 424.5
+        }
+      ]
+    },
+    {
+      "id": "e7",
+      "source": "committer",
+      "target": "end-success"
+    },
+    {
+      "id": "e8",
+      "source": "wait-manual",
+      "target": "end-manual"
+    }
+  ],
+  "variables": {},
+  "labelIds": [],
+  "createdAt": "2025-01-01T00:00:00.000Z",
+  "updatedAt": "2026-02-10T18:22:36.319Z"
+}

@@ -1,0 +1,443 @@
+{
+  "id": "code-migration",
+  "name": "Codebase Migration",
+  "description": "For framework migrations, API upgrades, or pattern migrations. Analyzes current state, plans migration, executes in batches via worktree, tests, reviews, and commits. Supports iterative migration.",
+  "nodes": [
+    {
+      "id": "trigger",
+      "type": "trigger",
+      "label": "Migration Spec",
+      "position": {
+        "x": 437.5,
+        "y": 80
+      },
+      "triggerType": "manual",
+      "triggerConfig": {
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "migrationDescription": {
+              "type": "string",
+              "description": "What to migrate (e.g., React class to hooks, Express to Fastify)"
+            },
+            "scope": {
+              "type": "string",
+              "description": "Scope/directory to migrate"
+            },
+            "constraints": {
+              "type": "string",
+              "description": "Any constraints or requirements"
+            }
+          },
+          "required": [
+            "migrationDescription"
+          ]
+        }
+      },
+      "config": {}
+    },
+    {
+      "id": "analyzer",
+      "type": "agent",
+      "label": "Analyze Current State",
+      "position": {
+        "x": 407.5,
+        "y": 342
+      },
+      "agentId": "codebase-researcher-7e8f9a0b",
+      "inputMapping": {
+        "topic": "$.trigger.migrationDescription",
+        "scope": "$.trigger.scope",
+        "depth": "$.variables.deep"
+      },
+      "outputMapping": {
+        "summary": "$.output.summary",
+        "findings": "$.output.findings",
+        "relatedFiles": "$.output.relatedFiles"
+      },
+      "config": {}
+    },
+    {
+      "id": "planner",
+      "type": "agent",
+      "label": "Plan Migration",
+      "position": {
+        "x": 407.5,
+        "y": 574
+      },
+      "agentId": "interactive-planner",
+      "inputMapping": {
+        "ticketTitle": "$.trigger.migrationDescription",
+        "ticketDescription": "$.nodes.analyzer.output.summary",
+        "codebasePath": "$.trigger.scope"
+      },
+      "outputMapping": {
+        "status": "$.output.status",
+        "epicId": "$.output.epicId",
+        "ticketsCreated": "$.output.ticketsCreated",
+        "summary": "$.output.summary"
+      },
+      "config": {}
+    },
+    {
+      "id": "wait-approve-plan",
+      "type": "wait",
+      "label": "Approve Migration Plan",
+      "position": {
+        "x": 407.5,
+        "y": 859
+      },
+      "waitType": "approval",
+      "prompt": "Review the migration plan. Approve to start executing the migration.",
+      "config": {}
+    },
+    {
+      "id": "check-plan-approved",
+      "type": "condition",
+      "label": "Plan Approved?",
+      "position": {
+        "x": 417.5,
+        "y": 1141
+      },
+      "conditions": [
+        {
+          "path": "$.userResponses.wait-approve-plan.approved",
+          "operator": "eq",
+          "value": true
+        }
+      ],
+      "targetNodeId": "executor",
+      "defaultTargetNodeId": "end-cancelled",
+      "config": {},
+      "logicOperator": "and"
+    },
+    {
+      "id": "executor",
+      "type": "agent",
+      "label": "Execute Migration",
+      "position": {
+        "x": 145,
+        "y": 1464
+      },
+      "agentId": "code-executor",
+      "reuseSessionOnLoop": true,
+      "worktreeMode": "new",
+      "worktreeConfig": {
+        "label": "Codebase Migration",
+        "autoMergeOnSuccess": true,
+        "cleanupOnComplete": true
+      },
+      "inputMapping": {
+        "ticketTitle": "$.trigger.migrationDescription",
+        "ticketDescription": "$.nodes.planner.output.summary",
+        "acceptanceCriteria": "$.trigger.constraints"
+      },
+      "outputMapping": {
+        "status": "$.output.status",
+        "filesModified": "$.output.filesModified",
+        "filesCreated": "$.output.filesCreated",
+        "summary": "$.output.summary"
+      },
+      "config": {}
+    },
+    {
+      "id": "tester",
+      "type": "agent",
+      "label": "Test Migration",
+      "position": {
+        "x": 172.5,
+        "y": 1749
+      },
+      "agentId": "test-writer-c9d0e1f2",
+      "worktreeMode": "inherit",
+      "inheritWorktreeFromNodeId": "executor",
+      "inputMapping": {
+        "code": "$.nodes.executor.output.summary",
+        "filePath": "$.nodes.executor.output.filesModified[0]",
+        "focusAreas": "$.trigger.migrationDescription"
+      },
+      "outputMapping": {
+        "tests": "$.output.tests",
+        "summary": "$.output.summary"
+      },
+      "config": {}
+    },
+    {
+      "id": "reviewer",
+      "type": "agent",
+      "label": "Review Changes",
+      "position": {
+        "x": 160,
+        "y": 1981
+      },
+      "agentId": "code-reviewer-e5f6a7b8",
+      "worktreeMode": "inherit",
+      "inheritWorktreeFromNodeId": "executor",
+      "inputMapping": {
+        "code": "$.nodes.executor.output.summary",
+        "context": "$.trigger.migrationDescription"
+      },
+      "outputMapping": {
+        "score": "$.output.score",
+        "issues": "$.output.issues",
+        "summary": "$.output.summary"
+      },
+      "config": {}
+    },
+    {
+      "id": "wait-final",
+      "type": "wait",
+      "label": "Final Review",
+      "position": {
+        "x": 145,
+        "y": 2213
+      },
+      "waitType": "input",
+      "prompt": "Migration executed, tested, and reviewed. Approve to commit, retry to fix issues, or cancel.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string",
+            "description": "commit, retry, or cancel"
+          }
+        },
+        "required": [
+          "action"
+        ]
+      },
+      "config": {}
+    },
+    {
+      "id": "check-final",
+      "type": "condition",
+      "label": "Final Decision",
+      "position": {
+        "x": 155,
+        "y": 2495
+      },
+      "conditions": [
+        {
+          "path": "$.userResponses.wait-final.action",
+          "operator": "eq",
+          "value": "commit"
+        }
+      ],
+      "targetNodeId": "committer",
+      "defaultTargetNodeId": "check-retry",
+      "config": {},
+      "logicOperator": "and"
+    },
+    {
+      "id": "check-retry",
+      "type": "condition",
+      "label": "Retry?",
+      "position": {
+        "x": 350,
+        "y": 2818
+      },
+      "conditions": [
+        {
+          "path": "$.userResponses.wait-final.action",
+          "operator": "eq",
+          "value": "retry"
+        }
+      ],
+      "targetNodeId": "executor",
+      "defaultTargetNodeId": "end-cancelled",
+      "config": {},
+      "logicOperator": "and"
+    },
+    {
+      "id": "committer",
+      "type": "agent",
+      "label": "Commit Migration",
+      "position": {
+        "x": -50,
+        "y": 2818
+      },
+      "agentId": "structured-committer",
+      "worktreeMode": "inherit",
+      "inheritWorktreeFromNodeId": "executor",
+      "inputMapping": {
+        "changesSummary": "$.nodes.executor.output.summary"
+      },
+      "outputMapping": {
+        "status": "$.output.status",
+        "summary": "$.output.summary"
+      },
+      "config": {}
+    },
+    {
+      "id": "end-success",
+      "type": "end",
+      "label": "Migration Complete",
+      "position": {
+        "x": 0,
+        "y": 3141
+      },
+      "endType": "success",
+      "config": {}
+    },
+    {
+      "id": "end-cancelled",
+      "type": "end",
+      "label": "Cancelled",
+      "position": {
+        "x": 730,
+        "y": 1464
+      },
+      "endType": "cancelled",
+      "config": {}
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "source": "trigger",
+      "target": "analyzer"
+    },
+    {
+      "id": "e2",
+      "source": "analyzer",
+      "target": "planner"
+    },
+    {
+      "id": "e3",
+      "source": "planner",
+      "target": "wait-approve-plan"
+    },
+    {
+      "id": "e4",
+      "source": "wait-approve-plan",
+      "target": "check-plan-approved"
+    },
+    {
+      "id": "e5-yes",
+      "source": "check-plan-approved",
+      "target": "executor",
+      "sourceHandle": "true",
+      "label": "Approved"
+    },
+    {
+      "id": "e5-no",
+      "source": "check-plan-approved",
+      "target": "end-cancelled",
+      "sourceHandle": "false",
+      "label": "Cancel"
+    },
+    {
+      "id": "e6",
+      "source": "executor",
+      "target": "tester"
+    },
+    {
+      "id": "e7",
+      "source": "tester",
+      "target": "reviewer"
+    },
+    {
+      "id": "e8",
+      "source": "reviewer",
+      "target": "wait-final"
+    },
+    {
+      "id": "e9",
+      "source": "wait-final",
+      "target": "check-final"
+    },
+    {
+      "id": "e10-commit",
+      "source": "check-final",
+      "target": "committer",
+      "sourceHandle": "true",
+      "label": "Commit"
+    },
+    {
+      "id": "e10-other",
+      "source": "check-final",
+      "target": "check-retry",
+      "sourceHandle": "false",
+      "label": "Other"
+    },
+    {
+      "id": "e11-retry",
+      "source": "check-retry",
+      "target": "executor",
+      "sourceHandle": "true",
+      "label": "Retry",
+      "waypoints": [
+        {
+          "x": 640,
+          "y": 2919.5
+        },
+        {
+          "x": 640,
+          "y": 2596.5
+        },
+        {
+          "x": 640,
+          "y": 2294
+        },
+        {
+          "x": 640,
+          "y": 2037
+        },
+        {
+          "x": 640,
+          "y": 1805
+        },
+        {
+          "x": 640,
+          "y": 1546.5
+        }
+      ]
+    },
+    {
+      "id": "e11-cancel",
+      "source": "check-retry",
+      "target": "end-cancelled",
+      "sourceHandle": "false",
+      "label": "Cancel",
+      "waypoints": [
+        {
+          "x": 640,
+          "y": 2919.5
+        },
+        {
+          "x": 640,
+          "y": 2596.5
+        },
+        {
+          "x": 640,
+          "y": 2294
+        },
+        {
+          "x": 640,
+          "y": 2037
+        },
+        {
+          "x": 640,
+          "y": 1805
+        },
+        {
+          "x": 640,
+          "y": 1530
+        },
+        {
+          "x": 700,
+          "y": 1530
+        }
+      ]
+    },
+    {
+      "id": "e12",
+      "source": "committer",
+      "target": "end-success"
+    }
+  ],
+  "variables": {},
+  "labelIds": [],
+  "createdAt": "2025-01-01T00:00:00.000Z",
+  "updatedAt": "2026-02-10T18:22:30.199Z"
+}

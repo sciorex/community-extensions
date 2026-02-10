@@ -1,0 +1,255 @@
+{
+  "id": "lit-review",
+  "name": "Literature Review",
+  "description": "Structured literature review pipeline: broad search, approve scope, deep dive into approved areas, generate hypotheses from findings, synthesize into a formal review document.",
+  "nodes": [
+    {
+      "id": "trigger",
+      "type": "trigger",
+      "label": "Research Question",
+      "position": {
+        "x": 331.5,
+        "y": 80
+      },
+      "triggerType": "manual",
+      "triggerConfig": {
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "topic": {
+              "type": "string",
+              "description": "Research topic or question"
+            },
+            "domain": {
+              "type": "string",
+              "description": "Research domain (e.g., machine-learning, HCI)"
+            },
+            "depth": {
+              "type": "string",
+              "description": "Review depth: quick (5-10 papers), standard (15-25), comprehensive (30+)"
+            }
+          },
+          "required": [
+            "topic"
+          ]
+        }
+      },
+      "config": {}
+    },
+    {
+      "id": "broad-search",
+      "type": "agent",
+      "label": "Broad Literature Search",
+      "position": {
+        "x": 310,
+        "y": 342
+      },
+      "agentId": "paper-reader",
+      "inputMapping": {
+        "topic": "$.trigger.topic",
+        "maxPapers": "$.trigger.depth"
+      },
+      "outputMapping": {
+        "papers": "$.output.papers",
+        "synthesis": "$.output.synthesis",
+        "gaps": "$.output.gaps",
+        "summary": "$.output.summary"
+      },
+      "config": {}
+    },
+    {
+      "id": "wait-scope",
+      "type": "wait",
+      "label": "Review Search Results",
+      "position": {
+        "x": 310,
+        "y": 627
+      },
+      "waitType": "input",
+      "prompt": "Review the broad search results. Approve to proceed with deep analysis, or refine the search.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "approve": {
+            "type": "boolean",
+            "description": "Proceed with deep analysis"
+          },
+          "refinement": {
+            "type": "string",
+            "description": "Search refinement or additional focus areas"
+          }
+        },
+        "required": [
+          "approve"
+        ]
+      },
+      "config": {}
+    },
+    {
+      "id": "check-scope",
+      "type": "condition",
+      "label": "Scope OK?",
+      "position": {
+        "x": 320,
+        "y": 909
+      },
+      "conditions": [
+        {
+          "path": "$.userResponses.wait-scope.approve",
+          "operator": "eq",
+          "value": true
+        }
+      ],
+      "targetNodeId": "deep-search",
+      "defaultTargetNodeId": "broad-search",
+      "config": {},
+      "logicOperator": "and"
+    },
+    {
+      "id": "deep-search",
+      "type": "agent",
+      "label": "Deep Analysis",
+      "position": {
+        "x": 310,
+        "y": 1232
+      },
+      "agentId": "paper-reader",
+      "resumeFromNodeId": "broad-search",
+      "inputMapping": {
+        "topic": "$.nodes.broad-search.output.synthesis",
+        "focusArea": "$.nodes.broad-search.output.gaps[0]"
+      },
+      "outputMapping": {
+        "papers": "$.output.papers",
+        "synthesis": "$.output.synthesis",
+        "gaps": "$.output.gaps",
+        "summary": "$.output.summary"
+      },
+      "config": {}
+    },
+    {
+      "id": "hypothesis-gen",
+      "type": "agent",
+      "label": "Generate Hypotheses",
+      "position": {
+        "x": 310,
+        "y": 1517
+      },
+      "agentId": "hypothesis-generator-7a8b9c0d",
+      "inputMapping": {
+        "researchFindings": "$.nodes.deep-search.output.synthesis",
+        "ticket": "$.trigger.topic",
+        "epicId": "$.trigger.topic"
+      },
+      "outputMapping": {
+        "hypotheses": "$.output.hypotheses",
+        "summary": "$.output.summary"
+      },
+      "config": {}
+    },
+    {
+      "id": "synthesizer",
+      "type": "agent",
+      "label": "Write Review Document",
+      "position": {
+        "x": 314,
+        "y": 1749
+      },
+      "agentId": "synthesizer-5a6b7c8d",
+      "inputMapping": {
+        "ticket": "$.trigger.topic",
+        "epicId": "$.trigger.topic",
+        "researchFindings": "$.nodes.deep-search.output",
+        "hypotheses": "$.nodes.hypothesis-gen.output.hypotheses"
+      },
+      "outputMapping": {
+        "reportPath": "$.output.reportPath",
+        "summary": "$.output.summary"
+      },
+      "config": {}
+    },
+    {
+      "id": "end-success",
+      "type": "end",
+      "label": "Review Complete",
+      "position": {
+        "x": 362.5,
+        "y": 1981
+      },
+      "endType": "success",
+      "config": {}
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "source": "trigger",
+      "target": "broad-search"
+    },
+    {
+      "id": "e2",
+      "source": "broad-search",
+      "target": "wait-scope"
+    },
+    {
+      "id": "e3",
+      "source": "wait-scope",
+      "target": "check-scope"
+    },
+    {
+      "id": "e4-yes",
+      "source": "check-scope",
+      "target": "deep-search",
+      "sourceHandle": "true",
+      "label": "Approved"
+    },
+    {
+      "id": "e4-no",
+      "source": "check-scope",
+      "target": "broad-search",
+      "sourceHandle": "false",
+      "label": "Refine",
+      "waypoints": [
+        {
+          "x": 610,
+          "y": 1010.5
+        },
+        {
+          "x": 610,
+          "y": 859.25
+        },
+        {
+          "x": 280,
+          "y": 859.25
+        },
+        {
+          "x": 280,
+          "y": 708
+        },
+        {
+          "x": 280,
+          "y": 424.5
+        }
+      ]
+    },
+    {
+      "id": "e5",
+      "source": "deep-search",
+      "target": "hypothesis-gen"
+    },
+    {
+      "id": "e6",
+      "source": "hypothesis-gen",
+      "target": "synthesizer"
+    },
+    {
+      "id": "e7",
+      "source": "synthesizer",
+      "target": "end-success"
+    }
+  ],
+  "variables": {},
+  "labelIds": [],
+  "createdAt": "2025-01-01T00:00:00.000Z",
+  "updatedAt": "2026-02-10T18:23:22.161Z"
+}

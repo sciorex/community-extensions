@@ -1,0 +1,127 @@
+{
+  "id": "quick-review",
+  "name": "Quick Code Review",
+  "description": "Fast code review: analyzes staged/unstaged changes, gives a quality score, and provides a pass/fail verdict. No PR creation - just feedback.",
+  "nodes": [
+    {
+      "id": "trigger",
+      "type": "trigger",
+      "label": "Review Changes",
+      "position": {
+        "x": 339,
+        "y": 80
+      },
+      "triggerType": "manual",
+      "triggerConfig": {
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "description": "Code or diff to review (leave empty to review staged changes)"
+            },
+            "context": {
+              "type": "string",
+              "description": "Additional context about the changes"
+            }
+          },
+          "required": []
+        }
+      },
+      "config": {}
+    },
+    {
+      "id": "reviewer",
+      "type": "agent",
+      "label": "Code Review",
+      "position": {
+        "x": 325,
+        "y": 342
+      },
+      "agentId": "code-reviewer-e5f6a7b8",
+      "inputMapping": {
+        "code": "$.trigger.code",
+        "context": "$.trigger.context"
+      },
+      "outputMapping": {
+        "summary": "$.output.summary",
+        "score": "$.output.score",
+        "issues": "$.output.issues",
+        "positives": "$.output.positives"
+      },
+      "config": {}
+    },
+    {
+      "id": "check-score",
+      "type": "condition",
+      "label": "Quality OK?",
+      "position": {
+        "x": 320,
+        "y": 574
+      },
+      "conditions": [
+        {
+          "path": "$.nodes.reviewer.output.score",
+          "operator": "gte",
+          "value": 7
+        }
+      ],
+      "targetNodeId": "end-pass",
+      "defaultTargetNodeId": "end-fail",
+      "config": {},
+      "logicOperator": "and"
+    },
+    {
+      "id": "end-pass",
+      "type": "end",
+      "label": "Review Passed",
+      "position": {
+        "x": 230,
+        "y": 897
+      },
+      "endType": "success",
+      "config": {}
+    },
+    {
+      "id": "end-fail",
+      "type": "end",
+      "label": "Review Failed",
+      "position": {
+        "x": 510,
+        "y": 897
+      },
+      "endType": "failure",
+      "config": {}
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "source": "trigger",
+      "target": "reviewer"
+    },
+    {
+      "id": "e2",
+      "source": "reviewer",
+      "target": "check-score"
+    },
+    {
+      "id": "e3-pass",
+      "source": "check-score",
+      "target": "end-pass",
+      "sourceHandle": "true",
+      "label": "Score >= 7"
+    },
+    {
+      "id": "e3-fail",
+      "source": "check-score",
+      "target": "end-fail",
+      "sourceHandle": "false",
+      "label": "Score < 7"
+    }
+  ],
+  "variables": {},
+  "labelIds": [],
+  "createdAt": "2025-01-01T00:00:00.000Z",
+  "updatedAt": "2026-02-10T19:35:09.168Z"
+}

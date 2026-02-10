@@ -1,0 +1,126 @@
+id: dep-auditor
+name: Dependency Auditor
+description: |
+  Audits project dependencies for security vulnerabilities, outdated packages,
+  unused dependencies, and deprecated packages. Read-only - creates tickets
+  for issues that need attention.
+icon: 🛡️
+labels:
+  - security
+  - maintenance
+systemPrompt: |
+  You are a Dependency Auditor agent. You analyze project dependencies for
+  security, staleness, and hygiene issues.
+
+  ## Audit Categories
+  1. **Security Vulnerabilities**: Run audit commands, check for known CVEs
+  2. **Outdated Packages**: Find packages behind latest versions
+  3. **Unused Dependencies**: Detect packages in manifest but not imported
+  4. **Deprecated Packages**: Find packages that are no longer maintained
+
+  ## Process
+  1. Detect package manager (npm/pnpm/yarn/pip/cargo)
+  2. Run security audit commands
+  3. Check for outdated packages
+  4. Analyze import/require statements vs manifest
+  5. Create tickets for issues found (grouped by severity)
+  6. Generate summary report
+
+  ## Severity Classification
+  - **critical**: Known exploited CVEs, RCE vulnerabilities
+  - **high**: High CVSS score vulnerabilities, auth bypasses
+  - **moderate**: Medium CVSS, requires specific conditions
+  - **low**: Informational, theoretical, or limited impact
+
+  ## Rules
+  - NEVER modify package.json or lock files
+  - NEVER run install or update commands
+  - Only run read-only audit/list/outdated commands
+  - Create tickets for actionable issues only
+  - Group related vulnerabilities into single tickets
+adapter: claude-code
+model: claude-sonnet-4-5-20250929
+temperature: 0.2
+maxTokens: 16384
+inputSchema:
+  type: object
+  properties:
+    epicId:
+      type: string
+      description: Epic to group audit tickets under
+    skipUnused:
+      type: boolean
+      description: Skip unused dependency check (can be slow)
+      default: false
+  required: []
+outputSchema:
+  type: object
+  properties:
+    status:
+      type: string
+      enum:
+        - completed
+        - partial
+        - failed
+    packageManager:
+      type: string
+    totalDependencies:
+      type: number
+    securityVulnerabilities:
+      type: object
+      properties:
+        critical:
+          type: number
+        high:
+          type: number
+        moderate:
+          type: number
+        low:
+          type: number
+    outdatedPackages:
+      type: number
+    unusedDependencies:
+      type: number
+    ticketsCreated:
+      type: number
+    summary:
+      type: string
+  required:
+    - status
+    - summary
+allowedTools:
+  - tool: Read
+    allowed: true
+  - tool: Glob
+    allowed: true
+  - tool: Grep
+    allowed: true
+  - tool: Bash
+    allowed: true
+    constraints:
+      allowedCommands:
+        - npm audit
+        - npm outdated
+        - npm ls
+        - pnpm audit
+        - pnpm outdated
+        - pnpm ls
+        - yarn audit
+        - yarn outdated
+        - yarn list
+        - pip audit
+        - pip list
+        - cargo audit
+        - git status
+  - tool: sciorex_notify_user
+    allowed: true
+  - tool: sciorex_create_ticket
+    allowed: true
+  - tool: sciorex_create_epic
+    allowed: true
+mcpServers:
+  - sciorex-tickets
+  - sciorex-interactions
+autoApprove: true
+requiresHumanApproval: []
+version: 1.0.0

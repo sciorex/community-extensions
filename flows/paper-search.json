@@ -1,0 +1,134 @@
+{
+  "id": "paper-search",
+  "name": "Paper Search",
+  "description": "Searches for academic papers on a topic, summarizes findings, and generates BibTeX entries. Simple entry point for researchers.",
+  "nodes": [
+    {
+      "id": "trigger",
+      "type": "trigger",
+      "label": "Search Topic",
+      "position": {
+        "x": 340,
+        "y": 80
+      },
+      "triggerType": "manual",
+      "triggerConfig": {
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "topic": {
+              "type": "string",
+              "description": "Research topic or question to search for"
+            },
+            "maxPapers": {
+              "type": "number",
+              "description": "Maximum papers to find (default 10)"
+            },
+            "yearRange": {
+              "type": "string",
+              "description": "Year range (e.g., 2020-2025)"
+            }
+          },
+          "required": [
+            "topic"
+          ]
+        }
+      },
+      "config": {}
+    },
+    {
+      "id": "reader",
+      "type": "agent",
+      "label": "Find & Analyze Papers",
+      "position": {
+        "x": 310,
+        "y": 342
+      },
+      "agentId": "paper-reader",
+      "inputMapping": {
+        "topic": "$.trigger.topic",
+        "maxPapers": "$.trigger.maxPapers",
+        "yearRange": "$.trigger.yearRange"
+      },
+      "outputMapping": {
+        "papers": "$.output.papers",
+        "synthesis": "$.output.synthesis",
+        "gaps": "$.output.gaps",
+        "summary": "$.output.summary"
+      },
+      "config": {}
+    },
+    {
+      "id": "check-results",
+      "type": "condition",
+      "label": "Papers Found?",
+      "position": {
+        "x": 320,
+        "y": 627
+      },
+      "conditions": [
+        {
+          "path": "$.nodes.reader.output.status",
+          "operator": "neq",
+          "value": "no-results"
+        }
+      ],
+      "targetNodeId": "end-success",
+      "defaultTargetNodeId": "end-no-results",
+      "config": {},
+      "logicOperator": "and"
+    },
+    {
+      "id": "end-success",
+      "type": "end",
+      "label": "Search Complete",
+      "position": {
+        "x": 220.25,
+        "y": 950
+      },
+      "endType": "success",
+      "config": {}
+    },
+    {
+      "id": "end-no-results",
+      "type": "end",
+      "label": "No Results",
+      "position": {
+        "x": 513.25,
+        "y": 950
+      },
+      "endType": "failure",
+      "config": {}
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "source": "trigger",
+      "target": "reader"
+    },
+    {
+      "id": "e2",
+      "source": "reader",
+      "target": "check-results"
+    },
+    {
+      "id": "e3-yes",
+      "source": "check-results",
+      "target": "end-success",
+      "sourceHandle": "true",
+      "label": "Found papers"
+    },
+    {
+      "id": "e3-no",
+      "source": "check-results",
+      "target": "end-no-results",
+      "sourceHandle": "false",
+      "label": "No results"
+    }
+  ],
+  "variables": {},
+  "labelIds": [],
+  "createdAt": "2025-01-01T00:00:00.000Z",
+  "updatedAt": "2026-02-10T18:24:30.386Z"
+}

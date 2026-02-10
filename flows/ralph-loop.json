@@ -1,0 +1,498 @@
+{
+  "id": "ralph-loop",
+  "name": "Ralph Loop",
+  "description": "Autonomous self-improving coding loop inspired by the Ralph Wiggum technique. Breaks requirements into discrete tasks, executes each with independent verification, accumulates learnings across iterations, and commits verified work. Implements the Plan → Execute → Verify → Commit → Learn → Repeat pattern until all tasks pass or the user intervenes.",
+  "nodes": [
+    {
+      "id": "trigger",
+      "type": "trigger",
+      "label": "Requirements Input",
+      "position": {
+        "x": 229,
+        "y": 80
+      },
+      "triggerType": "manual",
+      "triggerConfig": {
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "requirements": {
+              "type": "string",
+              "description": "Feature requirements, bug report, or PRD to implement autonomously"
+            },
+            "projectPath": {
+              "type": "string",
+              "description": "Path to the project root (defaults to current directory)"
+            }
+          },
+          "required": [
+            "requirements"
+          ]
+        }
+      },
+      "config": {}
+    },
+    {
+      "id": "coordinator",
+      "type": "agent",
+      "label": "Ralph Coordinator",
+      "position": {
+        "x": 210,
+        "y": 342
+      },
+      "agentId": "ralph-coordinator",
+      "reuseSessionOnLoop": true,
+      "inputMapping": {
+        "requirements": "$.trigger.requirements",
+        "projectPath": "$.trigger.projectPath"
+      },
+      "outputMapping": {
+        "selectedTask": "$.output.selectedTask",
+        "isAllComplete": "$.output.isAllComplete",
+        "completedCount": "$.output.completedCount",
+        "totalTasks": "$.output.totalTasks",
+        "learnings": "$.output.learnings"
+      },
+      "config": {}
+    },
+    {
+      "id": "check-done",
+      "type": "condition",
+      "label": "All Tasks Complete?",
+      "position": {
+        "x": 220,
+        "y": 627
+      },
+      "conditions": [
+        {
+          "path": "$.nodes.coordinator.output.isAllComplete",
+          "operator": "eq",
+          "value": true
+        }
+      ],
+      "logicOperator": "and",
+      "targetNodeId": "end-complete",
+      "defaultTargetNodeId": "executor",
+      "config": {}
+    },
+    {
+      "id": "executor",
+      "type": "agent",
+      "label": "Implement Task",
+      "position": {
+        "x": 485,
+        "y": 950
+      },
+      "agentId": "code-executor",
+      "reuseSessionOnLoop": true,
+      "worktreeMode": "new",
+      "worktreeConfig": {
+        "baseBranch": "main",
+        "branchPrefix": "ralph-loop",
+        "autoMergeOnSuccess": true
+      },
+      "inputMapping": {
+        "ticketTitle": "$.nodes.coordinator.output.selectedTask.title",
+        "ticketDescription": "$.nodes.coordinator.output.selectedTask.description",
+        "acceptanceCriteria": "$.nodes.coordinator.output.selectedTask.acceptanceCriteria",
+        "codebasePath": "$.trigger.projectPath"
+      },
+      "outputMapping": {
+        "implementation": "$.output.implementation",
+        "filesChanged": "$.output.filesChanged"
+      },
+      "config": {}
+    },
+    {
+      "id": "verifier",
+      "type": "agent",
+      "label": "Independent Verifier",
+      "position": {
+        "x": 485,
+        "y": 1235
+      },
+      "agentId": "criteria-verifier",
+      "inheritWorktreeFromNodeId": "executor",
+      "inputMapping": {
+        "ticketTitle": "$.nodes.coordinator.output.selectedTask.title",
+        "ticketDescription": "$.nodes.coordinator.output.selectedTask.description",
+        "acceptanceCriteria": "$.nodes.coordinator.output.selectedTask.acceptanceCriteria",
+        "implementationSummary": "$.nodes.executor.output.implementation",
+        "codebasePath": "$.trigger.projectPath"
+      },
+      "outputMapping": {
+        "allMet": "$.output.allMet",
+        "results": "$.output.results",
+        "summary": "$.output.summary"
+      },
+      "config": {}
+    },
+    {
+      "id": "check-verified",
+      "type": "condition",
+      "label": "Verification Passed?",
+      "position": {
+        "x": 495,
+        "y": 1520
+      },
+      "conditions": [
+        {
+          "path": "$.nodes.verifier.output.allMet",
+          "operator": "eq",
+          "value": true
+        }
+      ],
+      "logicOperator": "and",
+      "targetNodeId": "committer",
+      "defaultTargetNodeId": "wait-failed",
+      "config": {}
+    },
+    {
+      "id": "committer",
+      "type": "agent",
+      "label": "Commit Verified Work",
+      "position": {
+        "x": 285,
+        "y": 1843
+      },
+      "agentId": "structured-committer",
+      "inheritWorktreeFromNodeId": "executor",
+      "inputMapping": {
+        "strategy": "$.variables.commitStrategy",
+        "scope": "$.nodes.coordinator.output.selectedTask.title"
+      },
+      "outputMapping": {
+        "commitHash": "$.output.commitHash",
+        "commitMessage": "$.output.commitMessage"
+      },
+      "config": {}
+    },
+    {
+      "id": "wait-failed",
+      "type": "wait",
+      "label": "Verification Failed",
+      "position": {
+        "x": 685,
+        "y": 1843
+      },
+      "waitType": "input",
+      "prompt": "Task verification failed. The independent verifier found issues with the implementation. What would you like to do?",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string",
+            "enum": [
+              "retry",
+              "skip",
+              "stop"
+            ],
+            "description": "retry = try again with feedback, skip = move to next task, stop = end the loop"
+          }
+        },
+        "required": [
+          "action"
+        ]
+      },
+      "config": {}
+    },
+    {
+      "id": "check-action",
+      "type": "condition",
+      "label": "User Decision",
+      "position": {
+        "x": 695,
+        "y": 2128
+      },
+      "conditions": [
+        {
+          "path": "$.nodes.wait-failed.response.action",
+          "operator": "eq",
+          "value": "retry"
+        }
+      ],
+      "logicOperator": "and",
+      "targetNodeId": "executor",
+      "defaultTargetNodeId": "check-skip",
+      "config": {}
+    },
+    {
+      "id": "check-skip",
+      "type": "condition",
+      "label": "Skip or Stop?",
+      "position": {
+        "x": 695,
+        "y": 2451
+      },
+      "conditions": [
+        {
+          "path": "$.nodes.wait-failed.response.action",
+          "operator": "eq",
+          "value": "skip"
+        }
+      ],
+      "logicOperator": "and",
+      "targetNodeId": "coordinator",
+      "defaultTargetNodeId": "end-stopped",
+      "config": {}
+    },
+    {
+      "id": "end-complete",
+      "type": "end",
+      "label": "All Tasks Complete",
+      "position": {
+        "x": -15,
+        "y": 950
+      },
+      "endType": "success",
+      "config": {}
+    },
+    {
+      "id": "end-stopped",
+      "type": "end",
+      "label": "Loop Stopped",
+      "position": {
+        "x": 745,
+        "y": 2774
+      },
+      "endType": "cancelled",
+      "config": {}
+    }
+  ],
+  "edges": [
+    {
+      "id": "e-trigger-coordinator",
+      "source": "trigger",
+      "target": "coordinator"
+    },
+    {
+      "id": "e-coordinator-check",
+      "source": "coordinator",
+      "target": "check-done"
+    },
+    {
+      "id": "e-check-complete",
+      "source": "check-done",
+      "target": "end-complete",
+      "sourceHandle": "true",
+      "label": "All Done"
+    },
+    {
+      "id": "e-check-executor",
+      "source": "check-done",
+      "target": "executor",
+      "sourceHandle": "false",
+      "label": "Tasks Remain"
+    },
+    {
+      "id": "e-executor-verifier",
+      "source": "executor",
+      "target": "verifier"
+    },
+    {
+      "id": "e-verifier-check",
+      "source": "verifier",
+      "target": "check-verified"
+    },
+    {
+      "id": "e-verified-committer",
+      "source": "check-verified",
+      "target": "committer",
+      "sourceHandle": "true",
+      "label": "Passed"
+    },
+    {
+      "id": "e-verified-failed",
+      "source": "check-verified",
+      "target": "wait-failed",
+      "sourceHandle": "false",
+      "label": "Failed"
+    },
+    {
+      "id": "e-committer-coordinator",
+      "source": "committer",
+      "target": "coordinator",
+      "label": "Next Task",
+      "waypoints": [
+        {
+          "x": 595,
+          "y": 1925.5
+        },
+        {
+          "x": 595,
+          "y": 1773.5
+        },
+        {
+          "x": -44.78712172022,
+          "y": 1773.5
+        },
+        {
+          "x": -44.78712172022,
+          "y": 1621.5
+        },
+        {
+          "x": -44.78712172022,
+          "y": 1469.5
+        },
+        {
+          "x": -44.78712172022,
+          "y": 1469.5
+        },
+        {
+          "x": -44.78712172022,
+          "y": 1317.5
+        },
+        {
+          "x": -44.78712172022,
+          "y": 1175
+        },
+        {
+          "x": -45,
+          "y": 1175
+        },
+        {
+          "x": -45,
+          "y": 1032.5
+        },
+        {
+          "x": -45,
+          "y": 728.5
+        },
+        {
+          "x": -45,
+          "y": 424.5
+        },
+        {
+          "x": 180,
+          "y": 424.5
+        }
+      ]
+    },
+    {
+      "id": "e-failed-action",
+      "source": "wait-failed",
+      "target": "check-action"
+    },
+    {
+      "id": "e-action-retry",
+      "source": "check-action",
+      "target": "executor",
+      "sourceHandle": "true",
+      "label": "Retry",
+      "waypoints": [
+        {
+          "x": 985,
+          "y": 2229.5
+        },
+        {
+          "x": 985,
+          "y": 2077.5
+        },
+        {
+          "x": 255,
+          "y": 2077.5
+        },
+        {
+          "x": 255,
+          "y": 1925.5
+        },
+        {
+          "x": 255,
+          "y": 1621.5
+        },
+        {
+          "x": 255,
+          "y": 1317.5
+        },
+        {
+          "x": 255,
+          "y": 1032.5
+        },
+        {
+          "x": 455,
+          "y": 1032.5
+        }
+      ]
+    },
+    {
+      "id": "e-action-check-skip",
+      "source": "check-action",
+      "target": "check-skip",
+      "sourceHandle": "false"
+    },
+    {
+      "id": "e-skip-coordinator",
+      "source": "check-skip",
+      "target": "coordinator",
+      "sourceHandle": "true",
+      "label": "Skip Task",
+      "waypoints": [
+        {
+          "x": 985,
+          "y": 2552.5
+        },
+        {
+          "x": 985,
+          "y": 2229.5
+        },
+        {
+          "x": 985,
+          "y": 2077.5
+        },
+        {
+          "x": 255,
+          "y": 2077.5
+        },
+        {
+          "x": 255,
+          "y": 1925.5
+        },
+        {
+          "x": 255,
+          "y": 1621.5
+        },
+        {
+          "x": 255,
+          "y": 1317.5
+        },
+        {
+          "x": 255,
+          "y": 1175
+        },
+        {
+          "x": -45,
+          "y": 1175
+        },
+        {
+          "x": -45,
+          "y": 1032.5
+        },
+        {
+          "x": -45,
+          "y": 728.5
+        },
+        {
+          "x": -45,
+          "y": 424.5
+        },
+        {
+          "x": 180,
+          "y": 424.5
+        }
+      ]
+    },
+    {
+      "id": "e-skip-stop",
+      "source": "check-skip",
+      "target": "end-stopped",
+      "sourceHandle": "false",
+      "label": "Stop Loop"
+    }
+  ],
+  "variables": {
+    "commitStrategy": "atomic"
+  },
+  "labelIds": [],
+  "createdAt": "2026-02-10T00:00:00.000Z",
+  "updatedAt": "2026-02-10T18:15:07.419Z"
+}

@@ -1,0 +1,540 @@
+{
+  "id": "feature-dev",
+  "name": "Feature Implementation",
+  "description": "Per-ticket implementation lifecycle: Implement -> Test -> Verify acceptance criteria -> Handle failures -> Commit -> Merge. Uses worktrees for isolation. Supports retry loops with session resumption.",
+  "nodes": [
+    {
+      "id": "trigger",
+      "type": "trigger",
+      "label": "Start Implementation",
+      "position": {
+        "x": 424,
+        "y": 80
+      },
+      "triggerType": "manual",
+      "triggerConfig": {
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "ticketId": {
+              "type": "string",
+              "description": "Ticket ID"
+            },
+            "ticketTitle": {
+              "type": "string",
+              "description": "Ticket title"
+            },
+            "ticketDescription": {
+              "type": "string",
+              "description": "Full description"
+            },
+            "acceptanceCriteria": {
+              "type": "string",
+              "description": "Acceptance criteria"
+            },
+            "epicId": {
+              "type": "string",
+              "description": "Parent epic ID"
+            },
+            "featureDocsPath": {
+              "type": "string",
+              "description": "Path to feature docs"
+            }
+          },
+          "required": [
+            "ticketTitle",
+            "ticketDescription"
+          ]
+        }
+      },
+      "config": {}
+    },
+    {
+      "id": "implementer",
+      "type": "agent",
+      "label": "Implement Feature",
+      "position": {
+        "x": 410,
+        "y": 342
+      },
+      "agentId": "code-executor",
+      "reuseSessionOnLoop": true,
+      "worktreeMode": "new",
+      "worktreeConfig": {
+        "label": "Feature Implementation",
+        "autoMergeOnSuccess": true,
+        "cleanupOnComplete": true
+      },
+      "inputMapping": {
+        "ticketId": "$.trigger.ticketId",
+        "ticketTitle": "$.trigger.ticketTitle",
+        "ticketDescription": "$.trigger.ticketDescription",
+        "acceptanceCriteria": "$.trigger.acceptanceCriteria",
+        "epicId": "$.trigger.epicId",
+        "featureDocsPath": "$.trigger.featureDocsPath"
+      },
+      "outputMapping": {
+        "status": "$.output.status",
+        "filesModified": "$.output.filesModified",
+        "filesCreated": "$.output.filesCreated",
+        "selfAssessment": "$.output.selfAssessment",
+        "concerns": "$.output.concerns",
+        "summary": "$.output.summary"
+      },
+      "config": {}
+    },
+    {
+      "id": "check-implemented",
+      "type": "condition",
+      "label": "Implemented?",
+      "position": {
+        "x": 420,
+        "y": 627
+      },
+      "conditions": [
+        {
+          "path": "$.nodes.implementer.output.status",
+          "operator": "eq",
+          "value": "implemented"
+        }
+      ],
+      "targetNodeId": "tester",
+      "defaultTargetNodeId": "end-blocked",
+      "config": {},
+      "logicOperator": "and"
+    },
+    {
+      "id": "tester",
+      "type": "agent",
+      "label": "Write & Run Tests",
+      "position": {
+        "x": 161,
+        "y": 950
+      },
+      "agentId": "test-writer-c9d0e1f2",
+      "worktreeMode": "inherit",
+      "inheritWorktreeFromNodeId": "implementer",
+      "inputMapping": {
+        "code": "$.nodes.implementer.output.summary",
+        "filePath": "$.nodes.implementer.output.filesModified[0]",
+        "focusAreas": "$.trigger.acceptanceCriteria"
+      },
+      "outputMapping": {
+        "tests": "$.output.tests",
+        "coverage": "$.output.coverage",
+        "summary": "$.output.summary"
+      },
+      "config": {}
+    },
+    {
+      "id": "verifier",
+      "type": "agent",
+      "label": "Verify Criteria",
+      "position": {
+        "x": 135,
+        "y": 1222
+      },
+      "agentId": "criteria-verifier",
+      "worktreeMode": "inherit",
+      "inheritWorktreeFromNodeId": "implementer",
+      "inputMapping": {
+        "ticketId": "$.trigger.ticketId",
+        "acceptanceCriteria": "$.trigger.acceptanceCriteria",
+        "implementerOutput": "$.nodes.implementer.output",
+        "testerOutput": "$.nodes.tester.output",
+        "epicId": "$.trigger.epicId"
+      },
+      "outputMapping": {
+        "status": "$.output.status",
+        "criteria": "$.output.criteria",
+        "recommendation": "$.output.recommendation",
+        "quickFixes": "$.output.quickFixes",
+        "summary": "$.output.summary"
+      },
+      "config": {}
+    },
+    {
+      "id": "check-criteria",
+      "type": "condition",
+      "label": "All Criteria Met?",
+      "position": {
+        "x": 145,
+        "y": 1507
+      },
+      "conditions": [
+        {
+          "path": "$.nodes.verifier.output.recommendation",
+          "operator": "eq",
+          "value": "proceed"
+        }
+      ],
+      "targetNodeId": "committer",
+      "defaultTargetNodeId": "check-quick-fix",
+      "config": {},
+      "logicOperator": "and"
+    },
+    {
+      "id": "check-quick-fix",
+      "type": "condition",
+      "label": "Quick Fix?",
+      "position": {
+        "x": 345,
+        "y": 1830
+      },
+      "conditions": [
+        {
+          "path": "$.nodes.verifier.output.recommendation",
+          "operator": "eq",
+          "value": "quick_fix_needed"
+        }
+      ],
+      "targetNodeId": "implementer",
+      "defaultTargetNodeId": "wait-user-decision",
+      "config": {},
+      "logicOperator": "and"
+    },
+    {
+      "id": "wait-user-decision",
+      "type": "wait",
+      "label": "User Decision Required",
+      "position": {
+        "x": 335,
+        "y": 2153
+      },
+      "waitType": "input",
+      "prompt": "Some acceptance criteria were not fully met. Choose how to proceed.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string",
+            "description": "proceed (commit as-is), retry (try again), cancel"
+          }
+        },
+        "required": [
+          "action"
+        ]
+      },
+      "config": {}
+    },
+    {
+      "id": "check-user-action",
+      "type": "condition",
+      "label": "User Action?",
+      "position": {
+        "x": 345,
+        "y": 2435
+      },
+      "conditions": [
+        {
+          "path": "$.userResponses.wait-user-decision.action",
+          "operator": "eq",
+          "value": "proceed"
+        }
+      ],
+      "targetNodeId": "committer",
+      "defaultTargetNodeId": "check-retry",
+      "config": {},
+      "logicOperator": "and"
+    },
+    {
+      "id": "check-retry",
+      "type": "condition",
+      "label": "Retry?",
+      "position": {
+        "x": 345,
+        "y": 2758
+      },
+      "conditions": [
+        {
+          "path": "$.userResponses.wait-user-decision.action",
+          "operator": "eq",
+          "value": "retry"
+        }
+      ],
+      "targetNodeId": "implementer",
+      "defaultTargetNodeId": "end-cancelled",
+      "config": {},
+      "logicOperator": "and"
+    },
+    {
+      "id": "committer",
+      "type": "agent",
+      "label": "Commit Changes",
+      "position": {
+        "x": -65,
+        "y": 1830
+      },
+      "agentId": "structured-committer",
+      "worktreeMode": "inherit",
+      "inheritWorktreeFromNodeId": "implementer",
+      "inputMapping": {
+        "ticketId": "$.trigger.ticketId",
+        "changesSummary": "$.nodes.implementer.output.summary"
+      },
+      "outputMapping": {
+        "status": "$.output.status",
+        "commits": "$.output.commits",
+        "summary": "$.output.summary"
+      },
+      "config": {}
+    },
+    {
+      "id": "end-success",
+      "type": "end",
+      "label": "Feature Complete",
+      "position": {
+        "x": -13.5,
+        "y": 2153
+      },
+      "endType": "success",
+      "config": {}
+    },
+    {
+      "id": "end-blocked",
+      "type": "end",
+      "label": "Implementation Blocked",
+      "position": {
+        "x": 735,
+        "y": 950
+      },
+      "endType": "failure",
+      "config": {}
+    },
+    {
+      "id": "end-cancelled",
+      "type": "end",
+      "label": "Cancelled",
+      "position": {
+        "x": 395,
+        "y": 3081
+      },
+      "endType": "cancelled",
+      "config": {}
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "source": "trigger",
+      "target": "implementer"
+    },
+    {
+      "id": "e2",
+      "source": "implementer",
+      "target": "check-implemented"
+    },
+    {
+      "id": "e3-yes",
+      "source": "check-implemented",
+      "target": "tester",
+      "sourceHandle": "true",
+      "label": "Implemented"
+    },
+    {
+      "id": "e3-no",
+      "source": "check-implemented",
+      "target": "end-blocked",
+      "sourceHandle": "false",
+      "label": "Blocked"
+    },
+    {
+      "id": "e4",
+      "source": "tester",
+      "target": "verifier"
+    },
+    {
+      "id": "e5",
+      "source": "verifier",
+      "target": "check-criteria"
+    },
+    {
+      "id": "e6-yes",
+      "source": "check-criteria",
+      "target": "committer",
+      "sourceHandle": "true",
+      "label": "All met"
+    },
+    {
+      "id": "e6-no",
+      "source": "check-criteria",
+      "target": "check-quick-fix",
+      "sourceHandle": "false",
+      "label": "Issues"
+    },
+    {
+      "id": "e7-fix",
+      "source": "check-quick-fix",
+      "target": "implementer",
+      "sourceHandle": "true",
+      "label": "Quick fix",
+      "waypoints": [
+        {
+          "x": 635,
+          "y": 1931.5
+        },
+        {
+          "x": 635,
+          "y": 1608.5
+        },
+        {
+          "x": 635,
+          "y": 1304.5
+        },
+        {
+          "x": 635,
+          "y": 1165.25
+        },
+        {
+          "x": 131,
+          "y": 1165.25
+        },
+        {
+          "x": 131,
+          "y": 1026
+        },
+        {
+          "x": 131,
+          "y": 728.5
+        },
+        {
+          "x": 131,
+          "y": 424.5
+        },
+        {
+          "x": 380,
+          "y": 424.5
+        }
+      ]
+    },
+    {
+      "id": "e7-user",
+      "source": "check-quick-fix",
+      "target": "wait-user-decision",
+      "sourceHandle": "false",
+      "label": "Needs decision"
+    },
+    {
+      "id": "e8",
+      "source": "wait-user-decision",
+      "target": "check-user-action"
+    },
+    {
+      "id": "e9-proceed",
+      "source": "check-user-action",
+      "target": "committer",
+      "sourceHandle": "true",
+      "label": "Proceed",
+      "waypoints": [
+        {
+          "x": 635,
+          "y": 2536.5
+        },
+        {
+          "x": 635,
+          "y": 2385.25
+        },
+        {
+          "x": -43.5,
+          "y": 2385.25
+        },
+        {
+          "x": -43.5,
+          "y": 2234
+        },
+        {
+          "x": -43.5,
+          "y": 1912.5
+        }
+      ]
+    },
+    {
+      "id": "e9-other",
+      "source": "check-user-action",
+      "target": "check-retry",
+      "sourceHandle": "false",
+      "label": "Other"
+    },
+    {
+      "id": "e10-retry",
+      "source": "check-retry",
+      "target": "implementer",
+      "sourceHandle": "true",
+      "label": "Retry",
+      "waypoints": [
+        {
+          "x": 635,
+          "y": 2859.5
+        },
+        {
+          "x": 635,
+          "y": 2536.5
+        },
+        {
+          "x": 635,
+          "y": 2385.25
+        },
+        {
+          "x": -43.5,
+          "y": 2385.25
+        },
+        {
+          "x": -43.5,
+          "y": 2234
+        },
+        {
+          "x": -43.5,
+          "y": 2082.75
+        },
+        {
+          "x": -95,
+          "y": 2082.75
+        },
+        {
+          "x": -95,
+          "y": 1931.5
+        },
+        {
+          "x": -95,
+          "y": 1608.5
+        },
+        {
+          "x": -95,
+          "y": 1304.5
+        },
+        {
+          "x": -95,
+          "y": 1026
+        },
+        {
+          "x": -95,
+          "y": 728.5
+        },
+        {
+          "x": -95,
+          "y": 424.5
+        },
+        {
+          "x": 380,
+          "y": 424.5
+        }
+      ]
+    },
+    {
+      "id": "e10-cancel",
+      "source": "check-retry",
+      "target": "end-cancelled",
+      "sourceHandle": "false",
+      "label": "Cancel"
+    },
+    {
+      "id": "e11",
+      "source": "committer",
+      "target": "end-success"
+    }
+  ],
+  "variables": {},
+  "labelIds": [],
+  "createdAt": "2025-01-01T00:00:00.000Z",
+  "updatedAt": "2026-02-10T18:22:04.136Z"
+}
